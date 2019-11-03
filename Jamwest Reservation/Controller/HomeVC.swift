@@ -31,6 +31,7 @@
     
     func configureNavigationBar() {
         navigationController?.navigationBar.barTintColor = UIColor.init(displayP3Red: 17/255, green: 16/255, blue: 38/255, alpha: 95)
+        navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barStyle = .black
         
         navigationItem.title = "Reservation"

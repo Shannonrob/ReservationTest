@@ -15,6 +15,7 @@
 		85D18A3A236F05C400F06441 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D18A39236F05C400F06441 /* HomeVC.swift */; };
 		85D18A3C236F05CF00F06441 /* MenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D18A3B236F05CF00F06441 /* MenuVC.swift */; };
 		85D18A3E236F165900F06441 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D18A3D236F165900F06441 /* Protocols.swift */; };
+		85D18A40236F29A100F06441 /* MenuOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D18A3F236F29A100F06441 /* MenuOptionCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		85D18A39236F05C400F06441 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		85D18A3B236F05CF00F06441 /* MenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuVC.swift; sourceTree = "<group>"; };
 		85D18A3D236F165900F06441 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		85D18A3F236F29A100F06441 /* MenuOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuOptionCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 		85D18A34236F04E600F06441 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				85D18A3F236F29A100F06441 /* MenuOptionCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -175,6 +178,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85D18A40236F29A100F06441 /* MenuOptionCell.swift in Sources */,
 				85D18A38236F05B900F06441 /* ContainerVC.swift in Sources */,
 				85D18A3A236F05C400F06441 /* HomeVC.swift in Sources */,
 				85D18A1F236F040C00F06441 /* AppDelegate.swift in Sources */,
