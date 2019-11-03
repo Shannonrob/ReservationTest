@@ -9,21 +9,25 @@
 /* Begin PBXBuildFile section */
 		85D18A1F236F040C00F06441 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D18A1E236F040C00F06441 /* AppDelegate.swift */; };
 		85D18A21236F040C00F06441 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D18A20236F040C00F06441 /* SceneDelegate.swift */; };
-		85D18A23236F040C00F06441 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D18A22236F040C00F06441 /* ViewController.swift */; };
-		85D18A26236F040C00F06441 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85D18A24236F040C00F06441 /* Main.storyboard */; };
 		85D18A28236F040D00F06441 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85D18A27236F040D00F06441 /* Assets.xcassets */; };
 		85D18A2B236F040D00F06441 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85D18A29236F040D00F06441 /* LaunchScreen.storyboard */; };
+		85D18A38236F05B900F06441 /* ContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D18A37236F05B900F06441 /* ContainerVC.swift */; };
+		85D18A3A236F05C400F06441 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D18A39236F05C400F06441 /* HomeVC.swift */; };
+		85D18A3C236F05CF00F06441 /* MenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D18A3B236F05CF00F06441 /* MenuVC.swift */; };
+		85D18A3E236F165900F06441 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D18A3D236F165900F06441 /* Protocols.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		85D18A1B236F040C00F06441 /* Jamwest Reservation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Jamwest Reservation.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		85D18A1E236F040C00F06441 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		85D18A20236F040C00F06441 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		85D18A22236F040C00F06441 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		85D18A25236F040C00F06441 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		85D18A27236F040D00F06441 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		85D18A2A236F040D00F06441 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		85D18A2C236F040D00F06441 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		85D18A37236F05B900F06441 /* ContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerVC.swift; sourceTree = "<group>"; };
+		85D18A39236F05C400F06441 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		85D18A3B236F05CF00F06441 /* MenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuVC.swift; sourceTree = "<group>"; };
+		85D18A3D236F165900F06441 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +60,49 @@
 		85D18A1D236F040C00F06441 /* Jamwest Reservation */ = {
 			isa = PBXGroup;
 			children = (
+				85D18A36236F04ED00F06441 /* Utilities */,
+				85D18A35236F04E900F06441 /* Model */,
+				85D18A34236F04E600F06441 /* View */,
+				85D18A32236F04CB00F06441 /* Controller */,
 				85D18A1E236F040C00F06441 /* AppDelegate.swift */,
 				85D18A20236F040C00F06441 /* SceneDelegate.swift */,
-				85D18A22236F040C00F06441 /* ViewController.swift */,
-				85D18A24236F040C00F06441 /* Main.storyboard */,
 				85D18A27236F040D00F06441 /* Assets.xcassets */,
 				85D18A29236F040D00F06441 /* LaunchScreen.storyboard */,
 				85D18A2C236F040D00F06441 /* Info.plist */,
 			);
 			path = "Jamwest Reservation";
+			sourceTree = "<group>";
+		};
+		85D18A32236F04CB00F06441 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				85D18A37236F05B900F06441 /* ContainerVC.swift */,
+				85D18A39236F05C400F06441 /* HomeVC.swift */,
+				85D18A3B236F05CF00F06441 /* MenuVC.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		85D18A34236F04E600F06441 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		85D18A35236F04E900F06441 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		85D18A36236F04ED00F06441 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				85D18A3D236F165900F06441 /* Protocols.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,7 +165,6 @@
 			files = (
 				85D18A2B236F040D00F06441 /* LaunchScreen.storyboard in Resources */,
 				85D18A28236F040D00F06441 /* Assets.xcassets in Resources */,
-				85D18A26236F040C00F06441 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,23 +175,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				85D18A23236F040C00F06441 /* ViewController.swift in Sources */,
+				85D18A38236F05B900F06441 /* ContainerVC.swift in Sources */,
+				85D18A3A236F05C400F06441 /* HomeVC.swift in Sources */,
 				85D18A1F236F040C00F06441 /* AppDelegate.swift in Sources */,
+				85D18A3E236F165900F06441 /* Protocols.swift in Sources */,
 				85D18A21236F040C00F06441 /* SceneDelegate.swift in Sources */,
+				85D18A3C236F05CF00F06441 /* MenuVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		85D18A24236F040C00F06441 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				85D18A25236F040C00F06441 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		85D18A29236F040D00F06441 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

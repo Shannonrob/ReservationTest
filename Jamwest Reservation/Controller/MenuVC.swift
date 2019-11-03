@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MenuVC.swift
 //  Jamwest Reservation
 //
 //  Created by Shannon Robinson on 11/3/19.
@@ -8,13 +8,17 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class MenuVC: UIViewController {
+ 
+//    MARK: - Properties
+    
+//    MARK: - Init
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
-
-
+    
+//    MARK: - Handlers
+    
+    
 }
-
