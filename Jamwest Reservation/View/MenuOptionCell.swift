@@ -10,7 +10,22 @@ import UIKit
 
 class MenuOptionCell: UITableViewCell {
 
-//  MARK: - Properties
+    //  MARK: - Properties
+    
+    let iconImage: UIImageView = {
+        let icon = UIImageView()
+        icon.contentMode = .scaleAspectFit
+        icon.clipsToBounds = true
+        return icon
+    }()
+    
+    let menuLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.text = "Sample text"
+        return label
+    }()
     
     //    MARK: - Init
     
@@ -18,6 +33,19 @@ class MenuOptionCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         backgroundColor =  UIColor.init(displayP3Red: 17/255, green: 16/255, blue: 38/255, alpha: 95)
+        
+        addSubview(iconImage)
+        iconImage.translatesAutoresizingMaskIntoConstraints = false
+        iconImage.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        iconImage.leftAnchor.constraint(equalTo: leftAnchor, constant: 12).isActive = true
+        iconImage.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        iconImage.widthAnchor.constraint(equalToConstant: 24).isActive = true
+                
+        addSubview(menuLabel)
+        menuLabel.translatesAutoresizingMaskIntoConstraints = false
+        menuLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        menuLabel.leftAnchor.constraint(equalTo: iconImage.rightAnchor, constant: 12).isActive = true
+        
     }
     
     required init?(coder: NSCoder) {

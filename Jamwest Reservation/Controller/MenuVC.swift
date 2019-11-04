@@ -53,6 +53,11 @@ extension MenuVC: UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! MenuOptionCell
+        
+        let menuOption = MenuOption(rawValue: indexPath.row)
+        cell.menuLabel.text = menuOption?.description
+        cell.iconImage.image = menuOption?.iconImage
+        
         return cell
     }
     
