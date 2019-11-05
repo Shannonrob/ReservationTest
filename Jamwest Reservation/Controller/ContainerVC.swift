@@ -12,7 +12,7 @@ class ContainerVC: UIViewController {
  
 //    MARK: - Properties
     
-    var menuVC: UIViewController!
+    var menuVC: MenuVC!
     var centerController: UIViewController!
     var isExpanded = false
 
@@ -25,6 +25,14 @@ class ContainerVC: UIViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return.lightContent
+    }
+    
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation{
+        return.slide
+    }
+    
+    override var prefersStatusBarHidden: Bool{
+        return  isExpanded
     }
     
 //    MARK: - Handlers
@@ -43,13 +51,14 @@ class ContainerVC: UIViewController {
         if menuVC == nil {
 //            add menu controller here
             menuVC = MenuVC()
+            menuVC.delegate = self
             view.insertSubview(menuVC.view, at: 0)
             addChild(menuVC)
             menuVC.didMove(toParent: self)
         }
     }
     
-    func showMenuVC(shouldExpand: Bool) {
+    func animatePanel(shouldExpand: Bool,menuOption: MenuOption?) {
         
         if shouldExpand {
 //         show menu
@@ -58,23 +67,50 @@ class ContainerVC: UIViewController {
             }, completion: nil)
         } else {
 //            hide menu
+                      
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
-               self.centerController.view.frame.origin.x = 0
-           }, completion: nil)
+                self.centerController.view.frame.origin.x = 0
+            }) { (_) in
+                guard let menuOption = menuOption else { return }
+                self.didSelectMenuOption(menuOption: menuOption)
+            }
         }
+        animateStatusBar()
+    }
+    
+    func didSelectMenuOption(menuOption: MenuOption){
+        switch menuOption{
+        case .Submit:
+            print("Submit email")
+        case .Waivers:
+            print("View waivers")
+        case .Reservations:
+            print("Show reservations")
+        case .Settings:
+            print("Show settings")
+        }
+    }
+    
+    func animateStatusBar() {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
+            self.setNeedsStatusBarAppearanceUpdate()
+      }, completion: nil)
     }
 }
 
 extension ContainerVC: HomeVcDelegate {
-    
-    func handleMenuToggle() {
-       
+    func handleMenuToggle(forMenuOption menuOption: MenuOption?) {
         if !isExpanded {
-            configureMenuVC()
-        }
+        configureMenuVC()
+    }
+    
+//    func handleMenuToggle(forMenuOption menuOption: MenuOption) {
+//
+//
+//        }
         
         isExpanded = !isExpanded
-        showMenuVC(shouldExpand: isExpanded)
+        animatePanel(shouldExpand: isExpanded, menuOption: menuOption)
     }
     
     

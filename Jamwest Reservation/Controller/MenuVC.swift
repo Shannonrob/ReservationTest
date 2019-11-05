@@ -13,6 +13,7 @@ class MenuVC: UIViewController {
 //    MARK: - Properties
     
     var tableView: UITableView!
+    var delegate: HomeVcDelegate?
     private let reuseIdentifier = "MenuOptionCell"
     
 //    MARK: - Init
@@ -61,5 +62,9 @@ extension MenuVC: UITableViewDelegate,UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let menuOption = MenuOption(rawValue: indexPath.row)
+        delegate?.handleMenuToggle(forMenuOption: menuOption)
+    }
     
 }

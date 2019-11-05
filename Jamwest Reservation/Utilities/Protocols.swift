@@ -8,5 +8,5 @@
 
 protocol HomeVcDelegate {
   
-    func handleMenuToggle()
+    func handleMenuToggle(forMenuOption menuOption: MenuOption?)
 }
