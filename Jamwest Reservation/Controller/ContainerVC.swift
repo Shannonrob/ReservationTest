@@ -87,7 +87,8 @@ class ContainerVC: UIViewController {
         case .Reservations:
             print("Show reservations")
         case .Settings:
-            print("Show settings")
+            let settingsVC = SettingsVC()
+            present(UINavigationController(rootViewController: settingsVC), animated: true, completion: nil)
         }
     }
     
@@ -99,19 +100,12 @@ class ContainerVC: UIViewController {
 }
 
 extension ContainerVC: HomeVcDelegate {
+   
     func handleMenuToggle(forMenuOption menuOption: MenuOption?) {
         if !isExpanded {
         configureMenuVC()
     }
-    
-//    func handleMenuToggle(forMenuOption menuOption: MenuOption) {
-//
-//
-//        }
-        
         isExpanded = !isExpanded
         animatePanel(shouldExpand: isExpanded, menuOption: menuOption)
     }
-    
-    
 }

@@ -33,6 +33,7 @@ class MenuOptionCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         backgroundColor =  UIColor.init(displayP3Red: 17/255, green: 16/255, blue: 38/255, alpha: 95)
+        selectionStyle = .none
         
         addSubview(iconImage)
         iconImage.translatesAutoresizingMaskIntoConstraints = false
