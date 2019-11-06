@@ -88,7 +88,9 @@ class ContainerVC: UIViewController {
             print("Show reservations")
         case .Settings:
             let settingsVC = SettingsVC()
-            present(UINavigationController(rootViewController: settingsVC), animated: true, completion: nil)
+            let navigationController = UINavigationController(rootViewController: settingsVC)
+            navigationController.modalPresentationStyle = .fullScreen
+            present(navigationController, animated: true)
         }
     }
     
