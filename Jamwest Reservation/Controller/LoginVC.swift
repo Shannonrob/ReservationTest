@@ -48,17 +48,19 @@ class LoginVC: UIViewController {
         
         let attributedTitle = NSMutableAttributedString(string: "Dont have an account?  ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18), NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         attributedTitle.append(NSAttributedString(string: "Sign Up", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18), NSAttributedString.Key.foregroundColor: UIColor(red: 242/255, green: 125/255, blue: 15/255, alpha: 1)]))
-        
+        button.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
         button.setAttributedTitle(attributedTitle, for: .normal)
         
         return button
     }()
     
-    
+//    MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.init(displayP3Red: 17/255, green: 16/255, blue: 38/255, alpha: 95)
+        
+        navigationController?.navigationBar.isHidden = true
         
         configureViewComponents()
         
@@ -66,6 +68,11 @@ class LoginVC: UIViewController {
         dontHaveAccountButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 30, paddingRight: 0, width: 0, height: 50)
     }
    
+    @objc func handleSignUp() {
+        let signUpVC = SignUpVC()
+        navigationController?.pushViewController(signUpVC, animated: true)
+    }
+    
     func configureViewComponents() {
         let stackView = UIStackView(arrangedSubviews: [emailTextField,passwordTextField,loginButton])
         
@@ -74,7 +81,7 @@ class LoginVC: UIViewController {
         stackView.distribution = .fillEqually
         
         view.addSubview(stackView)
-        stackView.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 200, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 600, height: 180)
+        stackView.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 180, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 600, height: 180)
         stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
 }
