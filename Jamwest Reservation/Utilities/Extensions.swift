@@ -40,3 +40,25 @@ extension UIView {
     }
     
 }
+
+extension UITextField{
+    
+    func design(placeHolder: String?, backgroundColor: UIColor?, font: CGFloat?, textColor: UIColor?) {
+        
+        if let backgroundColor = backgroundColor {
+            self.backgroundColor = backgroundColor
+        }
+        
+        if let textColor = textColor {
+            self.textColor = textColor
+        }
+        
+        if let font = font {
+            self.font = UIFont.systemFont(ofSize: font)
+        }
+        
+        if placeHolder != nil {
+            self.attributedPlaceholder = NSAttributedString(string: placeHolder!, attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray])
+        }
+    }
+}

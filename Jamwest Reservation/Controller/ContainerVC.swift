@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ContainerVC: UIViewController {
  
@@ -20,7 +21,12 @@ class ContainerVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureHomeVC()
+        
+        if Auth.auth().currentUser == nil {
+            configureSignInVC()
+        } else {
+            configureHomeVC()
+        }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -41,7 +47,18 @@ class ContainerVC: UIViewController {
         let homeVC = HomeVC()
         homeVC.delegate = self
         centerController = UINavigationController(rootViewController: homeVC)
+
+        view.addSubview(centerController.view)
+        addChild(centerController)
+        centerController.didMove(toParent: self)
         
+
+    }
+//    Switch rootViewController
+    func configureSignInVC() {
+        let loginVC = LoginVC()
+        centerController = UINavigationController(rootViewController: loginVC)
+
         view.addSubview(centerController.view)
         addChild(centerController)
         centerController.didMove(toParent: self)
@@ -85,12 +102,21 @@ class ContainerVC: UIViewController {
         case .Waivers:
             print("View waivers")
         case .Reservations:
-            print("Show reservations")
+            present(AddReservationVC(), animated: true, completion: nil)
         case .Settings:
-            let settingsVC = SettingsVC()
-            let navigationController = UINavigationController(rootViewController: settingsVC)
-            navigationController.modalPresentationStyle = .fullScreen
-            present(navigationController, animated: true)
+            do
+            {
+                 try Auth.auth().signOut()
+               configureSignInVC()
+            }
+            catch let error as NSError
+            {
+                print (error.localizedDescription)
+            }
+//            let settingsVC = SettingsVC()
+//            let navigationController = UINavigationController(rootViewController: settingsVC)
+//            navigationController.modalPresentationStyle = .fullScreen
+//            present(navigationController, animated: true)
         }
     }
     

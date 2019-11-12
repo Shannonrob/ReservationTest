@@ -16,12 +16,34 @@ class MenuVC: UIViewController {
     var delegate: HomeVcDelegate?
     private let reuseIdentifier = "MenuOptionCell"
     
+    let menuIconImage: UIImageView = {
+        let icon = UIImageView()
+        icon.contentMode = .scaleAspectFit
+        icon.image = UIImage(named: "explore")
+        icon.image?.withTintColor(UIColor(red: 242/255, green: 125/255, blue: 15/255, alpha: 1))
+        icon.clipsToBounds = true
+        return icon
+    }()
+    
+    let menuLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(red: 242/255, green: 125/255, blue: 15/255, alpha: 1)
+        label.font = UIFont.init(name: "AvenirNext-DemiBold", size: 25)
+        label.text = "Jamwest Adventure Park"
+        return label
+    }()
+    
 //    MARK: - Init
     
     override func viewDidLoad() {
         super.viewDidLoad()
+ 
+        view.backgroundColor = UIColor.init(displayP3Red: 17/255, green: 16/255, blue: 38/255, alpha: 95)
         
-//        view.backgroundColor = UIColor.init(displayP3Red: 17/255, green: 16/255, blue: 38/255, alpha: 95)
+        view.addSubview(menuIconImage)
+        menuIconImage.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 30, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        view.addSubview(menuLabel)
+        menuLabel.anchor(top: menuIconImage.bottomAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         configureTableView()
     }
     
@@ -39,10 +61,7 @@ class MenuVC: UIViewController {
         
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-       tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        tableView.anchor(top: menuLabel.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
 }

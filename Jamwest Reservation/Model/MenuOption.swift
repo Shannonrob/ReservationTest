@@ -19,8 +19,8 @@ enum MenuOption: Int, CustomStringConvertible {
         switch self {
         case .Submit: return "SUBMIT EMAILS"
         case.Waivers: return "WAIVERS"
-        case.Reservations: return "RESERVATIONS"
-        case.Settings: return "SETTINGS"
+        case.Reservations: return "ADD RESERVATIONS"
+        case.Settings: return "SIGN OUT"
             
         }
     }

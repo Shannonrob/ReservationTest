@@ -10,16 +10,14 @@ import UIKit
 import Firebase
 
 class LoginVC: UIViewController {
-
+    
+    var window: UIWindow?
     
    let emailTextField: UITextField = {
       
        let textfield = UITextField()
-       textfield.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray])
-       textfield.backgroundColor = UIColor.white
+       textfield.design(placeHolder: "Email", backgroundColor: .white, font: 18, textColor: .black)
        textfield.borderStyle = .roundedRect
-       textfield.font = UIFont.systemFont(ofSize: 18)
-       textfield.textColor = .black
        textfield.addTarget(self, action: #selector(formValidation), for: .editingChanged)
        return textfield
    }()
@@ -92,7 +90,8 @@ class LoginVC: UIViewController {
             }
             
 //            handle success
-            print("Successfully signed user in")
+             
+            
             self.clearTextFields()
         } 
     }

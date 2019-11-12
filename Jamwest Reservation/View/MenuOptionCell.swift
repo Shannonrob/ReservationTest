@@ -22,7 +22,7 @@ class MenuOptionCell: UITableViewCell {
     let menuLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 18)
         label.text = "Sample text"
         return label
     }()
@@ -39,8 +39,8 @@ class MenuOptionCell: UITableViewCell {
         iconImage.translatesAutoresizingMaskIntoConstraints = false
         iconImage.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         iconImage.leftAnchor.constraint(equalTo: leftAnchor, constant: 12).isActive = true
-        iconImage.heightAnchor.constraint(equalToConstant: 24).isActive = true
-        iconImage.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        iconImage.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        iconImage.widthAnchor.constraint(equalToConstant: 45).isActive = true
                 
         addSubview(menuLabel)
         menuLabel.translatesAutoresizingMaskIntoConstraints = false
