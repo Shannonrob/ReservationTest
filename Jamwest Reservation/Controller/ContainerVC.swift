@@ -23,7 +23,7 @@ class ContainerVC: UIViewController {
         super.viewDidLoad()
         
         if Auth.auth().currentUser == nil {
-            configureSignInVC()
+            presentSignInVC()
         } else {
             configureHomeVC()
         }
@@ -55,7 +55,7 @@ class ContainerVC: UIViewController {
 
     }
 //    Switch rootViewController
-    func configureSignInVC() {
+    func presentSignInVC() {
         let loginVC = LoginVC()
         centerController = UINavigationController(rootViewController: loginVC)
 
@@ -100,23 +100,24 @@ class ContainerVC: UIViewController {
         case .Submit:
             print("Submit email")
         case .Waivers:
-            print("View waivers")
+            let waiverVC = WaiverVC()
+            let navigationController = UINavigationController(rootViewController: waiverVC)
+            navigationController.modalPresentationStyle = .fullScreen
+            present(navigationController, animated: true)
         case .Reservations:
-            present(AddReservationVC(), animated: true, completion: nil)
+            let addReservationVC = AddReservationVC()
+            present(UINavigationController(rootViewController: addReservationVC), animated: true, completion: nil)
         case .Settings:
             do
             {
                  try Auth.auth().signOut()
-               configureSignInVC()
+               presentSignInVC()
             }
             catch let error as NSError
             {
                 print (error.localizedDescription)
             }
-//            let settingsVC = SettingsVC()
-//            let navigationController = UINavigationController(rootViewController: settingsVC)
-//            navigationController.modalPresentationStyle = .fullScreen
-//            present(navigationController, animated: true)
+
         }
     }
     

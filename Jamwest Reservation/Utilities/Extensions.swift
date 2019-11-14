@@ -43,7 +43,7 @@ extension UIView {
 
 extension UITextField{
     
-    func design(placeHolder: String?, backgroundColor: UIColor?, font: CGFloat?, textColor: UIColor?) {
+    func design(placeHolder: String?, backgroundColor: UIColor?, fontSize: CGFloat?, textColor: UIColor?, borderStyle: BorderStyle?) {
         
         if let backgroundColor = backgroundColor {
             self.backgroundColor = backgroundColor
@@ -53,12 +53,17 @@ extension UITextField{
             self.textColor = textColor
         }
         
-        if let font = font {
+        if let font = fontSize {
             self.font = UIFont.systemFont(ofSize: font)
         }
         
         if placeHolder != nil {
-            self.attributedPlaceholder = NSAttributedString(string: placeHolder!, attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray])
+            self.attributedPlaceholder = NSAttributedString(string: placeHolder!, attributes: [NSAttributedString.Key.foregroundColor : UIColor.darkGray])
+        }
+        
+        
+        if let borderStyle = borderStyle {
+            self.borderStyle = borderStyle
         }
     }
 }

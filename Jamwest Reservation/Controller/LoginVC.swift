@@ -16,8 +16,7 @@ class LoginVC: UIViewController {
    let emailTextField: UITextField = {
       
        let textfield = UITextField()
-       textfield.design(placeHolder: "Email", backgroundColor: .white, font: 18, textColor: .black)
-       textfield.borderStyle = .roundedRect
+       textfield.design(placeHolder: "Email", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect)
        textfield.addTarget(self, action: #selector(formValidation), for: .editingChanged)
        return textfield
    }()
@@ -25,12 +24,8 @@ class LoginVC: UIViewController {
     let passwordTextField: UITextField = {
        
         let textfield = UITextField()
-        textfield.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray])
+        textfield.design(placeHolder: "Password", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect)
         textfield.isSecureTextEntry = true
-        textfield.backgroundColor = UIColor.white
-        textfield.borderStyle = .roundedRect
-        textfield.font = UIFont.systemFont(ofSize: 18)
-        textfield.textColor = .black
         textfield.addTarget(self, action: #selector(formValidation), for: .editingChanged)
         return textfield
     }()
@@ -45,6 +40,16 @@ class LoginVC: UIViewController {
         button.isEnabled = false
         button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
         return button
+    }()
+    
+    let incorrectPasswordLabel: UILabel = {
+        
+        let label = UILabel()
+        label.text = "Incorrect email or password"
+        label.textColor = UIColor(red: 242/255, green: 125/255, blue: 15/255, alpha: 1)
+        label.isHidden = true
+        label.font = UIFont(name: "AvenirNext-DemiBold", size: 22)
+        return label
     }()
     
     let dontHaveAccountButton: UIButton = {
@@ -86,6 +91,7 @@ class LoginVC: UIViewController {
 //            handle error
             if let error = error {
                 print("Unable to sign user in with error", error.localizedDescription)
+                self.incorrectPasswordLabel.isHidden = false
                 return
             }
             
@@ -101,6 +107,7 @@ class LoginVC: UIViewController {
            emailTextField.hasText,
            passwordTextField.hasText else {
            loginButton.isEnabled = false
+           incorrectPasswordLabel.isHidden = true
            loginButton.backgroundColor = UIColor(red: 374/255, green: 175/255, blue: 22/255, alpha: 1)
            return
            }
@@ -125,5 +132,10 @@ class LoginVC: UIViewController {
         view.addSubview(stackView)
         stackView.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 180, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 600, height: 180)
         stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        view.addSubview(incorrectPasswordLabel)
+        incorrectPasswordLabel.anchor(top: stackView.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 15, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        incorrectPasswordLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
+    
 }

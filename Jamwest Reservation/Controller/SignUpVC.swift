@@ -14,11 +14,7 @@ class SignUpVC: UIViewController {
     let emailTextField: UITextField = {
          
           let textfield = UITextField()
-          textfield.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray])
-          textfield.backgroundColor = UIColor.white
-          textfield.borderStyle = .roundedRect
-          textfield.font = UIFont.systemFont(ofSize: 18)
-          textfield.textColor = .black
+          textfield.design(placeHolder: "Email", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect)
           textfield.addTarget(self, action: #selector(formValidation), for: .editingChanged)
           return textfield
       }()
@@ -26,11 +22,7 @@ class SignUpVC: UIViewController {
     let userNameTextfield: UITextField = {
          
           let textfield = UITextField()
-          textfield.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray])
-          textfield.backgroundColor = UIColor.white
-          textfield.borderStyle = .roundedRect
-          textfield.font = UIFont.systemFont(ofSize: 18)
-          textfield.textColor = .black
+          textfield.design(placeHolder: "Username", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect)
           textfield.addTarget(self, action: #selector(formValidation), for: .editingChanged)
           return textfield
       }()
@@ -38,15 +30,20 @@ class SignUpVC: UIViewController {
     let passwordTextfield: UITextField = {
          
           let textfield = UITextField()
-          textfield.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray])
+          textfield.design(placeHolder: "Password", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect)
           textfield.isSecureTextEntry = true
-          textfield.backgroundColor = UIColor.white
-          textfield.borderStyle = .roundedRect
-          textfield.font = UIFont.systemFont(ofSize: 18)
-          textfield.textColor = .black
           textfield.addTarget(self, action: #selector(formValidation), for: .editingChanged)
           return textfield
       }()
+    
+    let confirmPasswordTextfield: UITextField = {
+        
+        let textfield = UITextField()
+        textfield.design(placeHolder: "Confirm Password", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect)
+        textfield.isSecureTextEntry = true
+        textfield.addTarget(self, action: #selector(formValidation), for: .editingChanged)
+        return textfield
+    }()
     
     let signUpButton: UIButton = {
         let button = UIButton(type: .system)
@@ -58,6 +55,16 @@ class SignUpVC: UIViewController {
         button.isEnabled = false
         button.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
         return button
+    }()
+    
+    let incorrectPasswordLabel: UILabel = {
+        
+        let label = UILabel()
+        label.text = "Password doesn't match"
+        label.textColor = UIColor(red: 242/255, green: 125/255, blue: 15/255, alpha: 1)
+        label.isHidden = true
+        label.font = UIFont(name: "AvenirNext-DemiBold", size: 22)
+        return label
     }()
     
     let alreadyHaveAccount: UIButton = {
@@ -121,13 +128,26 @@ class SignUpVC: UIViewController {
         guard
             emailTextField.hasText,
             userNameTextfield.hasText,
-            passwordTextfield.hasText else {
+            passwordTextfield.hasText,
+            confirmPasswordTextfield.hasText && confirmPasswordTextfield.text == passwordTextfield.text else {
+                
+                passwordCheck()
                 signUpButton.isEnabled = false
                 signUpButton.backgroundColor = UIColor(red: 374/255, green: 175/255, blue: 22/255, alpha: 1)
                 return
         }
+        passwordCheck()
         signUpButton.isEnabled = true
         signUpButton.backgroundColor = UIColor(red: 242/255, green: 125/255, blue: 15/255, alpha: 1)
+    }
+    
+    func passwordCheck() {
+        
+        if confirmPasswordTextfield.text != passwordTextfield.text {
+            incorrectPasswordLabel.isHidden = false
+        } else {
+            incorrectPasswordLabel.isHidden = true
+        }
     }
     
     func clearTextFields() {
@@ -139,14 +159,18 @@ class SignUpVC: UIViewController {
     }
 
     func configureViewComponents() {
-        let stackView = UIStackView(arrangedSubviews: [emailTextField,userNameTextfield,passwordTextfield,signUpButton])
+        let stackView = UIStackView(arrangedSubviews: [emailTextField,userNameTextfield,passwordTextfield,confirmPasswordTextfield,signUpButton])
         stackView.axis = .vertical
         stackView.spacing = 15
         stackView.distribution = .fillEqually
         
         view.addSubview(stackView)
-        stackView.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 180, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 600, height: 240)
+        stackView.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 60, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 600, height: 320)
         stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+       
+        view.addSubview(incorrectPasswordLabel)
+        incorrectPasswordLabel.anchor(top: stackView.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 6, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        incorrectPasswordLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
    
 

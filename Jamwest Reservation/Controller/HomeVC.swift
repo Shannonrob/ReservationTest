@@ -19,7 +19,7 @@
      override func viewDidLoad() {
          super.viewDidLoad()
         
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1)
         configureNavigationBar()
      }
      

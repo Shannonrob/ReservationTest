@@ -16,34 +16,13 @@ class MenuVC: UIViewController {
     var delegate: HomeVcDelegate?
     private let reuseIdentifier = "MenuOptionCell"
     
-    let menuIconImage: UIImageView = {
-        let icon = UIImageView()
-        icon.contentMode = .scaleAspectFit
-        icon.image = UIImage(named: "explore")
-        icon.image?.withTintColor(UIColor(red: 242/255, green: 125/255, blue: 15/255, alpha: 1))
-        icon.clipsToBounds = true
-        return icon
-    }()
-    
-    let menuLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor(red: 242/255, green: 125/255, blue: 15/255, alpha: 1)
-        label.font = UIFont.init(name: "AvenirNext-DemiBold", size: 25)
-        label.text = "Jamwest Adventure Park"
-        return label
-    }()
     
 //    MARK: - Init
     
     override func viewDidLoad() {
         super.viewDidLoad()
- 
-        view.backgroundColor = UIColor.init(displayP3Red: 17/255, green: 16/255, blue: 38/255, alpha: 95)
         
-        view.addSubview(menuIconImage)
-        menuIconImage.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 30, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        view.addSubview(menuLabel)
-        menuLabel.anchor(top: menuIconImage.bottomAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        view.backgroundColor = UIColor.init(displayP3Red: 17/255, green: 16/255, blue: 38/255, alpha: 95)
         configureTableView()
     }
     
@@ -61,12 +40,41 @@ class MenuVC: UIViewController {
         
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.anchor(top: menuLabel.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        tableView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
 }
 
 extension MenuVC: UITableViewDelegate,UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let headerView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 350, height: 160))
+//        headerView.backgroundColor = .black
+
+        
+//        let logoImage: UIImageView = {
+//
+//            icon.contentMode = .scaleAspectFit
+//            icon.clipsToBounds = true
+//            return icon
+//        }()
+        
+        let logo = UIImageView()
+        logo.contentMode = .scaleAspectFill
+        logo.clipsToBounds = true
+        logo.image = #imageLiteral(resourceName: "clearWhite")
+    
+        headerView.addSubview(logo)
+        logo.anchor(top: headerView.topAnchor, left: headerView.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 330, height: headerView.frame.height)
+
+        return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 160
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
     }
