@@ -16,7 +16,7 @@ class LoginVC: UIViewController {
    let emailTextField: UITextField = {
       
        let textfield = UITextField()
-       textfield.design(placeHolder: "Email", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect)
+    textfield.design(placeHolder: "Email", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 0, height: 0)
        textfield.addTarget(self, action: #selector(formValidation), for: .editingChanged)
        return textfield
    }()
@@ -24,7 +24,7 @@ class LoginVC: UIViewController {
     let passwordTextField: UITextField = {
        
         let textfield = UITextField()
-        textfield.design(placeHolder: "Password", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect)
+        textfield.design(placeHolder: "Password", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 0, height: 0)
         textfield.isSecureTextEntry = true
         textfield.addTarget(self, action: #selector(formValidation), for: .editingChanged)
         return textfield

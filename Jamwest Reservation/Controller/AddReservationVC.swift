@@ -12,40 +12,115 @@ class AddReservationVC: UIViewController {
 
 //    MARK: - Properties
     
+     let hotelNameLabel: UILabel = {
     
-    let hotelTextField: UITextField = {
+       let label = UILabel()
+       label.text = " Hotel"
+        label.textColor = .darkGray
+       label.font = UIFont(name: avenirNext_Demibold, size: 16)
+        return label
+    }()
+    
+    let tourRepNameLabel: UILabel = {
+       
+          let label = UILabel()
+          label.text = " Tour Representative"
+           label.textColor = .darkGray
+          label.font = UIFont(name: avenirNext_Demibold, size: 16)
+           return label
+       }()
+    
+    let tourCompanyNameLabel: UILabel = {
+       
+          let label = UILabel()
+          label.text = " Tour Company"
+           label.textColor = .darkGray
+          label.font = UIFont(name: avenirNext_Demibold, size: 16)
+           return label
+       }()
+    
+    let groupNameLabel: UILabel = {
+
+          let label = UILabel()
+          label.text = " Group Name"
+           label.textColor = .darkGray
+          label.font = UIFont(name: avenirNext_Demibold, size: 16)
+           return label
+       }()
+
+    let paxCountLabel: UILabel = {
+
+          let label = UILabel()
+          label.text = " Pax"
+           label.textColor = .darkGray
+          label.font = UIFont(name: avenirNext_Demibold, size: 16)
+           return label
+       }()
+
+    let voucherNumberLabel: UILabel = {
+
+          let label = UILabel()
+          label.text = " Voucher #"
+           label.textColor = .darkGray
+          label.font = UIFont(name: avenirNext_Demibold, size: 16)
+           return label
+       }()
+
+    let reservationDate: UILabel = {
+
+          let label = UILabel()
+          label.text = " Date"
+           label.textColor = .darkGray
+          label.font = UIFont(name: avenirNext_Demibold, size: 16)
+           return label
+       }()
+
+    let hotelNameTextField: UITextField = {
         let textfield = UITextField()
-        textfield.design(placeHolder: "Hotel Name", backgroundColor: .lightText, fontSize: 18, textColor: .black, borderStyle: .roundedRect)
+        textfield.design(placeHolder: "Hotel", backgroundColor: .lightText, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
+        textfield.setIcon(#imageLiteral(resourceName: "orangeHotel"))
         return textfield
     }()
     
     let tourRepTextfield: UITextField = {
         let textfield = UITextField()
-        textfield.design(placeHolder: "Tour Representitive", backgroundColor: .lightText, fontSize: 18, textColor: .black, borderStyle: .roundedRect)
+        textfield.design(placeHolder: "Tour Representative", backgroundColor: .lightText, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
+        textfield.setIcon(#imageLiteral(resourceName: "orangeConcierge"))
         return textfield
     }()
     
     let paxTextfield: UITextField = {
         let textfield = UITextField()
-        textfield.design(placeHolder: "Pax", backgroundColor: .lightText, fontSize: 18, textColor: .black, borderStyle: .roundedRect)
+        textfield.design(placeHolder: "Pax", backgroundColor: .lightText, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
+        textfield.setIcon(#imageLiteral(resourceName: "orangeGroup.2"))
         return textfield
     }()
     
     let groupNameTextfield: UITextField = {
         let textfield = UITextField()
-        textfield.design(placeHolder: "Group Name", backgroundColor: .lightText, fontSize: 18, textColor: .black, borderStyle: .roundedRect)
+        textfield.design(placeHolder: "Group Name", backgroundColor: .lightText, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
+        textfield.setIcon(#imageLiteral(resourceName: "orangeName"))
         return textfield
     }()
     
     let tourCompanyTextfield: UITextField = {
         let textfield = UITextField()
-        textfield.design(placeHolder: "Tour Company", backgroundColor: .lightText, fontSize: 18, textColor: .black, borderStyle: .roundedRect)
+        textfield.design(placeHolder: "Tour Company", backgroundColor: .lightText, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
+        textfield.setIcon(#imageLiteral(resourceName: "orangeBus"))
         return textfield
     }()
     
     let vourcherTextfield: UITextField = {
         let textfield = UITextField()
-        textfield.design(placeHolder: "Voucher #", backgroundColor: .lightText, fontSize: 18, textColor: .black, borderStyle: .roundedRect)
+        textfield.design(placeHolder: "Voucher", backgroundColor: .lightText, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
+        textfield.setIcon(#imageLiteral(resourceName: "orangeNumber"))
+        return textfield
+    }()
+    
+    let reservationDateTextfield: UITextField = {
+        let textfield = UITextField()
+        textfield.design(placeHolder: "Date", backgroundColor: .lightText, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
+        textfield.setIcon(#imageLiteral(resourceName: "orangeDate"))
         return textfield
     }()
     
@@ -53,9 +128,11 @@ class AddReservationVC: UIViewController {
 //    MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
-
+       
         configureUI()
         configureViewComponents()
+        
+        reservationDateTextfield.addTarget(self, action: #selector(dateTapped), for: .editingDidBegin)
     }
     
 //    MARK: - Selectors
@@ -65,6 +142,10 @@ class AddReservationVC: UIViewController {
     }
     
 //    MARK: - Helper Functions
+    
+    @objc func dateTapped () {
+        print("Select reservation date")
+    }
     
     func configureUI() {
 
@@ -78,25 +159,56 @@ class AddReservationVC: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "dismiss").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleDismiss))
         
     }
+
+}
+
+extension AddReservationVC {
     
-    func configureViewComponents() {
-           let leftStackView = UIStackView(arrangedSubviews: [hotelTextField,tourRepTextfield,tourCompanyTextfield])
-           leftStackView.axis = .vertical
-           leftStackView.spacing = 15
-           leftStackView.distribution = .fillEqually
+    
+    func configureViewComponents(){
         
-           let rightStackView = UIStackView(arrangedSubviews: [groupNameTextfield,paxTextfield,vourcherTextfield])
-           rightStackView.axis = .vertical
-           rightStackView.spacing = 15
-           rightStackView.distribution = .fillEqually
-           
-           view.addSubview(leftStackView)
-        leftStackView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 30, paddingBottom: 0, paddingRight: 0, width: 300, height: 200)
+        let hotelStackView = UIStackView(arrangedSubviews: [hotelNameLabel, hotelNameTextField])
+        hotelStackView.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
+        hotelStackView.axis = .vertical
+        
+        let tourRepStackView = UIStackView(arrangedSubviews: [tourRepNameLabel, tourRepTextfield])
+        tourRepStackView.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
+        tourRepStackView.axis = .vertical
+        
+        let tourCompanyStackView = UIStackView(arrangedSubviews: [tourCompanyNameLabel, tourCompanyTextfield])
+        tourCompanyStackView.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
+        tourCompanyStackView.axis = .vertical
+        
+        let groupNameStackView = UIStackView(arrangedSubviews: [groupNameLabel, groupNameTextfield])
+        groupNameStackView.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
+        groupNameStackView.axis = .vertical
+        
+        let paxStackView = UIStackView(arrangedSubviews: [paxCountLabel, paxTextfield])
+        paxStackView.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
+        paxStackView.axis = .vertical
+        
+        let voucherNumberStackView = UIStackView(arrangedSubviews: [voucherNumberLabel, vourcherTextfield])
+        voucherNumberStackView.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
+        voucherNumberStackView.axis = .vertical
+        
+        let dateStackView = UIStackView(arrangedSubviews: [reservationDate, reservationDateTextfield])
+        dateStackView.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
+        dateStackView.axis = .vertical
+        
+        let leftStackView = UIStackView(arrangedSubviews: [hotelStackView, tourRepStackView, tourCompanyStackView])
+        leftStackView.configureStackView(alignment: .leading, distribution: .fillEqually, spacing: 15)
+        leftStackView.axis = .vertical
+        
+        let rightStackView = UIStackView(arrangedSubviews: [groupNameStackView, paxStackView, voucherNumberStackView, dateStackView])
+        rightStackView.configureStackView(alignment: .leading, distribution: .fillEqually, spacing: 15)
+        rightStackView.axis = .vertical
+
+        view.addSubview(leftStackView)
+        leftStackView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 30, paddingBottom: 0, paddingRight: 0, width: 300, height: 248)
         
         view.addSubview(rightStackView)
-        rightStackView.anchor(top: view.topAnchor, left: nil, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 30, paddingBottom: 0, paddingRight: 30, width: 300, height: 200)
-          
-       }
+        rightStackView.anchor(top: view.topAnchor, left: nil, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 30, width: 300, height: 330)
+   
+    }
     
-
 }

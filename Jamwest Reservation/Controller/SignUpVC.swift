@@ -14,7 +14,7 @@ class SignUpVC: UIViewController {
     let emailTextField: UITextField = {
          
           let textfield = UITextField()
-          textfield.design(placeHolder: "Email", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect)
+        textfield.design(placeHolder: "Email", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 0, height: 0)
           textfield.addTarget(self, action: #selector(formValidation), for: .editingChanged)
           return textfield
       }()
@@ -22,7 +22,7 @@ class SignUpVC: UIViewController {
     let userNameTextfield: UITextField = {
          
           let textfield = UITextField()
-          textfield.design(placeHolder: "Username", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect)
+          textfield.design(placeHolder: "Username", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 0, height: 0)
           textfield.addTarget(self, action: #selector(formValidation), for: .editingChanged)
           return textfield
       }()
@@ -30,7 +30,7 @@ class SignUpVC: UIViewController {
     let passwordTextfield: UITextField = {
          
           let textfield = UITextField()
-          textfield.design(placeHolder: "Password", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect)
+          textfield.design(placeHolder: "Password", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 0, height: 0)
           textfield.isSecureTextEntry = true
           textfield.addTarget(self, action: #selector(formValidation), for: .editingChanged)
           return textfield
@@ -39,7 +39,7 @@ class SignUpVC: UIViewController {
     let confirmPasswordTextfield: UITextField = {
         
         let textfield = UITextField()
-        textfield.design(placeHolder: "Confirm Password", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect)
+        textfield.design(placeHolder: "Confirm Password", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 0, height: 0)
         textfield.isSecureTextEntry = true
         textfield.addTarget(self, action: #selector(formValidation), for: .editingChanged)
         return textfield

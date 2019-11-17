@@ -41,9 +41,10 @@ extension UIView {
     
 }
 
-extension UITextField{
+
+extension UITextField {
     
-    func design(placeHolder: String?, backgroundColor: UIColor?, fontSize: CGFloat?, textColor: UIColor?, borderStyle: BorderStyle?) {
+    func design(placeHolder: String?, backgroundColor: UIColor?, fontSize: CGFloat?, textColor: UIColor?, borderStyle: BorderStyle?, width: CGFloat, height: CGFloat) {
         
         if let backgroundColor = backgroundColor {
             self.backgroundColor = backgroundColor
@@ -58,12 +59,53 @@ extension UITextField{
         }
         
         if placeHolder != nil {
-            self.attributedPlaceholder = NSAttributedString(string: placeHolder!, attributes: [NSAttributedString.Key.foregroundColor : UIColor.darkGray])
+            self.attributedPlaceholder = NSAttributedString(string: placeHolder!, attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightGray])
         }
         
         
         if let borderStyle = borderStyle {
             self.borderStyle = borderStyle
+        }
+        
+        if width != 0 {
+               widthAnchor.constraint(equalToConstant: width).isActive = true
+           }
+               
+           if height != 0 {
+               heightAnchor.constraint(equalToConstant: height).isActive = true
+           }
+        
+    }
+    
+    func setIcon(_ image: UIImage) {
+        
+        let iconView = UIImageView(frame: CGRect(x: -10, y: 0, width: 50, height: 50))
+        iconView.image = image
+        
+        let iconContainerView: UIView = UIView(frame: CGRect(x: 30, y: 0, width: 50, height: 50))
+        iconContainerView.addSubview(iconView)
+        
+        rightView = iconContainerView
+        rightViewMode = .unlessEditing
+        
+    }
+}
+
+
+
+extension UIStackView {
+    
+    func configureStackView (alignment: Alignment?, distribution: Distribution?, spacing: CGFloat?) {
+        
+        if let alignment = alignment {
+            self.alignment = alignment
+        }
+        if let distribution = distribution {
+            self.distribution = distribution
+        }
+        
+        if let spacing = spacing {
+            self.spacing = spacing
         }
     }
 }

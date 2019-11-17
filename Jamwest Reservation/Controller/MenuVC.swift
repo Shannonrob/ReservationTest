@@ -47,37 +47,32 @@ class MenuVC: UIViewController {
 
 extension MenuVC: UITableViewDelegate,UITableViewDataSource {
     
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
-        let headerView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 350, height: 160))
-//        headerView.backgroundColor = .black
 
-        
-//        let logoImage: UIImageView = {
-//
-//            icon.contentMode = .scaleAspectFit
-//            icon.clipsToBounds = true
-//            return icon
-//        }()
-        
+        let headerView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 160))
+        headerView.backgroundColor = UIColor.init(displayP3Red: 17/255, green: 16/255, blue: 38/255, alpha: 95)
+
         let logo = UIImageView()
         logo.contentMode = .scaleAspectFill
         logo.clipsToBounds = true
-        logo.image = #imageLiteral(resourceName: "clearWhite")
-    
+        logo.image = UIImage(imageLiteralResourceName: "clearWhite").withRenderingMode(.alwaysOriginal)
+
         headerView.addSubview(logo)
         logo.anchor(top: headerView.topAnchor, left: headerView.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 330, height: headerView.frame.height)
 
         return headerView
     }
-    
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 160
     }
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
     }
+
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! MenuOptionCell
