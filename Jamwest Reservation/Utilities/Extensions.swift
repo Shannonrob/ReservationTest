@@ -91,6 +91,43 @@ extension UITextField {
     }
 }
 
+extension UIButton {
+    
+    func setButtonIcon (_ image: String?, title: String?, titleColor: UIColor?, buttonColor: UIColor?, cornerRadius: CGFloat?) {
+        
+        if let image = image {
+            setImage(#imageLiteral(resourceName: image).withRenderingMode(.alwaysOriginal), for: .normal)
+            imageView?.contentMode = .scaleAspectFit
+        }
+        
+        if let title = title {
+            setTitle(title, for: .normal)
+        }
+        
+        if let titleColor = titleColor {
+            setTitleColor(titleColor, for: .normal)
+        }
+        
+        if let buttonColor = buttonColor {
+            self.backgroundColor = buttonColor
+        }
+        
+        if let cornerRadius = cornerRadius {
+            self.layer.cornerRadius = cornerRadius
+        }
+        semanticContentAttribute = .forceRightToLeft
+    }
+    
+ 
+    func updateButtonIcon (_ image: String?) {
+        if let image = image {
+            setImage(#imageLiteral(resourceName: image).withRenderingMode(.alwaysOriginal), for: .normal)
+            imageView?.contentMode = .scaleAspectFit
+        }
+    }
+}
+
+
 
 
 extension UIStackView {
