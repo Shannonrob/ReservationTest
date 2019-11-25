@@ -16,6 +16,7 @@ class SignUpVC: UIViewController {
           let textfield = UITextField()
         textfield.design(placeHolder: "Email", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 0, height: 0)
           textfield.addTarget(self, action: #selector(formValidation), for: .editingChanged)
+        textfield.keyboardType = .emailAddress
           return textfield
       }()
     

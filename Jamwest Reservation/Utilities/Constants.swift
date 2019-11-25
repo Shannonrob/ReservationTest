@@ -7,5 +7,33 @@
 //
 
 import Foundation
+import UIKit
 
 let avenirNext_Demibold = "AvenirNext-DemiBold"
+
+struct Constants {
+    
+    struct Design {
+        
+        struct Color {
+            
+            struct Primary {
+                static let Orange = UIColor(red: 242/255, green: 125/255, blue: 15/255, alpha: 1)
+                static let Purple = UIColor(displayP3Red: 17/255, green: 16/255, blue: 38/255, alpha: 95)
+            }
+            
+            struct Border {
+                static let Orange = CGColor.init(srgbRed: 242/255, green: 125/255, blue: 15/255, alpha: 1)
+                static let Purple = CGColor.init(srgbRed: 17/255, green: 16/255, blue: 38/255, alpha: 95)
+            }
+            
+            struct Background {
+                static let FadeGray = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1)
+            }
+            
+            struct Hue {
+                static let Green = UIColor(hue: 0.50, saturation: 0.66, brightness: 0.66, alpha: 1)
+            }
+        }
+    }
+}

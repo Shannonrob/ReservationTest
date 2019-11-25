@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddReservationVC: UIViewController {
+class AddReservationVC: UIViewController, UITextFieldDelegate {
 
 //    MARK: - Properties
     var comboDealStatus = true
@@ -17,6 +17,7 @@ class AddReservationVC: UIViewController {
     var horseBackSelected = false
     var safariSelected = false
     var zipLineSelected = false
+    var pushKartSelected = false
     
     
     
@@ -84,54 +85,80 @@ class AddReservationVC: UIViewController {
         label.font = UIFont(name: avenirNext_Demibold, size: 16)
         return label
        }()
+    
+    let selectPackageLabel: UILabel = {
+
+       let label = UILabel()
+       label.text = " Select group package :"
+     
+        label.textColor = Constants.Design.Color.Primary.Purple
+       label.font = UIFont(name: avenirNext_Demibold, size: 18)
+       return label
+      }()
 
 //    MARK: - Textfields
     let hotelNameTextField: UITextField = {
         let textfield = UITextField()
-        textfield.design(placeHolder: "Hotel", backgroundColor: .lightText, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
-        textfield.setIcon(#imageLiteral(resourceName: "orangeHotel"))
+        textfield.design(placeHolder: "Hotel", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
+        textfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeHotel"))
+        textfield.layer.borderWidth = 0.85
+        textfield.layer.borderColor = Constants.Design.Color.Border.Orange
         return textfield
     }()
     
     let tourRepTextfield: UITextField = {
         let textfield = UITextField()
-        textfield.design(placeHolder: "Representative", backgroundColor: .lightText, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
-        textfield.setIcon(#imageLiteral(resourceName: "orangeConcierge"))
+        textfield.design(placeHolder: "Representative", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
+        textfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeConcierge"))
+        textfield.layer.borderWidth = 0.85
+        textfield.layer.borderColor = Constants.Design.Color.Border.Orange
         return textfield
     }()
     
     let paxTextfield: UITextField = {
         let textfield = UITextField()
-        textfield.design(placeHolder: "Pax", backgroundColor: .lightText, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
-        textfield.setIcon(#imageLiteral(resourceName: "orangeGroup.2"))
+        textfield.design(placeHolder: "Pax", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
+        textfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeGroup.2"))
+        textfield.layer.borderWidth = 0.85
+        textfield.layer.borderColor = Constants.Design.Color.Border.Orange
+        textfield.keyboardType = .numberPad
         return textfield
     }()
     
     let groupNameTextfield: UITextField = {
         let textfield = UITextField()
-        textfield.design(placeHolder: "Name", backgroundColor: .lightText, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
-        textfield.setIcon(#imageLiteral(resourceName: "orangeName"))
+        textfield.design(placeHolder: "Name", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
+        textfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeName"))
+        textfield.layer.borderWidth = 0.85
+        textfield.layer.borderColor = Constants.Design.Color.Border.Orange
         return textfield
     }()
     
     let tourCompanyTextfield: UITextField = {
         let textfield = UITextField()
-        textfield.design(placeHolder: "Tour Company", backgroundColor: .lightText, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
-        textfield.setIcon(#imageLiteral(resourceName: "orangeBus"))
+        textfield.design(placeHolder: "Tour Company", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
+        textfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeBus"))
+        textfield.layer.borderWidth = 0.85
+        textfield.layer.borderColor = Constants.Design.Color.Border.Orange
         return textfield
     }()
     
     let vourcherTextfield: UITextField = {
         let textfield = UITextField()
-        textfield.design(placeHolder: "Voucher", backgroundColor: .lightText, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
-        textfield.setIcon(#imageLiteral(resourceName: "orangeNumber"))
+        textfield.design(placeHolder: "Voucher", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
+        textfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeNumber"))
+        textfield.layer.borderWidth = 0.85
+        textfield.layer.borderColor = Constants.Design.Color.Border.Orange
+        textfield.keyboardType = .numberPad
         return textfield
     }()
     
     let reservationDateTextfield: UITextField = {
         let textfield = UITextField()
-        textfield.design(placeHolder: "Select Date", backgroundColor: .lightText, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
-        textfield.setIcon(#imageLiteral(resourceName: "orangeDate"))
+        textfield.design(placeHolder: "Select Date", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
+        textfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeDate"))
+        textfield.layer.borderWidth = 0.85
+        textfield.layer.borderColor = Constants.Design.Color.Border.Orange
         return textfield
     }()
     
@@ -139,7 +166,7 @@ class AddReservationVC: UIViewController {
     
     let comboDealButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setButtonIcon("orangeFillCircle", title: "Combo", titleColor: .black, buttonColor: .white, cornerRadius: 8)
+        button.setButtonIcon("whiteCheckMark", title: "Combo Deal", titleColor: .white, buttonColor: Constants.Design.Color.Hue.Green, cornerRadius: 8)
         button.titleLabel?.font = .boldSystemFont(ofSize: 18)
         button.addTarget(self, action: #selector(selectedTourPackage), for: .touchUpInside)
         button.isEnabled = false
@@ -148,7 +175,7 @@ class AddReservationVC: UIViewController {
     
     let superDealButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setButtonIcon("orangeEmptyCircle", title: "Super Deal", titleColor: .black, buttonColor: .white, cornerRadius: 8)
+        button.setButtonIcon("hiddenCheckMark", title: "Super Deal", titleColor: .white, buttonColor: Constants.Design.Color.Hue.Green, cornerRadius: 8)
         button.titleLabel?.font = .boldSystemFont(ofSize: 18)
         button.addTarget(self, action: #selector(selectedTourPackage), for: .touchUpInside)
         button.isSelected = false
@@ -186,6 +213,25 @@ class AddReservationVC: UIViewController {
         button.addTarget(self, action: #selector(zipLineTourSelected), for: .touchUpInside)
         return button
     }()
+    
+    let pushKartTourButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setButtonIcon("orangeEmptyCircle", title: "Push Kart", titleColor: .black, buttonColor: .white, cornerRadius: 8)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 18)
+        button.addTarget(self, action: #selector(zipLineTourSelected), for: .touchUpInside)
+        return button
+    }()
+    
+    let selectToursButton: UIButton = {
+        
+        let button = UIButton(type: .system)
+        button.setButtonIcon("purpleList", title: "Select reserved tours ", titleColor: Constants.Design.Color.Primary.Purple, buttonColor: nil, cornerRadius: nil)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 18)
+        button.addTarget(self, action: #selector(handleTourSelection), for: .touchUpInside)
+        
+        return button
+    }()
+    
 
 //    MARK: - Init
     override func viewDidLoad() {
@@ -193,9 +239,14 @@ class AddReservationVC: UIViewController {
        
         configureUI()
         configureStackViewComponents()
-
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
+        view.addGestureRecognizer(tap)
+        
         reservationDateTextfield.addTarget(self, action: #selector(dateTapped), for: .editingDidBegin)
+        textFieldDelegateStatus()
     }
+    
+    
     
 //    MARK: - Selectors
     
@@ -203,10 +254,43 @@ class AddReservationVC: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-//    MARK: - Helper Functions
-
+    @objc func presentNextVC() {
+        print("Next button pressed")
+    }
+    
     @objc func dateTapped () {
-        print("Select reservation date")
+           print("Select reservation date")
+    }
+    
+//    MARK: - Helper Functions
+    
+    func textFieldDelegateStatus() {
+        
+        hotelNameTextField.delegate = self
+        groupNameTextfield.delegate = self
+        paxTextfield.delegate = self
+        tourRepTextfield.delegate = self
+        vourcherTextfield.delegate = self
+        tourCompanyTextfield.delegate = self
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+       
+        switch textField {
+        case hotelNameTextField:
+            groupNameTextfield.becomeFirstResponder()
+        case groupNameTextfield:
+            paxTextfield.becomeFirstResponder()
+        case paxTextfield:
+            tourRepTextfield.becomeFirstResponder()
+        case tourRepTextfield:
+            vourcherTextfield.becomeFirstResponder()
+        case vourcherTextfield:
+            tourCompanyTextfield.becomeFirstResponder()
+        default:
+            textField.resignFirstResponder()
+        }
+        return false
     }
     
     @objc func selectedTourPackage() {
@@ -215,13 +299,13 @@ class AddReservationVC: UIViewController {
         superDealStatus = !superDealStatus
 
         if comboDealStatus == true && superDealStatus == false {
-            comboDealButton.updateButtonIcon("orangeFillCircle")
-            superDealButton.updateButtonIcon("orangeEmptyCircle")
+            comboDealButton.updateButtonIcon("whiteCheckMark")
+            superDealButton.updateButtonIcon("hiddenCheckMark")
             comboDealButton.isEnabled = false
             superDealButton.isEnabled = true
         } else {
-            superDealButton.updateButtonIcon("orangeFillCircle")
-            comboDealButton.updateButtonIcon("orangeEmptyCircle")
+            superDealButton.updateButtonIcon("whiteCheckMark")
+            comboDealButton.updateButtonIcon("hiddenCheckMark")
             superDealButton.isEnabled = false
             comboDealButton.isEnabled = true
         }
@@ -263,16 +347,30 @@ class AddReservationVC: UIViewController {
         }
     }
     
+    @objc func pushKartTourSelected() {
+        pushKartSelected = !pushKartSelected
+        if pushKartSelected == true {
+            pushKartTourButton.updateButtonIcon("orangeFillCircle")
+        } else {
+            pushKartTourButton.updateButtonIcon("orangeEmptyCircle")
+        }
+    }
+    
+    @objc func handleTourSelection() {
+        print("Selecting tours")
+    }
+    
     func configureUI() {
-        
-        view.backgroundColor = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1)
+//        view.backgroundColor = .white
+        view.backgroundColor = Constants.Design.Color.Background.FadeGray
         navigationController?.navigationBar.isHidden = false
         navigationItem.title = "Add Reservation"
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barStyle = .black
         navigationController?.navigationBar.barTintColor = UIColor.init(displayP3Red: 17/255, green: 16/255, blue: 38/255, alpha: 95)
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "dismiss").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleDismiss))
-        
+        navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Next", style: .plain, target: self, action: #selector(presentNextVC))
+        navigationItem.rightBarButtonItem?.tintColor = .white
     }
 
 }
@@ -310,31 +408,31 @@ extension AddReservationVC {
         dateStackView.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
         dateStackView.axis = .vertical
         
-        let leftStackView = UIStackView(arrangedSubviews: [hotelStackView, tourRepStackView, tourCompanyStackView])
-        leftStackView.configureStackView(alignment: .leading, distribution: .fillEqually, spacing: 15)
+        let leftStackView = UIStackView(arrangedSubviews: [hotelStackView, groupNameStackView, tourRepStackView, tourCompanyStackView])
+        leftStackView.configureStackView(alignment: .leading, distribution: .fillEqually, spacing: 25)
         leftStackView.axis = .vertical
         
-        let rightStackView = UIStackView(arrangedSubviews: [groupNameStackView, paxStackView, voucherNumberStackView, dateStackView])
-        rightStackView.configureStackView(alignment: .leading, distribution: .fillEqually, spacing: 15)
+        let rightStackView = UIStackView(arrangedSubviews: [dateStackView, paxStackView, voucherNumberStackView])
+        rightStackView.configureStackView(alignment: .leading, distribution: .fillEqually, spacing: 25)
         rightStackView.axis = .vertical
 
         view.addSubview(leftStackView)
-        leftStackView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 30, paddingBottom: 0, paddingRight: 0, width: 300, height: 248)
+        leftStackView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 40, paddingLeft: 30, paddingBottom: 0, paddingRight: 0, width: 300, height: 372)
         
         view.addSubview(rightStackView)
-        rightStackView.anchor(top: view.topAnchor, left: nil, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 30, width: 300, height: 330)
+        rightStackView.anchor(top: view.topAnchor, left: nil, bottom: nil, right: view.rightAnchor, paddingTop: 38, paddingLeft: 0, paddingBottom: 0, paddingRight: 30, width: 300, height: 276)
    
 //        MARK: - Buttons StackViews
-        let bottomLeftStackview = UIStackView(arrangedSubviews: [comboDealButton, superDealButton])
-        bottomLeftStackview.configureStackView(alignment: nil, distribution: .fillEqually, spacing: 8)
         
-        let bottomRightStackview = UIStackView(arrangedSubviews: [atvTourButton, horseBackRidingTourButton, safariTourButton, zipLineTourButton])
-        bottomRightStackview.configureStackView(alignment: nil, distribution: .fillEqually, spacing: 8)
+        let dealButtonsStackView = UIStackView(arrangedSubviews: [comboDealButton, superDealButton])
+        dealButtonsStackView.configureStackView(alignment: nil, distribution: .fillEqually, spacing: 8)
         
-        view.addSubview(bottomLeftStackview)
-        bottomLeftStackview.anchor(top: leftStackView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 30, paddingLeft: 30, paddingBottom: 0, paddingRight: 0, width: 300, height: 50)
+        let selectPackageStackView = UIStackView(arrangedSubviews: [selectPackageLabel, dealButtonsStackView])
+        selectPackageStackView.configureStackView(alignment: nil, distribution: .fillEqually, spacing: 0)
+        selectPackageStackView.axis = .vertical
         
-        view.addSubview(bottomRightStackview)
-        bottomRightStackview.anchor(top: rightStackView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 30, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: 50)
+        view.addSubview(selectPackageStackView)
+        selectPackageStackView.anchor(top: leftStackView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 30, paddingBottom: 0, paddingRight: 0, width: 340, height: 100)
     }
 }
+

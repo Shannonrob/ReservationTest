@@ -46,6 +46,8 @@ extension UITextField {
     
     func design(placeHolder: String?, backgroundColor: UIColor?, fontSize: CGFloat?, textColor: UIColor?, borderStyle: BorderStyle?, width: CGFloat, height: CGFloat) {
         
+        
+        
         if let backgroundColor = backgroundColor {
             self.backgroundColor = backgroundColor
         }
@@ -62,7 +64,6 @@ extension UITextField {
             self.attributedPlaceholder = NSAttributedString(string: placeHolder!, attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightGray])
         }
         
-        
         if let borderStyle = borderStyle {
             self.borderStyle = borderStyle
         }
@@ -77,7 +78,7 @@ extension UITextField {
         
     }
     
-    func setIcon(_ image: UIImage) {
+    func setTextfieldIcon(_ image: UIImage) {
         
         let iconView = UIImageView(frame: CGRect(x: -10, y: 0, width: 50, height: 50))
         iconView.image = image
@@ -144,5 +145,12 @@ extension UIStackView {
         if let spacing = spacing {
             self.spacing = spacing
         }
+    }
+}
+
+extension UIColor {
+    
+   func configureColor (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) -> UIColor {
+       return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: alpha)
     }
 }
