@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 let avenirNext_Demibold = "AvenirNext-DemiBold"
+let avenirNext_Heavy = "AvenirNext-Heavy"
+let helveticaNeue_Bold = "HelveticaNeue-Bold"
 
 struct Constants {
     
@@ -25,6 +27,7 @@ struct Constants {
             struct Border {
                 static let Orange = CGColor.init(srgbRed: 242/255, green: 125/255, blue: 15/255, alpha: 1)
                 static let Purple = CGColor.init(srgbRed: 17/255, green: 16/255, blue: 38/255, alpha: 95)
+                static let Blue = CGColor.init(srgbRed: 0.50, green: 0.66, blue: 0.66, alpha: 1)
             }
             
             struct Background {
@@ -33,6 +36,10 @@ struct Constants {
             
             struct Hue {
                 static let Green = UIColor(hue: 0.50, saturation: 0.66, brightness: 0.66, alpha: 1)
+            }
+            
+            struct FadedHue {
+                static let Green = UIColor(hue: 0.50, saturation: 0.20, brightness: 0.66, alpha: 1)
             }
         }
     }
