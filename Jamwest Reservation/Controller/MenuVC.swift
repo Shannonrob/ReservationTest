@@ -22,7 +22,8 @@ class MenuVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.init(displayP3Red: 17/255, green: 16/255, blue: 38/255, alpha: 95)
+        view.backgroundColor = Constants.Design.Color.Primary.Purple
+        
         configureTableView()
     }
     
@@ -34,7 +35,9 @@ class MenuVC: UIViewController {
         tableView.dataSource = self
         
         tableView.register(MenuOptionCell.self, forCellReuseIdentifier: reuseIdentifier)
-        tableView.backgroundColor = UIColor.init(displayP3Red: 17/255, green: 16/255, blue: 38/255, alpha: 95)
+        tableView.backgroundColor = Constants.Design.Color.Primary.Purple
+        
+        
         tableView.separatorStyle = .none
         tableView.rowHeight = 80
         
@@ -52,6 +55,7 @@ extension MenuVC: UITableViewDelegate,UITableViewDataSource {
 
         let headerView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 160))
         headerView.backgroundColor = UIColor.init(displayP3Red: 17/255, green: 16/255, blue: 38/255, alpha: 95)
+        
 
         let logo = UIImageView()
         logo.contentMode = .scaleAspectFill

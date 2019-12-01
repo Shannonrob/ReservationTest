@@ -12,6 +12,13 @@ import UIKit
 let avenirNext_Demibold = "AvenirNext-DemiBold"
 let avenirNext_Heavy = "AvenirNext-Heavy"
 let helveticaNeue_Bold = "HelveticaNeue-Bold"
+let avenirNext_Medium = "AvenirNext-Medium"
+let avenirNext_Regular = "AvenirNext-Regular"
+let single_Tour = "Single Tour"
+let combo_Deal = "Combo Deal"
+let super_Deal = "Super Deal"
+
+var tour_Package_Selected = String()
 
 struct Constants {
     

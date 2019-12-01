@@ -63,7 +63,7 @@
      override func viewDidLoad() {
          super.viewDidLoad()
         
-        configureUI()
+        configureViewConstraints()
         view.backgroundColor = Constants.Design.Color.Background.FadeGray
         
         configureNavigationBar()
@@ -78,9 +78,9 @@
     func configureNavigationBar() {
 //        NavigationBar title size
         
-//        let reservation = UIFont.systemFont(ofSize: 25)
-        let reservation = UIFont.init(name:"Helvetica neue", size: 25)!
-        navigationController?.navigationBar.barTintColor = UIColor.init(displayP3Red: 17/255, green: 16/255, blue: 38/255, alpha: 95)
+        let reservation = UIFont.boldSystemFont(ofSize: 25)
+//        let reservation = UIFont.init(name:"Helvetica neue", size: 25)!
+        navigationController?.navigationBar.barTintColor = Constants.Design.Color.Primary.Purple
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barStyle = .black
         
@@ -90,24 +90,24 @@
     }
     
 //    MARK: - Contraints
-    func configureUI() {
+    func configureViewConstraints() {
     
 //      UIViews
         
         view.addSubview(rightView)
         rightView.anchor(top: view.topAnchor, left: nil, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: view.frame.width / 2, height: 0)
         
-        view.addSubview(bottomView)
-        bottomView.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 75)
+//        view.addSubview(bottomView)
+//        bottomView.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 75)
     
 //    UILabels
         
         let greetingLabelsStackView = UIStackView(arrangedSubviews: [greetingLabel, selectGroupLabel])
         greetingLabelsStackView.axis = .vertical
-        greetingLabelsStackView.configureStackView(alignment: .center, distribution: .equalCentering, spacing: 60)
+        greetingLabelsStackView.configureStackView(alignment: .center, distribution: .equalSpacing, spacing: 60)
         
         rightView.addSubview(greetingLabelsStackView)
-        greetingLabelsStackView.anchor(top: rightView.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 150, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        greetingLabelsStackView.anchor(top: rightView.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 120, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         greetingLabelsStackView.centerXAnchor.constraint(equalTo: rightView.centerXAnchor).isActive = true
     
     }

@@ -12,6 +12,8 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
 
 //    MARK: - Properties
     
+    var delegate: AddReservationVCDelegate?
+    
     var atvSelected = false
     var horseBackSelected = false
     var safariSelected = false
@@ -175,7 +177,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     
     let singleTourButton: UIButton = {
          let button = UIButton(type: .system)
-        button.setButtonIcon("whiteCheckMark", title: "Single Tour", titleColor: .white, buttonColor: Constants.Design.Color.Hue.Green, cornerRadius: 8)
+        button.setButtonIcon("whiteCheckMark", title: single_Tour, titleColor: .white, buttonColor: Constants.Design.Color.Hue.Green, cornerRadius: 8)
          button.titleLabel?.font = .boldSystemFont(ofSize: 20)
          button.addTarget(self, action: #selector(selectedTourPackage), for: .touchUpInside)
          button.isEnabled = false
@@ -184,7 +186,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         
     let comboDealButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setButtonIcon("hiddenCheckMark", title: "Combo Deal", titleColor: .white, buttonColor: Constants.Design.Color.Hue.Green, cornerRadius: 8)
+        button.setButtonIcon("hiddenCheckMark", title: combo_Deal, titleColor: .white, buttonColor: Constants.Design.Color.Hue.Green, cornerRadius: 8)
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
         button.addTarget(self, action: #selector(selectedTourPackage), for: .touchUpInside)
         return button
@@ -192,60 +194,11 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     
     let superDealButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setButtonIcon("hiddenCheckMark", title: "Super Deal", titleColor: .white, buttonColor: Constants.Design.Color.Hue.Green, cornerRadius: 8)
+        button.setButtonIcon("hiddenCheckMark", title: super_Deal, titleColor: .white, buttonColor: Constants.Design.Color.Hue.Green, cornerRadius: 8)
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
         button.addTarget(self, action: #selector(selectedTourPackage), for: .touchUpInside)
         return button
        }()
-    
-    let atvTourButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setButtonIcon("orangeEmptyCircle", title: "ATV Tour", titleColor: .black, buttonColor: .white, cornerRadius: 8)
-        button.titleLabel?.font = .boldSystemFont(ofSize: 18)
-        button.addTarget(self, action: #selector(atvTourSelected), for: .touchUpInside)
-        return button
-    }()
-    
-    let horseBackRidingTourButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setButtonIcon("orangeEmptyCircle", title: "Horseback", titleColor: .black, buttonColor: .white, cornerRadius: 8)
-        button.titleLabel?.font = .boldSystemFont(ofSize: 18)
-        button.addTarget(self, action: #selector(horsebackTourSelected), for: .touchUpInside)
-        return button
-    }()
-    
-    let safariTourButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setButtonIcon("orangeEmptyCircle", title: "Safari Tour", titleColor: .black, buttonColor: .white, cornerRadius: 8)
-        button.titleLabel?.font = .boldSystemFont(ofSize: 18)
-        button.addTarget(self, action: #selector(safariTourSelected), for: .touchUpInside)
-        return button
-    }()
-    
-    let zipLineTourButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setButtonIcon("orangeEmptyCircle", title: "Zip Line", titleColor: .black, buttonColor: .white, cornerRadius: 8)
-        button.titleLabel?.font = .boldSystemFont(ofSize: 18)
-        button.addTarget(self, action: #selector(zipLineTourSelected), for: .touchUpInside)
-        return button
-    }()
-    
-    let pushKartTourButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setButtonIcon("orangeEmptyCircle", title: "Push Kart", titleColor: .black, buttonColor: .white, cornerRadius: 8)
-        button.titleLabel?.font = .boldSystemFont(ofSize: 18)
-        button.addTarget(self, action: #selector(zipLineTourSelected), for: .touchUpInside)
-        return button
-    }()
-    
-    let selectToursButton: UIButton = {
-        
-        let button = UIButton(type: .system)
-        button.setButtonIcon("purpleList", title: "Select reserved tours ", titleColor: Constants.Design.Color.Primary.Purple, buttonColor: nil, cornerRadius: nil)
-        button.titleLabel?.font = .boldSystemFont(ofSize: 18)
-        button.addTarget(self, action: #selector(handleTourSelection), for: .touchUpInside)
-        return button
-    }()
     
 //    MARK: - UIStepper
     
@@ -267,7 +220,8 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
 //    MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
+        tour_Package_Selected = single_Tour
         configureUI()
         configureStackViewComponents()
         configurePaxStepper()
@@ -287,7 +241,10 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     }
     
     @objc func handleNextButton() {
-        print("Next button pressed")
+    
+        let toursSelectionVC = ToursSelectionVC()
+        present(UINavigationController(rootViewController: toursSelectionVC), animated: true, completion: nil)
+    
     }
     
     @objc func handleDateSelection() {
@@ -299,14 +256,14 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         stepperValueLabel.text =  "\((Int(paxStepper.value )))"
     }
     
-    @objc func handleTourSelection() {
-           print("Selecting tours")
-       }
     
     @objc func selectedTourPackage(_ sender: UIButton) {
 
         switch sender {
+            
         case singleTourButton:
+            
+            tour_Package_Selected = singleTourButton.currentTitle!
             singleTourButton.updateButtonIcon("whiteCheckMark")
             comboDealButton.updateButtonIcon("hiddenCheckMark")
             superDealButton.updateButtonIcon("hiddenCheckMark")
@@ -315,6 +272,8 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
             superDealButton.isEnabled = true
             
         case comboDealButton:
+            
+            tour_Package_Selected = comboDealButton.currentTitle!
             singleTourButton.updateButtonIcon("hiddenCheckMark")
             comboDealButton.updateButtonIcon("whiteCheckMark")
             superDealButton.updateButtonIcon("hiddenCheckMark")
@@ -323,6 +282,8 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
             superDealButton.isEnabled = true
             
         case superDealButton:
+            
+            tour_Package_Selected = superDealButton.currentTitle!
             singleTourButton.updateButtonIcon("hiddenCheckMark")
             comboDealButton.updateButtonIcon("hiddenCheckMark")
             superDealButton.updateButtonIcon("whiteCheckMark")
@@ -334,53 +295,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
             return
         }
     }
-    
-    @objc func atvTourSelected() {
-           atvSelected = !atvSelected
-           if atvSelected == true {
-               atvTourButton.updateButtonIcon("orangeFillCircle")
-           } else {
-               atvTourButton.updateButtonIcon("orangeEmptyCircle")
-           }
-       }
-    
-    @objc func horsebackTourSelected() {
-        horseBackSelected = !horseBackSelected
-        if horseBackSelected == true {
-            horseBackRidingTourButton.updateButtonIcon("orangeFillCircle")
-        } else {
-            horseBackRidingTourButton.updateButtonIcon("orangeEmptyCircle")
-        }
-    }
-    
-    @objc func safariTourSelected() {
-        safariSelected = !safariSelected
-        if safariSelected == true {
-            safariTourButton.updateButtonIcon("orangeFillCircle")
-        } else {
-            safariTourButton.updateButtonIcon("orangeEmptyCircle")
-        }
-    }
-    
-    @objc func zipLineTourSelected() {
-        zipLineSelected = !zipLineSelected
-        if zipLineSelected == true {
-            zipLineTourButton.updateButtonIcon("orangeFillCircle")
-        } else {
-            zipLineTourButton.updateButtonIcon("orangeEmptyCircle")
-        }
-    }
-    
-    @objc func pushKartTourSelected() {
-        pushKartSelected = !pushKartSelected
-        if pushKartSelected == true {
-            pushKartTourButton.updateButtonIcon("orangeFillCircle")
-        } else {
-            pushKartTourButton.updateButtonIcon("orangeEmptyCircle")
-        }
-    }
-    
-    
+
 //    MARK: - Helper Functions
     
     func textFieldDelegateStatus() {
@@ -410,7 +325,6 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         return false
     }
     
-    
     func configureUI() {
         
         view.backgroundColor = Constants.Design.Color.Background.FadeGray
@@ -418,14 +332,16 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         navigationItem.title = "Add Reservation"
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barStyle = .black
-        navigationController?.navigationBar.barTintColor = UIColor.init(displayP3Red: 17/255, green: 16/255, blue: 38/255, alpha: 95)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "dismiss").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleDismiss))
+        navigationController?.navigationBar.barTintColor = Constants.Design.Color.Primary.Purple
+        
+        let reservation = UIFont.boldSystemFont(ofSize: 25)
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: reservation]
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "whiteDismiss ").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleDismiss))
         navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Next", style: .plain, target: self, action: #selector(handleNextButton))
         navigationItem.rightBarButtonItem?.tintColor = .white
     }
     
     func configurePaxStepper() {
-//        paxStepper.backgroundColor = .gray
         paxStepper.tintColor = .gray
     }
 
@@ -501,4 +417,6 @@ extension AddReservationVC {
 
     }
 }
+
+
 

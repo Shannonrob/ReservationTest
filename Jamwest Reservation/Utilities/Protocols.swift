@@ -10,3 +10,11 @@ protocol HomeVcDelegate {
   
     func handleMenuToggle(forMenuOption menuOption: MenuOption?)
 }
+
+protocol AddReservationVCDelegate {
+    
+    func handleSelectedTourPackage(forSelectedTourPackage: String)
+//    func handleSingleTourPackageSelected(forSingleTourPackage: String)
+//    func handleComboDealPackageSelected(forComboDealPackage: String)
+//    func handleSuperDealPackageSelected(forSuperDealPackage: String)
+}

@@ -135,6 +135,9 @@ extension UIButton {
             self.layer.cornerRadius = cornerRadius
         }
         semanticContentAttribute = .forceRightToLeft
+        tintColor = .clear
+        setTitleColor(.black, for: .selected)
+    
     }
     
  
@@ -144,6 +147,9 @@ extension UIButton {
             imageView?.contentMode = .scaleAspectFit
         }
     }
+    
+    
+    
 }
 
 
