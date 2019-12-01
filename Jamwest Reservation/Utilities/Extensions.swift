@@ -178,3 +178,13 @@ extension UIColor {
        return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: alpha)
     }
 }
+
+
+extension Array where Element: Equatable {
+    
+    // Remove first collection element that is equal to the given `object`:
+    mutating func remove(object: Element) {
+        guard let index = firstIndex(of: object) else {return}
+        remove(at: index)
+    }
+}

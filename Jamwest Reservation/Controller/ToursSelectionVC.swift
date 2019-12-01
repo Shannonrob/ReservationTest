@@ -12,9 +12,8 @@ class ToursSelectionVC: UIViewController{
     
 
 //    MARK: - Properties
-    var testArray = [UIButton]()
     
-    
+    var comboDealToursArray = [UIButton]()
     
 //    MARK: - Labels
     
@@ -37,7 +36,6 @@ class ToursSelectionVC: UIViewController{
    
        button.setButtonIcon("orangeATV", title: "ATV Tour", titleColor: .gray, buttonColor: .white, cornerRadius: 6)
        button.titleLabel?.font = .systemFont(ofSize: 24)
-//       button.setTitleColor(.black, for: .selected)
        button.layer.borderWidth = 0.80
        button.layer.borderColor = UIColor.lightGray.cgColor
        button.addTarget(self, action: #selector(handleATVTour), for: .touchUpInside)
@@ -110,10 +108,8 @@ class ToursSelectionVC: UIViewController{
         super.viewDidLoad()
 
        configureUI()
-        updateTourLabel()
+       updateTourLabel()
        setConstraints()
-       
-      
     }
     
 //    MARK: - Selectors
@@ -122,18 +118,13 @@ class ToursSelectionVC: UIViewController{
         dismiss(animated: true, completion: nil)
     }
     
-    @objc func handleSubmitButton() {
-        print(print("\(testArray.count)"))
-    }
-    
     @objc func handleATVTour() {
     
+        updateSelectionFont(button: atvTourButton)
+        
         switch tour_Package_Selected {
             
         case single_Tour:
-            
-            atvTourButton.isSelected = true
-            atvTourButton.titleLabel?.font = .boldSystemFont(ofSize: 24)
             horseBackRidingTourButton.isSelected = false
             horseBackRidingTourButton.titleLabel?.font = .systemFont(ofSize: 24)
             pushKartTourButton.isSelected = false
@@ -142,114 +133,121 @@ class ToursSelectionVC: UIViewController{
             safariTourButton.titleLabel?.font = .systemFont(ofSize: 24)
             zipLineTourButton.isSelected = false
             zipLineTourButton.titleLabel?.font = .systemFont(ofSize: 24)
-            activateSubmitButton()
-            
+            single_Tour_Selected = atvTourButton.currentTitle!
+            updateSingleTourSubmitButtonStyle()
+        
         case combo_Deal:
-            testArray.append(atvTourButton)
-            activateSubmitButton()
+            updateComboDealArray(button: atvTourButton)
+            updateComboDealSubmitButtonStyle()
+            
         case super_Deal:
             print("Super")
+            
         default:
             return
         }
-        
     }
     
     @objc func handleHorseBackRidingTour() {
+        
+        updateSelectionFont(button: horseBackRidingTourButton)
     
         switch tour_Package_Selected {
             
         case single_Tour:
-            
             atvTourButton.isSelected = false
             atvTourButton.titleLabel?.font = .systemFont(ofSize: 24)
-            horseBackRidingTourButton.isSelected = true
-            horseBackRidingTourButton.titleLabel?.font = .boldSystemFont(ofSize: 24)
             pushKartTourButton.isSelected = false
             pushKartTourButton.titleLabel?.font = .systemFont(ofSize: 24)
             safariTourButton.isSelected = false
             safariTourButton.titleLabel?.font = .systemFont(ofSize: 24)
             zipLineTourButton.isSelected = false
             zipLineTourButton.titleLabel?.font = .systemFont(ofSize: 24)
-            activateSubmitButton()
+            single_Tour_Selected = horseBackRidingTourButton.currentTitle!
+            updateSingleTourSubmitButtonStyle()
             
         case combo_Deal:
-            testArray.append(horseBackRidingTourButton)
-            activateSubmitButton()
+            
+            updateComboDealArray(button: horseBackRidingTourButton)
+            updateComboDealSubmitButtonStyle()
+            
         case super_Deal:
             print("Super")
+            
         default:
             return
         }
-
     }
     
     @objc func handlePushKartTour() {
     
+        updateSelectionFont(button: pushKartTourButton)
+        
         switch tour_Package_Selected {
             
         case single_Tour:
-        
             atvTourButton.isSelected = false
             atvTourButton.titleLabel?.font = .systemFont(ofSize: 24)
             horseBackRidingTourButton.isSelected = false
             horseBackRidingTourButton.titleLabel?.font = .systemFont(ofSize: 24)
-            pushKartTourButton.isSelected = true
-            pushKartTourButton.titleLabel?.font = .boldSystemFont(ofSize: 24)
             safariTourButton.isSelected = false
             safariTourButton.titleLabel?.font = .systemFont(ofSize: 24)
             zipLineTourButton.isSelected = false
             zipLineTourButton.titleLabel?.font = .systemFont(ofSize: 24)
-            activateSubmitButton()
+            single_Tour_Selected = pushKartTourButton.currentTitle!
+            updateSingleTourSubmitButtonStyle()
             
         case combo_Deal:
-            testArray.append(pushKartTourButton)
-            activateSubmitButton()
+            
+            updateComboDealArray(button: pushKartTourButton)
+            updateComboDealSubmitButtonStyle()
+            
         case super_Deal:
             print("Super")
+            
         default:
             return
         }
-
-        
     }
     
     @objc func handleSafariTour() {
     
+        updateSelectionFont(button: safariTourButton)
+        
         switch tour_Package_Selected {
             
         case single_Tour:
-         
             atvTourButton.isSelected = false
             atvTourButton.titleLabel?.font = .systemFont(ofSize: 24)
             horseBackRidingTourButton.isSelected = false
             horseBackRidingTourButton.titleLabel?.font = .systemFont(ofSize: 24)
             pushKartTourButton.isSelected = false
             pushKartTourButton.titleLabel?.font = .systemFont(ofSize: 24)
-            safariTourButton.isSelected = true
-            safariTourButton.titleLabel?.font = .boldSystemFont(ofSize: 24)
             zipLineTourButton.isSelected = false
             zipLineTourButton.titleLabel?.font = .systemFont(ofSize: 24)
-            activateSubmitButton()
+            single_Tour_Selected = safariTourButton.currentTitle!
+            updateSingleTourSubmitButtonStyle()
         
         case combo_Deal:
-            testArray.append(safariTourButton)
-            activateSubmitButton()
+            
+            updateComboDealArray(button: safariTourButton)
+            updateComboDealSubmitButtonStyle()
+            
         case super_Deal:
             print("Super")
+            
         default:
             return
         }
-
-        
     }
     
     @objc func handleZiplineTour() {
     
+        updateSelectionFont(button: zipLineTourButton)
+        
         switch tour_Package_Selected {
             
         case single_Tour:
-          
             atvTourButton.isSelected = false
             atvTourButton.titleLabel?.font = .systemFont(ofSize: 24)
             horseBackRidingTourButton.isSelected = false
@@ -258,20 +256,39 @@ class ToursSelectionVC: UIViewController{
             pushKartTourButton.titleLabel?.font = .systemFont(ofSize: 24)
             safariTourButton.isSelected = false
             safariTourButton.titleLabel?.font = .systemFont(ofSize: 24)
-            zipLineTourButton.isSelected = true
-            zipLineTourButton.titleLabel?.font = .boldSystemFont(ofSize: 24)
-            activateSubmitButton()
+            single_Tour_Selected = zipLineTourButton.currentTitle!
+            updateSingleTourSubmitButtonStyle()
             
         case combo_Deal:
-            testArray.append(zipLineTourButton)
-            activateSubmitButton()
+            
+            updateComboDealArray(button: zipLineTourButton)
+            updateComboDealSubmitButtonStyle()
+            
         case super_Deal:
             print("Super")
+            
         default:
             return
         }
-
+    }
+    
+    @objc func handleSubmitButton() {
         
+        switch tour_Package_Selected {
+        case single_Tour:
+            print(single_Tour_Selected)
+        case combo_Deal:
+            
+            for element in comboDealToursArray {
+                print(element.currentTitle!)
+            }
+            
+        case super_Deal:
+            break
+        default:
+            return
+            
+        }
     }
     
 //    MARK: - Helper Functions
@@ -281,12 +298,6 @@ class ToursSelectionVC: UIViewController{
             tourLabel.text = "Please select reserved tour"
         }
     }
-    
-    func activateSubmitButton() {
-        submitButton.isEnabled = true
-        submitButton.backgroundColor = Constants.Design.Color.Hue.Green
-    }
-    
     
     func configureUI() {
         
@@ -320,6 +331,56 @@ class ToursSelectionVC: UIViewController{
         
         view.addSubview(submitButton)
         submitButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 15, paddingBottom: 50, paddingRight: 15, width: 0, height: 60)
+    }
+    
+//    Function to update font style on button selection
+    func updateSelectionFont(button: UIButton) {
+       
+        if !button.isSelected == true {
+            button.isSelected = true
+            button.titleLabel?.font = .boldSystemFont(ofSize: 24)
+        } else {
+            button.isSelected = false
+            button.titleLabel?.font = .systemFont(ofSize: 24)
+        }
+    }
+    
+//    Function to add or removew from ComboDeal Array
+    func updateComboDealArray(button: UIButton) {
+        
+        if !comboDealToursArray.contains(button) {
+            comboDealToursArray.append(button)
+            button.isSelected = true
+        } else {
+            comboDealToursArray.remove(object: button)
+            button.isSelected = false
+            button.titleLabel?.font = .systemFont(ofSize: 24)
+        }
+    }
+    
+    func activateSubmitButton() {
+        submitButton.isEnabled = true
+        submitButton.backgroundColor = Constants.Design.Color.Hue.Green
+    }
+
+    func updateSingleTourSubmitButtonStyle() {
+        
+        activateSubmitButton()
+        guard atvTourButton.isSelected || horseBackRidingTourButton.isSelected || pushKartTourButton.isSelected || safariTourButton.isSelected || zipLineTourButton.isSelected == true else {
+        submitButton.backgroundColor = Constants.Design.Color.FadedHue.Green
+        submitButton.isEnabled = false
+        return
+        }
+    }
+    
+    func updateComboDealSubmitButtonStyle() {
+        
+        activateSubmitButton()
+        guard comboDealToursArray.count >= 2 else {
+        submitButton.backgroundColor = Constants.Design.Color.FadedHue.Green
+        submitButton.isEnabled = false
+        return
+        }
     }
 }
 
