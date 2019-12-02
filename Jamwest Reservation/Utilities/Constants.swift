@@ -19,7 +19,6 @@ let combo_Deal = "Combo Deal"
 let super_Deal = "Super Deal"
 
 var tour_Package_Selected = String()
-var single_Tour_Selected = String()
 
 
 struct Constants {

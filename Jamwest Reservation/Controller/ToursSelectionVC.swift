@@ -13,7 +13,9 @@ class ToursSelectionVC: UIViewController{
 
 //    MARK: - Properties
     
+    var singleTourPackageSelection = String()
     var comboDealToursArray = [UIButton]()
+    var superDealPackageArray = [UIButton]()
     
 //    MARK: - Labels
     
@@ -133,15 +135,16 @@ class ToursSelectionVC: UIViewController{
             safariTourButton.titleLabel?.font = .systemFont(ofSize: 24)
             zipLineTourButton.isSelected = false
             zipLineTourButton.titleLabel?.font = .systemFont(ofSize: 24)
-            single_Tour_Selected = atvTourButton.currentTitle!
-            updateSingleTourSubmitButtonStyle()
+            singleTourPackageSelection = atvTourButton.currentTitle!
+            configureSingleTourPackageSelection()
         
         case combo_Deal:
             updateComboDealArray(button: atvTourButton)
-            updateComboDealSubmitButtonStyle()
+            configureComboDealPackageTours()
             
         case super_Deal:
-            print("Super")
+            updateSuperDealArray(button: atvTourButton)
+            configureSuperDealPackageTours()
             
         default:
             return
@@ -163,16 +166,17 @@ class ToursSelectionVC: UIViewController{
             safariTourButton.titleLabel?.font = .systemFont(ofSize: 24)
             zipLineTourButton.isSelected = false
             zipLineTourButton.titleLabel?.font = .systemFont(ofSize: 24)
-            single_Tour_Selected = horseBackRidingTourButton.currentTitle!
-            updateSingleTourSubmitButtonStyle()
+            singleTourPackageSelection = horseBackRidingTourButton.currentTitle!
+            configureSingleTourPackageSelection()
             
         case combo_Deal:
             
             updateComboDealArray(button: horseBackRidingTourButton)
-            updateComboDealSubmitButtonStyle()
+            configureComboDealPackageTours()
             
         case super_Deal:
-            print("Super")
+            updateSuperDealArray(button: horseBackRidingTourButton)
+            configureSuperDealPackageTours()
             
         default:
             return
@@ -194,16 +198,18 @@ class ToursSelectionVC: UIViewController{
             safariTourButton.titleLabel?.font = .systemFont(ofSize: 24)
             zipLineTourButton.isSelected = false
             zipLineTourButton.titleLabel?.font = .systemFont(ofSize: 24)
-            single_Tour_Selected = pushKartTourButton.currentTitle!
-            updateSingleTourSubmitButtonStyle()
+            singleTourPackageSelection = pushKartTourButton.currentTitle!
+            configureSingleTourPackageSelection()
             
         case combo_Deal:
             
             updateComboDealArray(button: pushKartTourButton)
-            updateComboDealSubmitButtonStyle()
+            configureComboDealPackageTours()
             
         case super_Deal:
-            print("Super")
+            
+            updateSuperDealArray(button: pushKartTourButton)
+            configureSuperDealPackageTours()
             
         default:
             return
@@ -225,16 +231,18 @@ class ToursSelectionVC: UIViewController{
             pushKartTourButton.titleLabel?.font = .systemFont(ofSize: 24)
             zipLineTourButton.isSelected = false
             zipLineTourButton.titleLabel?.font = .systemFont(ofSize: 24)
-            single_Tour_Selected = safariTourButton.currentTitle!
-            updateSingleTourSubmitButtonStyle()
+            singleTourPackageSelection = safariTourButton.currentTitle!
+            configureSingleTourPackageSelection()
         
         case combo_Deal:
             
             updateComboDealArray(button: safariTourButton)
-            updateComboDealSubmitButtonStyle()
+            configureComboDealPackageTours()
             
         case super_Deal:
-            print("Super")
+            
+            updateSuperDealArray(button: safariTourButton)
+            configureSuperDealPackageTours()
             
         default:
             return
@@ -256,16 +264,18 @@ class ToursSelectionVC: UIViewController{
             pushKartTourButton.titleLabel?.font = .systemFont(ofSize: 24)
             safariTourButton.isSelected = false
             safariTourButton.titleLabel?.font = .systemFont(ofSize: 24)
-            single_Tour_Selected = zipLineTourButton.currentTitle!
-            updateSingleTourSubmitButtonStyle()
+            singleTourPackageSelection = zipLineTourButton.currentTitle!
+            configureSingleTourPackageSelection()
             
         case combo_Deal:
             
             updateComboDealArray(button: zipLineTourButton)
-            updateComboDealSubmitButtonStyle()
+            configureComboDealPackageTours()
             
         case super_Deal:
-            print("Super")
+            
+            updateSuperDealArray(button: zipLineTourButton)
+            configureSuperDealPackageTours()
             
         default:
             return
@@ -276,7 +286,7 @@ class ToursSelectionVC: UIViewController{
         
         switch tour_Package_Selected {
         case single_Tour:
-            print(single_Tour_Selected)
+            print(singleTourPackageSelection)
         case combo_Deal:
             
             for element in comboDealToursArray {
@@ -345,7 +355,7 @@ class ToursSelectionVC: UIViewController{
         }
     }
     
-//    Function to add or removew from ComboDeal Array
+//    Function to add or remove from ComboDeal Array
     func updateComboDealArray(button: UIButton) {
         
         if !comboDealToursArray.contains(button) {
@@ -358,12 +368,25 @@ class ToursSelectionVC: UIViewController{
         }
     }
     
+    //    Function to add or remove from SuperDeal Array
+    func updateSuperDealArray(button: UIButton) {
+        
+        if !superDealPackageArray.contains(button) {
+            superDealPackageArray.append(button)
+            button.isSelected = true
+        } else {
+            superDealPackageArray.remove(object: button)
+            button.isSelected = false
+            button.titleLabel?.font = .systemFont(ofSize: 24)
+        }
+    }
+    
     func activateSubmitButton() {
         submitButton.isEnabled = true
         submitButton.backgroundColor = Constants.Design.Color.Hue.Green
     }
 
-    func updateSingleTourSubmitButtonStyle() {
+    func configureSingleTourPackageSelection() {
         
         activateSubmitButton()
         guard atvTourButton.isSelected || horseBackRidingTourButton.isSelected || pushKartTourButton.isSelected || safariTourButton.isSelected || zipLineTourButton.isSelected == true else {
@@ -373,10 +396,20 @@ class ToursSelectionVC: UIViewController{
         }
     }
     
-    func updateComboDealSubmitButtonStyle() {
+    func configureComboDealPackageTours() {
         
         activateSubmitButton()
         guard comboDealToursArray.count >= 2 else {
+        submitButton.backgroundColor = Constants.Design.Color.FadedHue.Green
+        submitButton.isEnabled = false
+        return
+        }
+    }
+    
+    func configureSuperDealPackageTours() {
+        
+        activateSubmitButton()
+        guard superDealPackageArray.count >= 3 else {
         submitButton.backgroundColor = Constants.Design.Color.FadedHue.Green
         submitButton.isEnabled = false
         return
