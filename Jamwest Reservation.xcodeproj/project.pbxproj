@@ -27,6 +27,7 @@
 		85D18A4A2375B23700F06441 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D18A492375B23700F06441 /* Extensions.swift */; };
 		85D18A4C2377049A00F06441 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D18A4B2377049A00F06441 /* SignUpVC.swift */; };
 		85D18A4E2377107F00F06441 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 85D18A4D2377107F00F06441 /* GoogleService-Info.plist */; };
+		85F5C76423958F3600BDBA25 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F5C76323958F3600BDBA25 /* Alert.swift */; };
 		9B0AAB812486455CFAED8C0B /* Pods_Jamwest_Reservation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE97277E735E003B8403E3D /* Pods_Jamwest_Reservation.framework */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +55,7 @@
 		85D18A492375B23700F06441 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		85D18A4B2377049A00F06441 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		85D18A4D2377107F00F06441 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		85F5C76323958F3600BDBA25 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		8FE97277E735E003B8403E3D /* Pods_Jamwest_Reservation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Jamwest_Reservation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3143BCD1E507C7F3115A718 /* Pods-Jamwest Reservation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jamwest Reservation.debug.xcconfig"; path = "Target Support Files/Pods-Jamwest Reservation/Pods-Jamwest Reservation.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -142,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				85D18A4123707ADD00F06441 /* MenuOption.swift */,
+				85F5C76323958F3600BDBA25 /* Alert.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -297,6 +300,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85F5C76423958F3600BDBA25 /* Alert.swift in Sources */,
 				85D18A40236F29A100F06441 /* MenuOptionCell.swift in Sources */,
 				858A5620237AFCF100624FB8 /* DataService.swift in Sources */,
 				85D18A4223707ADD00F06441 /* MenuOption.swift in Sources */,

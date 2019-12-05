@@ -287,14 +287,23 @@ class ToursSelectionVC: UIViewController{
         switch tour_Package_Selected {
         case single_Tour:
             print(singleTourPackageSelection)
+            
         case combo_Deal:
+            
+            if comboDealToursArray.count > 2 {
+                Alert.showOverLimitComboDealTourSelections(on: self)
+            }
             
             for element in comboDealToursArray {
                 print(element.currentTitle!)
             }
             
         case super_Deal:
-            break
+            
+            if superDealPackageArray.count > 3 {
+                Alert.showOverLimitSuperDealTourSelections(on: self)
+            }
+            
         default:
             return
             

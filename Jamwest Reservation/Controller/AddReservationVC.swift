@@ -105,6 +105,17 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     
         return label
        }()
+    
+    let datePicker: UIDatePicker = {
+        
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .date
+        datePicker.backgroundColor = .white
+        datePicker.setValue(UIColor.black, forKey: "textColor")
+        datePicker.addTarget(self, action: #selector(selectedReservationDate), for: .valueChanged)
+        return datePicker
+    }()
+    
 
 //    MARK: - Textfields
     let hotelNameTextField: UITextField = {
@@ -170,6 +181,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         textfield.layer.borderWidth = 1
         textfield.layer.borderColor = Constants.Design.Color.Border.Blue
         textfield.addTarget(self, action: #selector(handleDateSelection), for: .editingDidBegin)
+    
         return textfield
     }()
     
@@ -179,7 +191,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
          let button = UIButton(type: .system)
         button.setButtonIcon("whiteCheckMark", title: single_Tour, titleColor: .white, buttonColor: Constants.Design.Color.Hue.Green, cornerRadius: 8)
          button.titleLabel?.font = .boldSystemFont(ofSize: 20)
-         button.addTarget(self, action: #selector(selectedTourPackage), for: .touchUpInside)
+         button.addTarget(self, action: #selector(handleSelectedTourPackage), for: .touchUpInside)
          button.isEnabled = false
          return button
         }()
@@ -188,7 +200,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         let button = UIButton(type: .system)
         button.setButtonIcon("hiddenCheckMark", title: combo_Deal, titleColor: .white, buttonColor: Constants.Design.Color.Hue.Green, cornerRadius: 8)
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
-        button.addTarget(self, action: #selector(selectedTourPackage), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleSelectedTourPackage), for: .touchUpInside)
         return button
        }()
     
@@ -196,7 +208,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         let button = UIButton(type: .system)
         button.setButtonIcon("hiddenCheckMark", title: super_Deal, titleColor: .white, buttonColor: Constants.Design.Color.Hue.Green, cornerRadius: 8)
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
-        button.addTarget(self, action: #selector(selectedTourPackage), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleSelectedTourPackage), for: .touchUpInside)
         return button
        }()
     
@@ -248,7 +260,35 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     }
     
     @objc func handleDateSelection() {
-           print("Select reservation date")
+
+        reservationDateTextfield.resignFirstResponder()
+        
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alertController.view.addSubview(datePicker)
+        
+        datePicker.anchor(top: alertController.view.topAnchor, left: nil, bottom: alertController.view.bottomAnchor, right: nil, paddingTop: 25, paddingLeft: 0, paddingBottom: 50, paddingRight: 0, width: 0, height: 0)
+        
+        
+        let defaultAction = UIAlertAction(title: "Done", style: .default, handler: { (alert: UIAlertAction!) -> Void in
+            alertController.dismiss(animated: false, completion: nil)
+        })
+        
+        alertController.addAction(defaultAction)
+        
+        let subview = (alertController.view.subviews.first?.subviews.first?.subviews.first!)! as UIView
+        subview.backgroundColor = .white
+        subview.tintColor = .red
+        subview.layer.cornerRadius = 1
+        
+        if let popoverController = alertController.popoverPresentationController {
+ 
+            popoverController.sourceView = reservationDateTextfield
+            popoverController.sourceRect = CGRect(x: 0, y: 54, width: reservationDateTextfield.bounds.width, height: 0)
+        }
+
+        self.present(alertController, animated: true, completion: nil)
+        
+        alertController.view.tintColor = Constants.Design.Color.Hue.Green
     }
     
     @objc func handleStepper() {
@@ -256,8 +296,11 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         stepperValueLabel.text =  "\((Int(paxStepper.value )))"
     }
     
+    @objc func selectedReservationDate(sender: UIDatePicker) {
+        print(sender.date)
+    }
     
-    @objc func selectedTourPackage(_ sender: UIButton) {
+    @objc func handleSelectedTourPackage(_ sender: UIButton) {
 
         switch sender {
             
@@ -344,7 +387,6 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     func configurePaxStepper() {
         paxStepper.tintColor = .gray
     }
-
 }
 
 extension AddReservationVC {
@@ -417,6 +459,4 @@ extension AddReservationVC {
 
     }
 }
-
-
 
