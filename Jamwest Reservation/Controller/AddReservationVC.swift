@@ -108,8 +108,20 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     
     let datePicker: UIDatePicker = {
         
+        var calendar: Calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+        let currentDate: Date = Date()
+        var dateComponents: DateComponents = DateComponents()
+        
+        calendar.timeZone = TimeZone(identifier: "EST")!
+        dateComponents.calendar = calendar
+        dateComponents.day = +14
+        
+        let maxDate: Date = calendar.date(byAdding: dateComponents, to: currentDate)!
         let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .date
+        datePicker.datePickerMode = .dateAndTime
+        datePicker.minimumDate = .some(currentDate as Date)
+        datePicker.maximumDate = maxDate
+    
         datePicker.backgroundColor = .white
         datePicker.setValue(UIColor.black, forKey: "textColor")
         datePicker.addTarget(self, action: #selector(selectedReservationDate), for: .valueChanged)
