@@ -114,17 +114,17 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         
         calendar.timeZone = TimeZone(identifier: "EST")!
         dateComponents.calendar = calendar
-        dateComponents.day = +14
+        dateComponents.year = +1
         
         let maxDate: Date = calendar.date(byAdding: dateComponents, to: currentDate)!
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .dateAndTime
         datePicker.minimumDate = .some(currentDate as Date)
         datePicker.maximumDate = maxDate
-    
+        
         datePicker.backgroundColor = .white
         datePicker.setValue(UIColor.black, forKey: "textColor")
-        datePicker.addTarget(self, action: #selector(selectedReservationDate), for: .valueChanged)
+        
         return datePicker
     }()
     
@@ -187,6 +187,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     }()
     
     let reservationDateTextfield: UITextField = {
+        
         let textfield = UITextField()
         textfield.design(placeHolder: "mm/dd/yyyy", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
         textfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeDate"))
@@ -199,9 +200,11 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     
 //    MARK: - Buttons
     
+    
+    
     let singleTourButton: UIButton = {
          let button = UIButton(type: .system)
-        button.setButtonIcon("whiteCheckMark", title: single_Tour, titleColor: .white, buttonColor: Constants.Design.Color.Hue.Green, cornerRadius: 8)
+        button.configureButtonWithIcon("whiteCheckMark", title: single_Tour, titleColor: .white, buttonColor: Constants.Design.Color.Hue.Green, cornerRadius: 8)
          button.titleLabel?.font = .boldSystemFont(ofSize: 20)
          button.addTarget(self, action: #selector(handleSelectedTourPackage), for: .touchUpInside)
          button.isEnabled = false
@@ -210,7 +213,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         
     let comboDealButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setButtonIcon("hiddenCheckMark", title: combo_Deal, titleColor: .white, buttonColor: Constants.Design.Color.Hue.Green, cornerRadius: 8)
+        button.configureButtonWithIcon("hiddenCheckMark", title: combo_Deal, titleColor: .white, buttonColor: Constants.Design.Color.Hue.Green, cornerRadius: 8)
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
         button.addTarget(self, action: #selector(handleSelectedTourPackage), for: .touchUpInside)
         return button
@@ -218,11 +221,12 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     
     let superDealButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setButtonIcon("hiddenCheckMark", title: super_Deal, titleColor: .white, buttonColor: Constants.Design.Color.Hue.Green, cornerRadius: 8)
+        button.configureButtonWithIcon("hiddenCheckMark", title: super_Deal, titleColor: .white, buttonColor: Constants.Design.Color.Hue.Green, cornerRadius: 8)
         button.titleLabel?.font = .boldSystemFont(ofSize: 20)
         button.addTarget(self, action: #selector(handleSelectedTourPackage), for: .touchUpInside)
         return button
        }()
+    
     
 //    MARK: - UIStepper
     
@@ -238,6 +242,21 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         stepper.stepValue = 1
         stepper.addTarget(self, action: #selector(handleStepper), for: UIControl.Event.valueChanged)
         return stepper
+    }()
+    
+//    Mark: - UIView
+    
+    let popoverView: UIView = {
+        
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    let popoverViewController: UIViewController = {
+       
+        let view = UIViewController()
+        return view
     }()
  
 
@@ -268,48 +287,51 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     
         let toursSelectionVC = ToursSelectionVC()
         present(UINavigationController(rootViewController: toursSelectionVC), animated: true, completion: nil)
-    
     }
     
+    
     @objc func handleDateSelection() {
-
+//        Add datePicker to popover
+        
+        let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        toolBar.barStyle = UIBarStyle.default
+        let space = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(handleSelectedReservationDate))
+        toolBar.barTintColor = .lightGray
+        toolBar.tintColor = Constants.Design.Color.Primary.Purple
+        toolBar.setItems([space, doneButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+        toolBar.sizeToFit()
+        
+        let datePickerSize = CGSize(width: datePicker.frame.width, height: 300)
         reservationDateTextfield.resignFirstResponder()
         
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alertController.view.addSubview(datePicker)
+        popoverView.addSubview(toolBar)
+        popoverView.addSubview(datePicker)
         
-        datePicker.anchor(top: alertController.view.topAnchor, left: nil, bottom: alertController.view.bottomAnchor, right: nil, paddingTop: 25, paddingLeft: 0, paddingBottom: 50, paddingRight: 0, width: 0, height: 0)
-        
-        
-        let defaultAction = UIAlertAction(title: "Done", style: .default, handler: { (alert: UIAlertAction!) -> Void in
-            alertController.dismiss(animated: false, completion: nil)
-        })
-        
-        alertController.addAction(defaultAction)
-        
-        let subview = (alertController.view.subviews.first?.subviews.first?.subviews.first!)! as UIView
-        subview.backgroundColor = .white
-        subview.tintColor = .red
-        subview.layer.cornerRadius = 1
-        
-        if let popoverController = alertController.popoverPresentationController {
- 
-            popoverController.sourceView = reservationDateTextfield
-            popoverController.sourceRect = CGRect(x: 0, y: 54, width: reservationDateTextfield.bounds.width, height: 0)
-        }
+        popoverViewController.view = popoverView
+        popoverViewController.modalPresentationStyle = .popover
+        popoverViewController.view.frame = CGRect(x: 0, y: 0, width: datePickerSize.width, height: datePickerSize.height)
+        popoverViewController.preferredContentSize = datePickerSize
+        popoverViewController.popoverPresentationController?.sourceView = reservationDateTextfield
+        popoverViewController.popoverPresentationController?.sourceRect = CGRect(x: 0, y: 51, width: reservationDateTextfield.bounds.width, height: 0)
+        popoverViewController.popoverPresentationController?.delegate = self as? UIPopoverPresentationControllerDelegate
 
-        self.present(alertController, animated: true, completion: nil)
+        toolBar.anchor(top: popoverView.topAnchor, left: popoverView.leftAnchor, bottom: nil, right: popoverView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: datePicker.frame.width, height: 60)
+        datePicker.anchor(top: toolBar.bottomAnchor, left: popoverView.leftAnchor, bottom: popoverView.bottomAnchor, right: popoverView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
-        alertController.view.tintColor = Constants.Design.Color.Hue.Green
+        self.present(popoverViewController, animated: true, completion: nil)
+    }
+    
+    @objc func handleSelectedReservationDate() {
+        
+//        let dateFormatter = DateFormatter()
+        
     }
     
     @objc func handleStepper() {
         
         stepperValueLabel.text =  "\((Int(paxStepper.value )))"
-    }
-    
-    @objc func selectedReservationDate(sender: UIDatePicker) {
-        print(sender.date)
     }
     
     @objc func handleSelectedTourPackage(_ sender: UIButton) {

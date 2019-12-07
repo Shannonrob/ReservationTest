@@ -36,7 +36,7 @@ class ToursSelectionVC: UIViewController{
    
     let button = UIButton(type: .system)
    
-       button.setButtonIcon("orangeATV", title: "ATV Tour", titleColor: .gray, buttonColor: .white, cornerRadius: 6)
+       button.configureButtonWithIcon("orangeATV", title: "ATV Tour", titleColor: .gray, buttonColor: .white, cornerRadius: 6)
        button.titleLabel?.font = .systemFont(ofSize: 24)
        button.layer.borderWidth = 0.80
        button.layer.borderColor = UIColor.lightGray.cgColor
@@ -48,7 +48,7 @@ class ToursSelectionVC: UIViewController{
    let horseBackRidingTourButton: UIButton = {
     
        let button = UIButton(type: .system)
-       button.setButtonIcon("orangeHorseRiding", title: "Horseback", titleColor: .gray, buttonColor: .white, cornerRadius: 6)
+       button.configureButtonWithIcon("orangeHorseRiding", title: "Horseback", titleColor: .gray, buttonColor: .white, cornerRadius: 6)
        button.titleLabel?.font = .systemFont(ofSize: 24)
        button.layer.borderWidth = 0.80
        button.layer.borderColor = UIColor.lightGray.cgColor
@@ -59,7 +59,7 @@ class ToursSelectionVC: UIViewController{
    let safariTourButton: UIButton = {
     
        let button = UIButton(type: .system)
-       button.setButtonIcon("orangeCrocodile", title: "Safari Tour", titleColor: .gray, buttonColor: .white, cornerRadius: 6)
+       button.configureButtonWithIcon("orangeCrocodile", title: "Safari Tour", titleColor: .gray, buttonColor: .white, cornerRadius: 6)
        button.titleLabel?.font = .systemFont(ofSize: 24)
        button.layer.borderWidth = 0.80
        button.layer.borderColor = UIColor.lightGray.cgColor
@@ -70,7 +70,7 @@ class ToursSelectionVC: UIViewController{
    let zipLineTourButton: UIButton = {
     
        let button = UIButton(type: .system)
-       button.setButtonIcon("orangeZipline", title: "Zip Line", titleColor: .gray, buttonColor: .white, cornerRadius: 6)
+       button.configureButtonWithIcon("orangeZipline", title: "Zip Line", titleColor: .gray, buttonColor: .white, cornerRadius: 6)
        button.titleLabel?.font = .systemFont(ofSize: 24)
        button.layer.borderWidth = 0.80
        button.layer.borderColor = UIColor.lightGray.cgColor
@@ -81,7 +81,7 @@ class ToursSelectionVC: UIViewController{
    let pushKartTourButton: UIButton = {
     
        let button = UIButton(type: .system)
-       button.setButtonIcon("orangeKart", title: "Push Kart", titleColor: .gray, buttonColor: .white, cornerRadius: 6)
+       button.configureButtonWithIcon("orangeKart", title: "Push Kart", titleColor: .gray, buttonColor: .white, cornerRadius: 6)
        button.titleLabel?.font = .systemFont(ofSize: 24)
        button.layer.borderWidth = 0.80
        button.layer.borderColor = UIColor.lightGray.cgColor
