@@ -108,7 +108,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     
     let datePicker: UIDatePicker = {
         
-        var calendar: Calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+        var calendar: Calendar = Calendar.current
         let currentDate: Date = Date()
         var dateComponents: DateComponents = DateComponents()
         
@@ -324,9 +324,13 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     }
     
     @objc func handleSelectedReservationDate() {
+    
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .short
+        reservationDateTextfield.text = dateFormatter.string(from: datePicker.date)
         
-//        let dateFormatter = DateFormatter()
-        
+        self.dismiss(animated: true, completion: nil)
     }
     
     @objc func handleStepper() {
@@ -421,6 +425,8 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     func configurePaxStepper() {
         paxStepper.tintColor = .gray
     }
+    
+
 }
 
 extension AddReservationVC {
