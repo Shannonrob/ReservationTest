@@ -32,7 +32,7 @@ class MenuOptionCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        backgroundColor = Constants.Design.Color.Primary.Purple
+        backgroundColor = Constants.Design.Color.Primary.HeavyGreen
         selectionStyle = .none
        
         

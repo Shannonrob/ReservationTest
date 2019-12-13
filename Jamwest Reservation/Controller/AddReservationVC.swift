@@ -219,6 +219,14 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         return button
        }()
     
+    let deluxePackageButton: UIButton = {
+           let button = UIButton(type: .system)
+           button.configureButtonWithIcon("hiddenCheckMark", title: deluxe_Package, titleColor: .white, buttonColor: Constants.Design.Color.Hue.Green, cornerRadius: 8)
+           button.titleLabel?.font = .systemFont(ofSize: 18)
+           button.addTarget(self, action: #selector(handleSelectedTourPackage), for: .touchUpInside)
+           return button
+          }()
+    
     
 //    MARK: - UIStepper
     
@@ -343,43 +351,31 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         case singleTourButton:
             
             tour_Package_Selected = singleTourButton.currentTitle!
-            singleTourButton.updateButtonIcon("whiteCheckMark")
-            comboDealButton.updateButtonIcon("hiddenCheckMark")
-            superDealButton.updateButtonIcon("hiddenCheckMark")
-            singleTourButton.titleLabel?.font = .boldSystemFont(ofSize: 20)
-            comboDealButton.titleLabel?.font = .systemFont(ofSize: 18)
-            superDealButton.titleLabel?.font = .systemFont(ofSize: 18)
-            singleTourButton.isEnabled = false
-            comboDealButton.isEnabled = true
-            superDealButton.isEnabled = true
-            
+            singleTourButton.selectedPackageButtonState(icon: white_CheckMark, font: 20, enabled: false)
+            comboDealButton.unSelectedPackageButtonState(icon: clear_CheckMark, font: 18, enabled: true)
+            superDealButton.unSelectedPackageButtonState(icon: clear_CheckMark, font: 18, enabled: true)
+            deluxePackageButton.unSelectedPackageButtonState(icon: clear_CheckMark, font: 18, enabled: true)
+ 
         case comboDealButton:
-            
             tour_Package_Selected = comboDealButton.currentTitle!
-            singleTourButton.updateButtonIcon("hiddenCheckMark")
-            comboDealButton.updateButtonIcon("whiteCheckMark")
-            superDealButton.updateButtonIcon("hiddenCheckMark")
-            singleTourButton.titleLabel?.font = .systemFont(ofSize: 18)
-            comboDealButton.titleLabel?.font = .boldSystemFont(ofSize: 20)
-            superDealButton.titleLabel?.font = .systemFont(ofSize: 18)
-            singleTourButton.isEnabled = true
-            comboDealButton.isEnabled = false
-            superDealButton.isEnabled = true
-            
+            singleTourButton.unSelectedPackageButtonState(icon: clear_CheckMark, font: 18, enabled: true)
+            comboDealButton.selectedPackageButtonState(icon: white_CheckMark, font: 20, enabled: false)
+            superDealButton.unSelectedPackageButtonState(icon: clear_CheckMark, font: 18, enabled: true)
+            deluxePackageButton.unSelectedPackageButtonState(icon: clear_CheckMark, font: 18, enabled: true)
             
         case superDealButton:
-            
             tour_Package_Selected = superDealButton.currentTitle!
-            singleTourButton.updateButtonIcon("hiddenCheckMark")
-            comboDealButton.updateButtonIcon("hiddenCheckMark")
-            superDealButton.updateButtonIcon("whiteCheckMark")
-            singleTourButton.titleLabel?.font = .systemFont(ofSize: 18)
-            comboDealButton.titleLabel?.font = .systemFont(ofSize: 18)
-            superDealButton.titleLabel?.font = .boldSystemFont(ofSize: 20)
-            singleTourButton.isEnabled = true
-            comboDealButton.isEnabled = true
-            superDealButton.isEnabled = false
+            singleTourButton.unSelectedPackageButtonState(icon: clear_CheckMark, font: 18, enabled: true)
+            comboDealButton.unSelectedPackageButtonState(icon: clear_CheckMark, font: 18, enabled: true)
+            superDealButton.selectedPackageButtonState(icon: white_CheckMark, font: 20, enabled: false)
+            deluxePackageButton.unSelectedPackageButtonState(icon: clear_CheckMark, font: 18, enabled: true)
             
+        case deluxePackageButton:
+            tour_Package_Selected = deluxePackageButton.currentTitle!
+            singleTourButton.unSelectedPackageButtonState(icon: clear_CheckMark, font: 18, enabled: true)
+            comboDealButton.unSelectedPackageButtonState(icon: clear_CheckMark, font: 18, enabled: true)
+            superDealButton.unSelectedPackageButtonState(icon: clear_CheckMark, font: 18, enabled: true)
+            deluxePackageButton.selectedPackageButtonState(icon: white_CheckMark, font: 20, enabled: false)
             
         default:
             return
@@ -444,7 +440,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         navigationItem.title = "Add Reservation"
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barStyle = .black
-        navigationController?.navigationBar.barTintColor = Constants.Design.Color.Primary.Purple
+        navigationController?.navigationBar.barTintColor = Constants.Design.Color.Primary.HeavyGreen
         
         let reservation = UIFont.boldSystemFont(ofSize: 25)
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: reservation]
@@ -542,7 +538,7 @@ extension AddReservationVC {
         
 //        MARK: - Buttons StackViews
         
-        let dealButtonsStackView = UIStackView(arrangedSubviews: [singleTourButton, comboDealButton, superDealButton])
+        let dealButtonsStackView = UIStackView(arrangedSubviews: [singleTourButton, comboDealButton, superDealButton, deluxePackageButton])
         dealButtonsStackView.configureStackView(alignment: nil, distribution: .fillEqually, spacing: 8)
         
         let selectPackageStackView = UIStackView(arrangedSubviews: [selectPackageLabel, dealButtonsStackView])
@@ -550,9 +546,7 @@ extension AddReservationVC {
         selectPackageStackView.axis = .vertical
         
         view.addSubview(selectPackageStackView)
-        selectPackageStackView.anchor(top: stepperStackView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 30, paddingLeft: 30, paddingBottom: 0, paddingRight: 30, width: 0, height: 105)
-        
-
+        selectPackageStackView.anchor(top: stepperStackView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 30, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 105)
     }
 }
 

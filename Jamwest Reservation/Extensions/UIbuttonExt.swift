@@ -89,5 +89,39 @@ extension UIButton {
            self.setBackgroundImage(colorImage, for: forState)
          }
     
+
+    func selectedPackageButtonState(icon: String?, font: CGFloat?, enabled: Bool!) {
+        
+        if let icon = icon {
+            setImage(#imageLiteral(resourceName: icon).withRenderingMode(.alwaysOriginal), for: .normal)
+            imageView?.contentMode = .scaleAspectFit
+        }
+        
+         if let font = font {
+            titleLabel?.font = .boldSystemFont(ofSize: font)
+        }
+        
+        if let enabled = enabled {
+            self.isEnabled = enabled
+        }
+        
+    }
+    
+    func unSelectedPackageButtonState(icon: String?, font: CGFloat?, enabled: Bool!) {
+        
+        if let icon = icon {
+            setImage(#imageLiteral(resourceName: icon).withRenderingMode(.alwaysOriginal), for: .normal)
+            imageView?.contentMode = .scaleAspectFit
+        }
+        
+        if let font = font {
+            titleLabel?.font = .systemFont(ofSize: font)
+        }
+        
+        if let enabled = enabled {
+            self.isEnabled = enabled
+        }
+        
+    }
 }
 

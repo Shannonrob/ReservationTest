@@ -9,14 +9,22 @@
 import Foundation
 import UIKit
 
+// Fonts
 let avenirNext_Demibold = "AvenirNext-DemiBold"
 let avenirNext_Heavy = "AvenirNext-Heavy"
 let helveticaNeue_Bold = "HelveticaNeue-Bold"
 let avenirNext_Medium = "AvenirNext-Medium"
 let avenirNext_Regular = "AvenirNext-Regular"
+
+// Button title
 let single_Tour = "Single Tour"
 let combo_Deal = "Combo Deal"
 let super_Deal = "Super Deal"
+let deluxe_Package = "Deluxe"
+
+// Image name
+let white_CheckMark = "whiteCheckMark"
+let clear_CheckMark = "hiddenCheckMark"
 
 var tour_Package_Selected = String()
 
@@ -30,6 +38,11 @@ struct Constants {
             struct Primary {
                 static let Orange = UIColor(red: 242/255, green: 125/255, blue: 15/255, alpha: 1)
                 static let Purple = UIColor(displayP3Red: 17/255, green: 16/255, blue: 38/255, alpha: 95)
+//                static let HeavyGreen = UIColor(displayP3Red: 0/255, green: 162/255, blue: 138/255, alpha: 1)
+                static let HeavyGreen = UIColor(displayP3Red: 0/255, green: 81/255, blue: 82/255, alpha: 1)
+                static let LightPurple = UIColor(displayP3Red: 17/255, green: 16/255, blue: 95/255, alpha: 100)
+                static let MenuBlue = UIColor(displayP3Red: 17/255, green: 16/255, blue: 160/255, alpha: 100)
+                
             }
             
             struct Border {

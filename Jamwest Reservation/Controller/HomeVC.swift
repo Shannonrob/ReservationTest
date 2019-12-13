@@ -48,15 +48,10 @@
     
     let rightView: UIView = {
         let view = UIView()
-        view.backgroundColor = Constants.Design.Color.Primary.Purple
+        view.backgroundColor = Constants.Design.Color.Hue.Green
         return view
     }()
     
-    let bottomView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .lightGray
-        return view
-    }()
     
  //    MARK: - Init
      
@@ -80,7 +75,7 @@
         
         let reservation = UIFont.boldSystemFont(ofSize: 25)
 //        let reservation = UIFont.init(name:"Helvetica neue", size: 25)!
-        navigationController?.navigationBar.barTintColor = Constants.Design.Color.Primary.Purple
+        navigationController?.navigationBar.barTintColor = Constants.Design.Color.Primary.HeavyGreen
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barStyle = .black
         
@@ -94,21 +89,19 @@
     
 //      UIViews
         
-        view.addSubview(rightView)
-        rightView.anchor(top: view.topAnchor, left: nil, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: view.frame.width / 2, height: 0)
-        
-//        view.addSubview(bottomView)
-//        bottomView.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 75)
+//        view.addSubview(rightView)
+//        rightView.anchor(top: view.topAnchor, left: nil, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: view.frame.width / 2, height: 0)
+    
     
 //    UILabels
         
-        let greetingLabelsStackView = UIStackView(arrangedSubviews: [greetingLabel, selectGroupLabel])
-        greetingLabelsStackView.axis = .vertical
-        greetingLabelsStackView.configureStackView(alignment: .center, distribution: .equalSpacing, spacing: 60)
-        
-        rightView.addSubview(greetingLabelsStackView)
-        greetingLabelsStackView.anchor(top: rightView.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 120, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        greetingLabelsStackView.centerXAnchor.constraint(equalTo: rightView.centerXAnchor).isActive = true
+//        let greetingLabelsStackView = UIStackView(arrangedSubviews: [greetingLabel, selectGroupLabel])
+//        greetingLabelsStackView.axis = .vertical
+//        greetingLabelsStackView.configureStackView(alignment: .center, distribution: .equalSpacing, spacing: 60)
+//
+//        rightView.addSubview(greetingLabelsStackView)
+//        greetingLabelsStackView.anchor(top: rightView.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 120, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+//        greetingLabelsStackView.centerXAnchor.constraint(equalTo: rightView.centerXAnchor).isActive = true
     
     }
      
