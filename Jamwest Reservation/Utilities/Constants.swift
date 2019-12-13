@@ -20,11 +20,12 @@ let avenirNext_Regular = "AvenirNext-Regular"
 let single_Tour = "Single Tour"
 let combo_Deal = "Combo Deal"
 let super_Deal = "Super Deal"
-let deluxe_Package = "Deluxe"
+let deluxe_Package = "Deluxe Pkg"
 
 // Image name
 let white_CheckMark = "whiteCheckMark"
 let clear_CheckMark = "hiddenCheckMark"
+let orange_Race_Flag_Icon = "orangeRaceFlagIcon"
 
 var tour_Package_Selected = String()
 

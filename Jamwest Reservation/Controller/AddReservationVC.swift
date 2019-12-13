@@ -341,7 +341,6 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     @objc func handleFormValidation() {
         
        formValidation()
-        
     }
     
     @objc func handleSelectedTourPackage(_ sender: UIButton) {
@@ -414,6 +413,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 
         switch textField {
+            
         case hotelNameTextField:
             textField.resignFirstResponder()
             reservationDateTextfield.becomeFirstResponder()

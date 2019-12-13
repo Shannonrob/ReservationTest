@@ -31,4 +31,8 @@ struct Alert {
          showBasicAlert(on: vc, with: "Exceeded Package Limit", message: "This package limits a maximum of 3 tours.")
     }
     
+    static func showOverLimitDeluxePackageTourSelections(on vc: UIViewController) {
+         showBasicAlert(on: vc, with: "Exceeded Package Limit", message: "This package limits a maximum of 4 tours.")
+    }
+    
 }
