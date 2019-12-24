@@ -35,4 +35,8 @@ struct Alert {
          showBasicAlert(on: vc, with: "Exceeded Package Limit", message: "This package limits a maximum of 4 tours.")
     }
     
+    static func showSuccessfullyCreatedReservation(on vc: UIViewController) {
+         showBasicAlert(on: vc, with: "Success", message: "Your reservation was created.")
+    }
+    
 }

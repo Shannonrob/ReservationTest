@@ -12,8 +12,6 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
 
 //    MARK: - Properties
     
-    var delegate: AddReservationVCDelegate?
-    
     var atvSelected = false
     var horseBackSelected = false
     var safariSelected = false

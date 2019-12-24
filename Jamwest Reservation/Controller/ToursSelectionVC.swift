@@ -358,12 +358,17 @@ class ToursSelectionVC: UIViewController{
         switch tour_Package_Selected {
         case single_Tour:
             print(singleTourPackageSelection)
+            Alert.showSuccessfullyCreatedReservation(on: self)
             
         case combo_Deal:
             
             if comboDealToursArray.count > 2 {
                 Alert.showOverLimitComboDealTourSelections(on: self)
+            } else {
+                Alert.showSuccessfullyCreatedReservation(on: self)
             }
+            
+//            check what does this loop actual do
             
             for element in comboDealToursArray {
                 print(element.currentTitle!)
@@ -373,12 +378,16 @@ class ToursSelectionVC: UIViewController{
             
             if superDealPackageArray.count > 3 {
                 Alert.showOverLimitSuperDealTourSelections(on: self)
+            } else {
+                Alert.showSuccessfullyCreatedReservation(on: self)
             }
             
         case deluxe_Package:
             
             if deluxePackageArray.count > 4 {
                 Alert.showOverLimitDeluxePackageTourSelections(on: self)
+            } else {
+                Alert.showSuccessfullyCreatedReservation(on: self)
             }
             
         default:

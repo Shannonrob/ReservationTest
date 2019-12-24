@@ -12,7 +12,7 @@ import Firebase
 class ContainerVC: UIViewController {
  
 //    MARK: - Properties
-    
+
     var menuVC: MenuVC!
     var centerController: UIViewController!
     var isExpanded = false
@@ -23,9 +23,9 @@ class ContainerVC: UIViewController {
         super.viewDidLoad()
         
         if Auth.auth().currentUser == nil {
-            presentSignInVC()
+            presentLogInVC()
         } else {
-            configureHomeVC()
+            presentHomeVC()
         }
     }
     
@@ -43,7 +43,7 @@ class ContainerVC: UIViewController {
     
 //    MARK: - Handlers
     
-    func configureHomeVC() {
+    func presentHomeVC() {
         let homeVC = HomeVC()
         homeVC.delegate = self
         centerController = UINavigationController(rootViewController: homeVC)
@@ -51,11 +51,9 @@ class ContainerVC: UIViewController {
         view.addSubview(centerController.view)
         addChild(centerController)
         centerController.didMove(toParent: self)
-        
-
     }
-//    Switch rootViewController
-    func presentSignInVC() {
+    
+    func presentLogInVC() {
         let loginVC = LoginVC()
         centerController = UINavigationController(rootViewController: loginVC)
 
@@ -107,11 +105,11 @@ class ContainerVC: UIViewController {
         case .Reservations:
             let addReservationVC = AddReservationVC()
             present(UINavigationController(rootViewController: addReservationVC), animated: true, completion: nil)
-        case .Settings:
+        case .LogOut:
             do
             {
                  try Auth.auth().signOut()
-               presentSignInVC()
+               presentLogInVC()
             }
             catch let error as NSError
             {
@@ -138,3 +136,4 @@ extension ContainerVC: HomeVcDelegate {
         animatePanel(shouldExpand: isExpanded, menuOption: menuOption)
     }
 }
+

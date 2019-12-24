@@ -13,6 +13,8 @@ class LoginVC: UIViewController {
     
     var window: UIWindow?
     
+//    MARK: - Textfields
+    
    let emailTextField: UITextField = {
       
     let textfield = UITextField()
@@ -30,6 +32,8 @@ class LoginVC: UIViewController {
      textfield.addTarget(self, action: #selector(formValidation), for: .editingChanged)
      return textfield
     }()
+    
+//    MARK: - Buttons
     
     let loginButton: UIButton = {
         let button = UIButton(type: .system)
@@ -76,14 +80,18 @@ class LoginVC: UIViewController {
         dontHaveAccountButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 30, paddingRight: 0, width: 0, height: 50)
     }
    
+//    MARK: - Handlers
+    
     @objc func handleShowSignUp() {
         let signUpVC = SignUpVC()
-        clearTextFields()
         
         navigationController?.pushViewController(signUpVC, animated: true)
     }
     
     @objc func handleLogin() {
+        
+        view.endEditing(true)
+        
         guard let email = emailTextField.text,
               let password = passwordTextField.text else { return }
         
@@ -95,12 +103,9 @@ class LoginVC: UIViewController {
                 self.incorrectPasswordLabel.isHidden = false
                 return
             }
-            
 //            handle success
-             
-            
-            self.clearTextFields()
-        } 
+            self.presenContainerVC()
+        }
     }
     
     @objc func formValidation() {
@@ -116,12 +121,7 @@ class LoginVC: UIViewController {
            loginButton.backgroundColor = UIColor(red: 242/255, green: 125/255, blue: 15/255, alpha: 1)
        }
     
-    func clearTextFields() {
-        
-        emailTextField.text = nil
-        passwordTextField.text = nil
-        formValidation()
-    }
+//    MARK: - Helper Functions
     
     func configureViewComponents() {
         let stackView = UIStackView(arrangedSubviews: [emailTextField,passwordTextField,loginButton])
@@ -139,4 +139,12 @@ class LoginVC: UIViewController {
         incorrectPasswordLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
+    func presenContainerVC() {
+        
+        let containerVc = ContainerVC()
+        view.addSubview(containerVc.view)
+        addChild(containerVc)
+        containerVc.didMove(toParent: self)
+        
+    }
 }

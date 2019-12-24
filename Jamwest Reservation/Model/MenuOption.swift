@@ -13,14 +13,14 @@ enum MenuOption: Int, CustomStringConvertible {
     case Submit
     case Waivers
     case Reservations
-    case Settings
+    case LogOut
     
     var description: String{
         switch self {
         case .Submit: return "SUBMIT EMAILS"
         case.Waivers: return "WAIVERS"
         case.Reservations: return "ADD RESERVATIONS"
-        case.Settings: return "SIGN OUT"
+        case.LogOut: return "SIGN OUT"
             
         }
     }
@@ -30,7 +30,7 @@ enum MenuOption: Int, CustomStringConvertible {
           case .Submit: return UIImage(named: "Email") ?? UIImage()
           case.Waivers: return UIImage(named: "Waivers") ?? UIImage()
           case.Reservations: return UIImage(named: "Calender") ?? UIImage()
-          case.Settings: return UIImage(named: "Settings") ?? UIImage()
+          case.LogOut: return UIImage(named: "Settings") ?? UIImage()
               
           }
       }
