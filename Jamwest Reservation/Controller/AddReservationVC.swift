@@ -272,10 +272,8 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         
         stepperValueLabel.text = "\((Int(paxStepper.value )))"
         textFieldDelegateStatus()
-        
 
     }
-    
     
     
 //    MARK: - Selectors
@@ -475,6 +473,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         
        navigationItem.rightBarButtonItem?.isEnabled = true
     }
+    
 }
 
 

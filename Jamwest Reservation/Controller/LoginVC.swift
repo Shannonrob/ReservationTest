@@ -12,6 +12,7 @@ import Firebase
 class LoginVC: UIViewController {
     
     var window: UIWindow?
+    var centerController: UIViewController!
     
 //    MARK: - Textfields
     
@@ -71,8 +72,7 @@ class LoginVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.init(displayP3Red: 17/255, green: 16/255, blue: 38/255, alpha: 95)
-        
+        view.backgroundColor = Constants.Design.Color.Primary.HeavyGreen
         navigationController?.navigationBar.isHidden = true
         configureViewComponents()
         
@@ -83,8 +83,8 @@ class LoginVC: UIViewController {
 //    MARK: - Handlers
     
     @objc func handleShowSignUp() {
+       
         let signUpVC = SignUpVC()
-        
         navigationController?.pushViewController(signUpVC, animated: true)
     }
     
@@ -139,12 +139,16 @@ class LoginVC: UIViewController {
         incorrectPasswordLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
+
     func presenContainerVC() {
         
-        let containerVc = ContainerVC()
-        view.addSubview(containerVc.view)
-        addChild(containerVc)
-        containerVc.didMove(toParent: self)
-        
+        let containerVC = ContainerVC()
+        let navigationController = UINavigationController(rootViewController: containerVC)
+        view.addSubview(navigationController.view)
+        addChild(navigationController)
+        navigationController.didMove(toParent: self)
+        navigationController.setNavigationBarHidden(true, animated: false)
     }
+    
+    
 }

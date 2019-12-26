@@ -21,9 +21,9 @@ class ContainerVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+      
         if Auth.auth().currentUser == nil {
-            presentLogInVC()
+            presentLoginVC()
         } else {
             presentHomeVC()
         }
@@ -53,7 +53,7 @@ class ContainerVC: UIViewController {
         centerController.didMove(toParent: self)
     }
     
-    func presentLogInVC() {
+    func presentLoginVC() {
         let loginVC = LoginVC()
         centerController = UINavigationController(rootViewController: loginVC)
 
@@ -61,6 +61,7 @@ class ContainerVC: UIViewController {
         addChild(centerController)
         centerController.didMove(toParent: self)
     }
+    
     
     func configureMenuVC() {
         if menuVC == nil {
@@ -70,6 +71,26 @@ class ContainerVC: UIViewController {
             view.insertSubview(menuVC.view, at: 0)
             addChild(menuVC)
             menuVC.didMove(toParent: self)
+        }
+    }
+    
+    func presentWaiverVC () {
+        
+        let waiverVC = WaiverVC()
+        let navigationController = UINavigationController(rootViewController: waiverVC)
+        navigationController.modalPresentationStyle = .fullScreen
+        present(navigationController, animated: true)
+    }
+    
+    func handleLogOut() {
+        
+        do
+        {
+            try Auth.auth().signOut()
+            presentLoginVC()
+        }
+        catch let error as NSError {
+            print(error.localizedDescription)
         }
     }
     
@@ -93,37 +114,29 @@ class ContainerVC: UIViewController {
         animateStatusBar()
     }
     
+    
     func didSelectMenuOption(menuOption: MenuOption){
         switch menuOption{
         case .Submit:
             print("Submit email")
         case .Waivers:
-            let waiverVC = WaiverVC()
-            let navigationController = UINavigationController(rootViewController: waiverVC)
-            navigationController.modalPresentationStyle = .fullScreen
-            present(navigationController, animated: true)
+            presentWaiverVC()
         case .Reservations:
             let addReservationVC = AddReservationVC()
             present(UINavigationController(rootViewController: addReservationVC), animated: true, completion: nil)
         case .LogOut:
-            do
-            {
-                 try Auth.auth().signOut()
-               presentLogInVC()
-            }
-            catch let error as NSError
-            {
-                print (error.localizedDescription)
-            }
-
+           handleLogOut()
         }
     }
+    
+    
     
     func animateStatusBar() {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
             self.setNeedsStatusBarAppearanceUpdate()
       }, completion: nil)
     }
+    
 }
 
 extension ContainerVC: HomeVcDelegate {

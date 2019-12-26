@@ -44,14 +44,7 @@
         return label
     
     }()
-//    MARK: - UIViews
-    
-    let rightView: UIView = {
-        let view = UIView()
-        view.backgroundColor = Constants.Design.Color.Hue.Green
-        return view
-    }()
-    
+
     
  //    MARK: - Init
      
@@ -62,6 +55,7 @@
         view.backgroundColor = Constants.Design.Color.Background.FadeGray
         
         configureNavigationBar()
+        
      }
      
  //    MARK: - Handlers
@@ -76,7 +70,7 @@
         let reservation = UIFont.boldSystemFont(ofSize: 25)
 //        let reservation = UIFont.init(name:"Helvetica neue", size: 25)!
         navigationController?.navigationBar.barTintColor = Constants.Design.Color.Primary.HeavyGreen
-        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.barStyle = .black
         
         navigationItem.title = "Reservation"
@@ -86,7 +80,7 @@
     
 //    MARK: - Contraints
     func configureViewConstraints() {
-    
+       
 //      UIViews
         
 //        view.addSubview(rightView)
@@ -104,5 +98,6 @@
 //        greetingLabelsStackView.centerXAnchor.constraint(equalTo: rightView.centerXAnchor).isActive = true
     
     }
-     
+    
+ 
  }

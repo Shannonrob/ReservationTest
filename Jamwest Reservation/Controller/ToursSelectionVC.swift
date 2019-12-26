@@ -368,7 +368,7 @@ class ToursSelectionVC: UIViewController{
                 Alert.showSuccessfullyCreatedReservation(on: self)
             }
             
-//            check what does this loop actual do
+//            check what does this loop actually do
             
             for element in comboDealToursArray {
                 print(element.currentTitle!)

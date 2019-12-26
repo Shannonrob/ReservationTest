@@ -82,7 +82,7 @@ class SignUpVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-         view.backgroundColor = UIColor.init(displayP3Red: 17/255, green: 16/255, blue: 38/255, alpha: 95)
+         view.backgroundColor = Constants.Design.Color.Primary.HeavyGreen
         
         configureViewComponents()
         
@@ -91,13 +91,12 @@ class SignUpVC: UIViewController {
     }
     
     @objc func handleShowLogIn() {
-        
-        clearTextFields()
-        
         _ = navigationController?.popViewController(animated: true)
     }
     
     @objc func handleSignUp() {
+        
+        view.endEditing(true)
         
         guard let email = emailTextField.text,
               let password = passwordTextfield.text,
@@ -115,13 +114,12 @@ class SignUpVC: UIViewController {
             let dictionaryValues = ["username": username]
             let values = [uid: dictionaryValues]
             
-//            save user info to dataBase
+//            save user info to dataBase and log user in
             Database.database().reference().child("users").updateChildValues(values) { (error, ref) in
-                print("Successfully created user and saver information to datatbase")
-                self.clearTextFields()
+         
+                self.presenContainerVC()
             }
         }
-        
     }
     
     @objc func formValidation() {
@@ -151,12 +149,15 @@ class SignUpVC: UIViewController {
         }
     }
     
-    func clearTextFields() {
+    
+    func presenContainerVC() {
         
-        emailTextField.text = nil
-        userNameTextfield.text = nil
-        passwordTextfield.text = nil
-        formValidation()
+        let containerVC = ContainerVC()
+        let navigationController = UINavigationController(rootViewController: containerVC)
+        view.addSubview(navigationController.view)
+        addChild(navigationController)
+        navigationController.didMove(toParent: self)
+        navigationController.setNavigationBarHidden(true, animated: false)
     }
 
     func configureViewComponents() {
