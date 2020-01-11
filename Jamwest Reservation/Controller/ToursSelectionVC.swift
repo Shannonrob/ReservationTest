@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import Firebase
 
-class ToursSelectionVC: UIViewController{
+class ToursSelectionVC: UIViewController {
     
 
 //    MARK: - Properties
@@ -34,9 +35,7 @@ class ToursSelectionVC: UIViewController{
     
    let atvTourButton: UIButton = {
 
-   
-    let button = UIButton(type: .system)
-   
+       let button = UIButton(type: .system)
        button.configureButtonWithIcon("orangeATV", title: "ATV Tour", titleColor: .gray, buttonColor: .white, cornerRadius: 6)
        button.titleLabel?.font = .systemFont(ofSize: 24)
        button.layer.borderWidth = 0.80
@@ -112,7 +111,7 @@ class ToursSelectionVC: UIViewController{
         button.titleLabel?.font = .boldSystemFont(ofSize: 24)
         button.isEnabled = false
         button.addTarget(self, action: #selector(handleSubmitButton), for: .touchUpInside)
-           return button
+        return button
        }()
    
     
@@ -356,9 +355,11 @@ class ToursSelectionVC: UIViewController{
     @objc func handleSubmitButton() {
         
         switch tour_Package_Selected {
+            
         case single_Tour:
             print(singleTourPackageSelection)
             Alert.showSuccessfullyCreatedReservation(on: self)
+            submitReservation()
             
         case combo_Deal:
             
@@ -366,10 +367,10 @@ class ToursSelectionVC: UIViewController{
                 Alert.showOverLimitComboDealTourSelections(on: self)
             } else {
                 Alert.showSuccessfullyCreatedReservation(on: self)
+                submitReservation()
             }
             
-//            check what does this loop actually do
-            
+            // provides to current value of the selected package array
             for element in comboDealToursArray {
                 print(element.currentTitle!)
             }
@@ -380,6 +381,12 @@ class ToursSelectionVC: UIViewController{
                 Alert.showOverLimitSuperDealTourSelections(on: self)
             } else {
                 Alert.showSuccessfullyCreatedReservation(on: self)
+                submitReservation()
+            }
+            
+            // provides to current value of the selected package array
+            for element in superDealPackageArray {
+                print(element.currentTitle!)
             }
             
         case deluxe_Package:
@@ -388,8 +395,14 @@ class ToursSelectionVC: UIViewController{
                 Alert.showOverLimitDeluxePackageTourSelections(on: self)
             } else {
                 Alert.showSuccessfullyCreatedReservation(on: self)
+                submitReservation()
             }
             
+            // provides to current value of the selected package array
+            for element in deluxePackageArray {
+                print(element.currentTitle!)
+            }
+                        
         default:
             return
             
@@ -397,7 +410,26 @@ class ToursSelectionVC: UIViewController{
     }
     
 //    MARK: - Helper Functions
+    
+    func submitReservation() {
 
+        // reservation info
+        let values = [ "hotel": hotel_Name,
+                       "groupName": group_Name,
+                       "reservationDate": reservation_Date,
+                       "voucherNum": voucher_Number,
+                       "tourRep": tour_Rep,
+                       "tourComp": tour_Company,
+                       "pax": pax_Quantity] as [String: Any]
+        // post id
+        let postId = RESERVATION_REF.childByAutoId()
+        
+        // upload information to dataBase
+        postId.updateChildValues(values) { (err, ref) in
+        
+        }
+    }
+    
     func updateTourLabel() {
         if tour_Package_Selected == single_Tour {
             tourLabel.text = "Please select reserved tour"

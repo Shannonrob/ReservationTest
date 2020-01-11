@@ -6,8 +6,13 @@
 //  Copyright © 2019 Shannon Robinson. All rights reserved.
 //
 
-import Foundation
+import Firebase
 import UIKit
+
+// Database Refences
+let DB_REF = Database.database().reference()
+let USER_REF = DB_REF.child("users")
+let RESERVATION_REF = DB_REF.child("reservations")
 
 // Fonts
 let avenirNext_Demibold = "AvenirNext-DemiBold"
@@ -27,7 +32,17 @@ let white_CheckMark = "whiteCheckMark"
 let clear_CheckMark = "hiddenCheckMark"
 let orange_Race_Flag_Icon = "orangeRaceFlagIcon"
 
+// Notifying ToursSelectionVC which package was selected in AddReservationVC
+// Passing data from AddReservationVC to ToursSelectionVC
 var tour_Package_Selected = String()
+
+var hotel_Name = String()
+var group_Name = String()
+var tour_Rep = String()
+var tour_Company = String()
+var reservation_Date = String()
+var voucher_Number = String()
+var pax_Quantity = Int()
 
 
 struct Constants {

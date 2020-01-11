@@ -115,7 +115,7 @@ class SignUpVC: UIViewController {
             let values = [uid: dictionaryValues]
             
 //            save user info to dataBase and log user in
-            Database.database().reference().child("users").updateChildValues(values) { (error, ref) in
+            USER_REF.updateChildValues(values) { (error, ref) in
          
                 self.presenContainerVC()
             }

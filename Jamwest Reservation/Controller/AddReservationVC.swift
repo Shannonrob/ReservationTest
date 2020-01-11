@@ -19,7 +19,6 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     var pushKartSelected = false
     
     
-    
 //    MARK: - Labels
      let hotelNameLabel: UILabel = {
     
@@ -186,7 +185,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         textfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeDate"))
         textfield.layer.borderWidth = 1
         textfield.layer.borderColor = Constants.Design.Color.Border.Blue
-        textfield.addTarget(self, action: #selector(handleDateSelection), for: .editingDidBegin)
+        textfield.addTarget(self, action: #selector(configureDatePicker), for: .editingDidBegin)
         return textfield
     }()
     
@@ -283,12 +282,15 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     }
     
     @objc func handleNextButton() {
-    
+        
+//        passing data to ToursSelectionVC
+        passData()
+        
         let toursSelectionVC = ToursSelectionVC()
         present(UINavigationController(rootViewController: toursSelectionVC), animated: true, completion: nil)
     }
     
-    @objc func handleDateSelection() {
+    @objc func configureDatePicker() {
 //        Add datePicker to popover
 
         reservationDateTextfield.resignFirstResponder()
@@ -296,7 +298,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         toolBar.barStyle = UIBarStyle.default
         let space = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(handleSelectedReservationDate))
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(handleDateSelection))
         toolBar.barTintColor = .lightGray
         toolBar.tintColor = Constants.Design.Color.Primary.Purple
         toolBar.setItems([space, doneButton], animated: false)
@@ -323,7 +325,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         self.present(popoverViewController, animated: true, completion: nil)
     }
     
-    @objc func handleSelectedReservationDate() {
+    @objc func handleDateSelection() {
     
         formatDate()
         formValidation()
@@ -378,6 +380,34 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     }
 
 //    MARK: - Helper Functions
+    
+    func passData() {
+//        first test
+//        hotel_Name = hotelNameTextField.text!
+//        group_Name = groupNameTextfield.text!
+//        reservation_Date = reservationDateTextfield.text!
+//        voucher_Number = vourcherTextfield.text ?? ""
+//        tour_Rep = tourRepTextfield.text ?? ""
+//        tour_Company = tourCompanyTextfield.text ?? ""
+//        pax_Quantity = Int(paxStepper.value)
+        
+//        second test not including pax quantity
+        guard
+            let hotel = hotelNameTextField.text,
+            let group = groupNameTextfield.text,
+            let date = reservationDateTextfield.text,
+            let voucherNumber = vourcherTextfield.text,
+            let tourRep = tourRepTextfield.text,
+            let tourCompany = tourCompanyTextfield.text else { return }
+        
+            hotel_Name = hotel
+            group_Name = group
+            reservation_Date = date
+            voucher_Number = voucherNumber
+            tour_Rep = tourRep
+            tour_Company = tourCompany
+            pax_Quantity = Int(paxStepper.value)
+    }
     
     func textFieldDelegateStatus() {
         
@@ -455,6 +485,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .short
         reservationDateTextfield.text = dateFormatter.string(from: datePicker.date)
+
         dismiss(animated: true, completion: nil)
     }
     
@@ -470,10 +501,8 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
            navigationItem.rightBarButtonItem?.isEnabled = false
            return
        }
-        
        navigationItem.rightBarButtonItem?.isEnabled = true
     }
-    
 }
 
 

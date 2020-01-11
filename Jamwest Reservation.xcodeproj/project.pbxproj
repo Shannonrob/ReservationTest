@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		850380792381A37F00E14BB3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850380782381A37F00E14BB3 /* Constants.swift */; };
 		8569B9E02391AAD2004707A2 /* ToursSelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8569B9DF2391AAD2004707A2 /* ToursSelectionVC.swift */; };
-		858A5620237AFCF100624FB8 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858A561F237AFCF100624FB8 /* DataService.swift */; };
 		858A5624237B1E3500624FB8 /* AddReservationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858A5623237B1E3500624FB8 /* AddReservationVC.swift */; };
 		85D18A1F236F040C00F06441 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D18A1E236F040C00F06441 /* AppDelegate.swift */; };
 		85D18A21236F040C00F06441 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D18A20236F040C00F06441 /* SceneDelegate.swift */; };
@@ -39,7 +38,6 @@
 		30254A40F3AF3A74412A7DFC /* Pods-Jamwest Reservation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Jamwest Reservation.release.xcconfig"; path = "Target Support Files/Pods-Jamwest Reservation/Pods-Jamwest Reservation.release.xcconfig"; sourceTree = "<group>"; };
 		850380782381A37F00E14BB3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8569B9DF2391AAD2004707A2 /* ToursSelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToursSelectionVC.swift; sourceTree = "<group>"; };
-		858A561F237AFCF100624FB8 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		858A5623237B1E3500624FB8 /* AddReservationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReservationVC.swift; sourceTree = "<group>"; };
 		85D18A1B236F040C00F06441 /* Jamwest Reservation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Jamwest Reservation.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		85D18A1E236F040C00F06441 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -83,7 +81,6 @@
 		858A561E237AFCC300624FB8 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				858A561F237AFCF100624FB8 /* DataService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -324,7 +321,6 @@
 				85F5C76423958F3600BDBA25 /* Alert.swift in Sources */,
 				85D18A40236F29A100F06441 /* MenuOptionCell.swift in Sources */,
 				85F932E2239BF45100549000 /* UIStackviewExt.swift in Sources */,
-				858A5620237AFCF100624FB8 /* DataService.swift in Sources */,
 				85D18A4223707ADD00F06441 /* MenuOption.swift in Sources */,
 				85D18A38236F05B900F06441 /* ContainerVC.swift in Sources */,
 				85D18A3A236F05C400F06441 /* HomeVC.swift in Sources */,
