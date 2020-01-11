@@ -12,12 +12,14 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
 
 //    MARK: - Properties
     
-    var atvSelected = false
-    var horseBackSelected = false
-    var safariSelected = false
-    var zipLineSelected = false
-    var pushKartSelected = false
+//    need to identify where are these properties used else delete
     
+//    var atvSelected = false
+//    var horseBackSelected = false
+//    var safariSelected = false
+//    var zipLineSelected = false
+//    var pushKartSelected = false
+//
     
 //    MARK: - Labels
      let hotelNameLabel: UILabel = {
@@ -282,12 +284,8 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     }
     
     @objc func handleNextButton() {
-        
-//        passing data to ToursSelectionVC
-        passData()
-        
-        let toursSelectionVC = ToursSelectionVC()
-        present(UINavigationController(rootViewController: toursSelectionVC), animated: true, completion: nil)
+
+        submitReservation()
     }
     
     @objc func configureDatePicker() {
@@ -381,32 +379,35 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
 
 //    MARK: - Helper Functions
     
-    func passData() {
-//        first test
-//        hotel_Name = hotelNameTextField.text!
-//        group_Name = groupNameTextfield.text!
-//        reservation_Date = reservationDateTextfield.text!
-//        voucher_Number = vourcherTextfield.text ?? ""
-//        tour_Rep = tourRepTextfield.text ?? ""
-//        tour_Company = tourCompanyTextfield.text ?? ""
-//        pax_Quantity = Int(paxStepper.value)
+    func submitReservation() {
         
-//        second test not including pax quantity
         guard
-            let hotel = hotelNameTextField.text,
-            let group = groupNameTextfield.text,
-            let date = reservationDateTextfield.text,
-            let voucherNumber = vourcherTextfield.text,
-            let tourRep = tourRepTextfield.text,
-            let tourCompany = tourCompanyTextfield.text else { return }
+           let hotel = hotelNameTextField.text,
+           let group = groupNameTextfield.text,
+           let date = reservationDateTextfield.text,
+           let voucherNumber = vourcherTextfield.text,
+           let tourRep = tourRepTextfield.text,
+           let tourCompany = tourCompanyTextfield.text else { return }
+           let paxQuantity = paxStepper.value
+       
         
-            hotel_Name = hotel
-            group_Name = group
-            reservation_Date = date
-            voucher_Number = voucherNumber
-            tour_Rep = tourRep
-            tour_Company = tourCompany
-            pax_Quantity = Int(paxStepper.value)
+    // reservation info
+          let values = [ hotel_Name: hotel,
+                         group_Name: group,
+                         reservation_Date: date,
+                         voucher_Number: voucherNumber,
+                         tour_Rep: tourRep,
+                         tour_Company: tourCompany,
+                         pax: paxQuantity] as [String: Any]
+          // post id
+          let reservation = RESERVATION_REF.childByAutoId()
+          
+          // upload information to dataBase
+        reservation.updateChildValues(values) { (err, ref) in
+            
+           let toursSelectionVC = ToursSelectionVC()
+            self.present(UINavigationController(rootViewController: toursSelectionVC), animated: true, completion: nil)
+        }
     }
     
     func textFieldDelegateStatus() {

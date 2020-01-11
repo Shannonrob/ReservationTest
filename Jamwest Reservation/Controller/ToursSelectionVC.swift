@@ -170,38 +170,38 @@ class ToursSelectionVC: UIViewController {
     
     @objc func handleDrivingExperienceTour() {
           
-              updateSelectionFont(button: drivingExperienceButton)
+          updateSelectionFont(button: drivingExperienceButton)
+          
+          switch tour_Package_Selected {
               
-              switch tour_Package_Selected {
-                  
-              case single_Tour:
-                  atvTourButton.isSelected = false
-                  atvTourButton.titleLabel?.font = .systemFont(ofSize: 24)
-                  horseBackRidingTourButton.isSelected = false
-                  horseBackRidingTourButton.titleLabel?.font = .systemFont(ofSize: 24)
-                  pushKartTourButton.isSelected = false
-                  pushKartTourButton.titleLabel?.font = .systemFont(ofSize: 24)
-                  safariTourButton.isSelected = false
-                  safariTourButton.titleLabel?.font = .systemFont(ofSize: 24)
-                  singleTourPackageSelection = drivingExperienceButton.currentTitle!
-                  configureSingleTourPackageSelection()
-                  
-              case combo_Deal:
-                  updateComboDealArray(button: drivingExperienceButton)
-                  configureComboDealPackageTours()
-                  
-              case super_Deal:
-                  updateSuperDealArray(button: drivingExperienceButton)
-                  configureSuperDealPackageTours()
-                  
-              case deluxe_Package:
-                  updateDeluxePackageArray(button: drivingExperienceButton)
-                  configureDeluxePackageTours()
-                  
-              default:
-                  return
-              }
+          case single_Tour:
+              atvTourButton.isSelected = false
+              atvTourButton.titleLabel?.font = .systemFont(ofSize: 24)
+              horseBackRidingTourButton.isSelected = false
+              horseBackRidingTourButton.titleLabel?.font = .systemFont(ofSize: 24)
+              pushKartTourButton.isSelected = false
+              pushKartTourButton.titleLabel?.font = .systemFont(ofSize: 24)
+              safariTourButton.isSelected = false
+              safariTourButton.titleLabel?.font = .systemFont(ofSize: 24)
+              singleTourPackageSelection = drivingExperienceButton.currentTitle!
+              configureSingleTourPackageSelection()
+              
+          case combo_Deal:
+              updateComboDealArray(button: drivingExperienceButton)
+              configureComboDealPackageTours()
+              
+          case super_Deal:
+              updateSuperDealArray(button: drivingExperienceButton)
+              configureSuperDealPackageTours()
+              
+          case deluxe_Package:
+              updateDeluxePackageArray(button: drivingExperienceButton)
+              configureDeluxePackageTours()
+              
+          default:
+              return
           }
+      }
     
     @objc func handleHorseBackRidingTour() {
         
@@ -354,80 +354,85 @@ class ToursSelectionVC: UIViewController {
     
     @objc func handleSubmitButton() {
         
-        switch tour_Package_Selected {
-            
-        case single_Tour:
-            print(singleTourPackageSelection)
-            Alert.showSuccessfullyCreatedReservation(on: self)
-            submitReservation()
-            
-        case combo_Deal:
-            
-            if comboDealToursArray.count > 2 {
-                Alert.showOverLimitComboDealTourSelections(on: self)
-            } else {
-                Alert.showSuccessfullyCreatedReservation(on: self)
-                submitReservation()
-            }
-            
-            // provides to current value of the selected package array
-            for element in comboDealToursArray {
-                print(element.currentTitle!)
-            }
-            
-        case super_Deal:
-            
-            if superDealPackageArray.count > 3 {
-                Alert.showOverLimitSuperDealTourSelections(on: self)
-            } else {
-                Alert.showSuccessfullyCreatedReservation(on: self)
-                submitReservation()
-            }
-            
-            // provides to current value of the selected package array
-            for element in superDealPackageArray {
-                print(element.currentTitle!)
-            }
-            
-        case deluxe_Package:
-            
-            if deluxePackageArray.count > 4 {
-                Alert.showOverLimitDeluxePackageTourSelections(on: self)
-            } else {
-                Alert.showSuccessfullyCreatedReservation(on: self)
-                submitReservation()
-            }
-            
-            // provides to current value of the selected package array
-            for element in deluxePackageArray {
-                print(element.currentTitle!)
-            }
-                        
-        default:
-            return
-            
-        }
+//        submitReservation()
+        
+       
     }
     
 //    MARK: - Helper Functions
     
+    func selectedTours() {
+   
+       switch tour_Package_Selected {
+           
+       case single_Tour:
+           print(singleTourPackageSelection)
+           Alert.showSuccessfullyCreatedReservation(on: self)
+           
+       case combo_Deal:
+           
+           // check if package selections is greater than package limit
+           if comboDealToursArray.count > 2 {
+               Alert.showOverLimitComboDealTourSelections(on: self)
+           } else {
+               Alert.showSuccessfullyCreatedReservation(on: self)
+           }
+           
+           // provides the current value of the selected package array
+           for element in comboDealToursArray {
+               print(element.currentTitle!)
+           }
+           
+       case super_Deal:
+           
+           // check if package selections is greater than package limit
+           if superDealPackageArray.count > 3 {
+               Alert.showOverLimitSuperDealTourSelections(on: self)
+           } else {
+               Alert.showSuccessfullyCreatedReservation(on: self)
+           }
+           
+           // provides the current value of the selected package array
+           for element in superDealPackageArray {
+               print(element.currentTitle!)
+           }
+           
+       case deluxe_Package:
+           
+           // check if package selections is greater than package limit
+           if deluxePackageArray.count > 4 {
+               Alert.showOverLimitDeluxePackageTourSelections(on: self)
+           } else {
+               Alert.showSuccessfullyCreatedReservation(on: self)
+           }
+           
+           // provides the current value of the selected package array
+           for element in deluxePackageArray {
+               print(element.currentTitle!)
+           }
+                       
+       default:
+           return
+       }
+    }
+    
     func submitReservation() {
 
-        // reservation info
-        let values = [ "hotel": hotel_Name,
-                       "groupName": group_Name,
-                       "reservationDate": reservation_Date,
-                       "voucherNum": voucher_Number,
-                       "tourRep": tour_Rep,
-                       "tourComp": tour_Company,
-                       "pax": pax_Quantity] as [String: Any]
-        // post id
-        let postId = RESERVATION_REF.childByAutoId()
-        
-        // upload information to dataBase
-        postId.updateChildValues(values) { (err, ref) in
-        
-        }
+//        // reservation info
+//        let values = [ hotel_Name: hotel_Name,
+//                       group_Name: group_Name,
+//                       tour_Rep: reservation_Date,
+//                       voucher_Number: voucher_Number,
+//                       tour_Rep: tour_Rep,
+//                       tour_Company: tour_Company,
+//                       pax: pax_Quantity] as [String: Any]
+//        // post id
+//        let reservation = RESERVATION_REF.childByAutoId()
+//
+//        // upload information to dataBase
+//        reservation.updateChildValues(values) { (err, ref) in
+//
+//        }
     }
     
     func updateTourLabel() {
