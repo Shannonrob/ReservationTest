@@ -10,11 +10,13 @@ import Firebase
 import UIKit
 
 // Database Refences
+//var DB_Date = String() //date for current reservation
 let DB_REF = Database.database().reference()
 let USER_REF = DB_REF.child("users")
 let RESERVATION_REF = DB_REF.child("reservations")
 
-// Database Values
+
+// Database parameters
 let hotel_Name = "hotel"
 let group_Name = "groupName"
 let reservation_Date = "reservationDate"

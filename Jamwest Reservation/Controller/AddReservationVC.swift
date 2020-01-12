@@ -389,19 +389,17 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
            let tourRep = tourRepTextfield.text,
            let tourCompany = tourCompanyTextfield.text else { return }
            let paxQuantity = paxStepper.value
-       
-        
-    // reservation info
+           
+        // reservation info
           let values = [ hotel_Name: hotel,
                          group_Name: group,
-                         reservation_Date: date,
                          voucher_Number: voucherNumber,
                          tour_Rep: tourRep,
                          tour_Company: tourCompany,
                          pax: paxQuantity] as [String: Any]
           // post id
-          let reservation = RESERVATION_REF.childByAutoId()
-          
+        let reservation = RESERVATION_REF.child(date).childByAutoId()
+
           // upload information to dataBase
         reservation.updateChildValues(values) { (err, ref) in
             
@@ -484,7 +482,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     func formatDate() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .short
+//        dateFormatter.timeStyle = .short
         reservationDateTextfield.text = dateFormatter.string(from: datePicker.date)
 
         dismiss(animated: true, completion: nil)
