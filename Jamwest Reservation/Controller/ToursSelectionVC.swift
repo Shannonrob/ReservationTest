@@ -416,24 +416,6 @@ class ToursSelectionVC: UIViewController {
        }
     }
     
-    func submitReservation() {
-
-//        // reservation info
-//        let values = [ hotel_Name: hotel_Name,
-//                       group_Name: group_Name,
-//                       tour_Rep: reservation_Date,
-//                       voucher_Number: voucher_Number,
-//                       tour_Rep: tour_Rep,
-//                       tour_Company: tour_Company,
-//                       pax: pax_Quantity] as [String: Any]
-//        // post id
-//        let reservation = RESERVATION_REF.childByAutoId()
-//
-//        // upload information to dataBase
-//        reservation.updateChildValues(values) { (err, ref) in
-//
-//        }
-    }
     
     func updateTourLabel() {
         if tour_Package_Selected == single_Tour {

@@ -12,6 +12,9 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
 
 //    MARK: - Properties
     
+    var reservationTime = String()
+    var reservationDate = String()
+    
 //    need to identify where are these properties used else delete
     
 //    var atvSelected = false
@@ -284,6 +287,9 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     }
     
     @objc func handleNextButton() {
+        
+        formatReservationTime()
+        formatReservationDate()
 
         submitReservation()
     }
@@ -384,11 +390,11 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         guard
            let hotel = hotelNameTextField.text,
            let group = groupNameTextfield.text,
-           let date = reservationDateTextfield.text,
            let voucherNumber = vourcherTextfield.text,
            let tourRep = tourRepTextfield.text,
            let tourCompany = tourCompanyTextfield.text else { return }
            let paxQuantity = paxStepper.value
+        let tourPackage = tour_Package_Selected
            
         // reservation info
           let values = [ hotel_Name: hotel,
@@ -396,9 +402,10 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
                          voucher_Number: voucherNumber,
                          tour_Rep: tourRep,
                          tour_Company: tourCompany,
-                         pax: paxQuantity] as [String: Any]
+                         pax: paxQuantity,
+                         tour_Package: tourPackage] as [String: Any]
           // post id
-        let reservation = RESERVATION_REF.child(date).childByAutoId()
+        let reservation = RESERVATION_REF.child(reservationDate).child(reservationTime).childByAutoId()
 
           // upload information to dataBase
         reservation.updateChildValues(values) { (err, ref) in
@@ -430,10 +437,11 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
            }
        }
        
-       func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-           reservationDateTextfield.isEnabled = true
-           return true
-       }
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+    
+        reservationDateTextfield.isEnabled = true
+        return true
+    }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 
@@ -480,12 +488,29 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     }
     
     func formatDate() {
+        //date formatter for reservation date and time selected
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
-//        dateFormatter.timeStyle = .short
+        dateFormatter.timeStyle = .short
         reservationDateTextfield.text = dateFormatter.string(from: datePicker.date)
 
         dismiss(animated: true, completion: nil)
+    }
+    
+    func formatReservationTime() {
+        // formatter for reservation time selected
+        let reservationTimeFormatter = DateFormatter()
+        reservationTimeFormatter.timeStyle = .short
+        
+        reservationTime = reservationTimeFormatter.string(from: datePicker.date)
+    }
+    
+    func formatReservationDate() {
+        // formatter for reservation time selected
+        let reservationDateFormatter = DateFormatter()
+        reservationDateFormatter.dateStyle = .medium
+
+        reservationDate = reservationDateFormatter.string(from: datePicker.date)
     }
     
     func formValidation() {
