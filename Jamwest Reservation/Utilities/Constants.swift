@@ -13,6 +13,7 @@ import UIKit
 let DB_REF = Database.database().reference()
 let USER_REF = DB_REF.child("users")
 let RESERVATION_REF = DB_REF.child("reservations")
+let RESERVATION_TOURS_REF = DB_REF.child("reservation-Tours")
 
 
 // Database parameters
@@ -45,6 +46,8 @@ let orange_Race_Flag_Icon = "orangeRaceFlagIcon"
 // Notifying ToursSelectionVC which package was selected in AddReservationVC
 var tour_Package_Selected = String()
 
+// Catch the reservationId for each reservation and pass it to ToursSelectionVC
+var reservation_ID = String()
 
 struct Constants {
     

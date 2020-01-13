@@ -402,13 +402,16 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
                          voucher_Number: voucherNumber,
                          tour_Rep: tourRep,
                          tour_Company: tourCompany,
-                         pax: paxQuantity,
-                         tour_Package: tourPackage] as [String: Any]
+                         pax: paxQuantity] as [String: Any]
           // post id
         let reservation = RESERVATION_REF.child(reservationDate).child(reservationTime).childByAutoId()
 
           // upload information to dataBase
         reservation.updateChildValues(values) { (err, ref) in
+            
+            guard let reservationId = reservation.key else { return }
+            RESERVATION_TOURS_REF.child(reservationId).updateChildValues([tourPackage: 1])
+            reservation_ID = reservationId
             
            let toursSelectionVC = ToursSelectionVC()
             self.present(UINavigationController(rootViewController: toursSelectionVC), animated: true, completion: nil)
