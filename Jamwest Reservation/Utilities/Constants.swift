@@ -47,7 +47,7 @@ let orange_Race_Flag_Icon = "orangeRaceFlagIcon"
 var tour_Package_Selected = String()
 
 // Catch the reservationId for each reservation and pass it to ToursSelectionVC
-var reservation_ID = String()
+//var reservation_ID = String()
 
 struct Constants {
     

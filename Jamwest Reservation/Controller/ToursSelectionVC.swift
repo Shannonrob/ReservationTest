@@ -18,6 +18,8 @@ class ToursSelectionVC: UIViewController {
     var comboDealToursArray = [UIButton]()
     var superDealPackageArray = [UIButton]()
     var deluxePackageArray = [UIButton]()
+    var reservationTours = [String]()
+    var reservationId = ""
     
 //    MARK: - Labels
     
@@ -354,9 +356,7 @@ class ToursSelectionVC: UIViewController {
     
     @objc func handleSubmitButton() {
         
-//        submitReservation()
-        
-       
+        selectedTours()
     }
     
 //    MARK: - Helper Functions
@@ -366,7 +366,13 @@ class ToursSelectionVC: UIViewController {
        switch tour_Package_Selected {
            
        case single_Tour:
-           print(singleTourPackageSelection)
+//           print(singleTourPackageSelection)
+        // catching the selected tour
+           reservationTours = [singleTourPackageSelection]
+           
+           //method for pushing selected tours to database
+           submitSelectedTours()
+           
            Alert.showSuccessfullyCreatedReservation(on: self)
            
        case combo_Deal:
@@ -375,13 +381,16 @@ class ToursSelectionVC: UIViewController {
            if comboDealToursArray.count > 2 {
                Alert.showOverLimitComboDealTourSelections(on: self)
            } else {
+            
+            checkSelectedTours(forArray: comboDealToursArray)
+ 
+            //method for pushing selected tours to database
+            submitSelectedTours()
+            
                Alert.showSuccessfullyCreatedReservation(on: self)
            }
            
-           // provides the current value of the selected package array
-           for element in comboDealToursArray {
-               print(element.currentTitle!)
-           }
+         
            
        case super_Deal:
            
@@ -389,13 +398,15 @@ class ToursSelectionVC: UIViewController {
            if superDealPackageArray.count > 3 {
                Alert.showOverLimitSuperDealTourSelections(on: self)
            } else {
+            
+            checkSelectedTours(forArray: superDealPackageArray)
+            
+            //method for pushing selected tours to database
+            submitSelectedTours()
+            
                Alert.showSuccessfullyCreatedReservation(on: self)
            }
            
-           // provides the current value of the selected package array
-           for element in superDealPackageArray {
-               print(element.currentTitle!)
-           }
            
        case deluxe_Package:
            
@@ -403,19 +414,35 @@ class ToursSelectionVC: UIViewController {
            if deluxePackageArray.count > 4 {
                Alert.showOverLimitDeluxePackageTourSelections(on: self)
            } else {
+            
+            checkSelectedTours(forArray: deluxePackageArray)
+
+            //method for pushing selected tours to database
+            submitSelectedTours()
+            
                Alert.showSuccessfullyCreatedReservation(on: self)
            }
            
-           // provides the current value of the selected package array
-           for element in deluxePackageArray {
-               print(element.currentTitle!)
-           }
-                       
        default:
            return
        }
     }
     
+    func submitSelectedTours() {
+        
+        
+        // reservationTours is currently showing empty
+//        print("reservartion tours are \(reservationTours.description)", "reservationId is \(reservationId)", "selected package is \(tour_Package_Selected)")
+        
+    }
+    
+    // checking array for selected buttons
+    func checkSelectedTours(forArray array:Array<UIButton>) {
+        
+        for tours in array {
+        reservationTours.append(tours.currentTitle!)
+       }
+    }
     
     func updateTourLabel() {
         if tour_Package_Selected == single_Tour {

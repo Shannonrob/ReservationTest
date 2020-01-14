@@ -384,7 +384,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     }
 
 //    MARK: - Helper Functions
-    
+    // creating reservation
     func submitReservation() {
         
         guard
@@ -410,10 +410,12 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         reservation.updateChildValues(values) { (err, ref) in
             
             guard let reservationId = reservation.key else { return }
-            RESERVATION_TOURS_REF.child(reservationId).updateChildValues([tourPackage: 1])
-            reservation_ID = reservationId
+            
+            RESERVATION_TOURS_REF.updateChildValues([reservationId: tourPackage])
+            
             
            let toursSelectionVC = ToursSelectionVC()
+            toursSelectionVC.reservationId = reservationId
             self.present(UINavigationController(rootViewController: toursSelectionVC), animated: true, completion: nil)
         }
     }
