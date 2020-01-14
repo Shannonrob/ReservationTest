@@ -44,7 +44,7 @@ let clear_CheckMark = "hiddenCheckMark"
 let orange_Race_Flag_Icon = "orangeRaceFlagIcon"
 
 // Notifying ToursSelectionVC which package was selected in AddReservationVC
-var tour_Package_Selected = String()
+//var tour_Package_Selected = String()
 
 // Catch the reservationId for each reservation and pass it to ToursSelectionVC
 //var reservation_ID = String()

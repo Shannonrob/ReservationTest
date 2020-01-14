@@ -14,6 +14,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     
     var reservationTime = String()
     var reservationDate = String()
+    var tourPackageSelected = String()
     
 //    need to identify where are these properties used else delete
     
@@ -266,7 +267,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tour_Package_Selected = single_Tour
+        tourPackageSelected = single_Tour      // change this variable from being global
         configureUI()
         configureStackViewComponents()
         configurePaxStepper()
@@ -351,28 +352,28 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
             
         case singleTourButton:
             
-            tour_Package_Selected = singleTourButton.currentTitle!
+            tourPackageSelected = singleTourButton.currentTitle!
             singleTourButton.selectedPackageButtonState(icon: white_CheckMark, font: 20, enabled: false)
             comboDealButton.unSelectedPackageButtonState(icon: clear_CheckMark, font: 18, enabled: true)
             superDealButton.unSelectedPackageButtonState(icon: clear_CheckMark, font: 18, enabled: true)
             deluxePackageButton.unSelectedPackageButtonState(icon: clear_CheckMark, font: 18, enabled: true)
  
         case comboDealButton:
-            tour_Package_Selected = comboDealButton.currentTitle!
+            tourPackageSelected = comboDealButton.currentTitle!
             singleTourButton.unSelectedPackageButtonState(icon: clear_CheckMark, font: 18, enabled: true)
             comboDealButton.selectedPackageButtonState(icon: white_CheckMark, font: 20, enabled: false)
             superDealButton.unSelectedPackageButtonState(icon: clear_CheckMark, font: 18, enabled: true)
             deluxePackageButton.unSelectedPackageButtonState(icon: clear_CheckMark, font: 18, enabled: true)
             
         case superDealButton:
-            tour_Package_Selected = superDealButton.currentTitle!
+            tourPackageSelected = superDealButton.currentTitle!
             singleTourButton.unSelectedPackageButtonState(icon: clear_CheckMark, font: 18, enabled: true)
             comboDealButton.unSelectedPackageButtonState(icon: clear_CheckMark, font: 18, enabled: true)
             superDealButton.selectedPackageButtonState(icon: white_CheckMark, font: 20, enabled: false)
             deluxePackageButton.unSelectedPackageButtonState(icon: clear_CheckMark, font: 18, enabled: true)
             
         case deluxePackageButton:
-            tour_Package_Selected = deluxePackageButton.currentTitle!
+            tourPackageSelected = deluxePackageButton.currentTitle!
             singleTourButton.unSelectedPackageButtonState(icon: clear_CheckMark, font: 18, enabled: true)
             comboDealButton.unSelectedPackageButtonState(icon: clear_CheckMark, font: 18, enabled: true)
             superDealButton.unSelectedPackageButtonState(icon: clear_CheckMark, font: 18, enabled: true)
@@ -394,7 +395,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
            let tourRep = tourRepTextfield.text,
            let tourCompany = tourCompanyTextfield.text else { return }
            let paxQuantity = paxStepper.value
-        let tourPackage = tour_Package_Selected
+        let tourPackage = tourPackageSelected
            
         // reservation info
           let values = [ hotel_Name: hotel,
@@ -416,6 +417,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
             
            let toursSelectionVC = ToursSelectionVC()
             toursSelectionVC.reservationId = reservationId
+            toursSelectionVC.tourPackage = self.tourPackageSelected
             self.present(UINavigationController(rootViewController: toursSelectionVC), animated: true, completion: nil)
         }
     }

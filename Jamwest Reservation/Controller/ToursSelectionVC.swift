@@ -20,6 +20,9 @@ class ToursSelectionVC: UIViewController {
     var deluxePackageArray = [UIButton]()
     var reservationTours = [String]()
     var reservationId = ""
+    var tourPackage = String()
+    
+    var reservedToursDictionary = [:] as [String: Any]
     
 //    MARK: - Labels
     
@@ -137,7 +140,7 @@ class ToursSelectionVC: UIViewController {
     
         updateSelectionFont(button: atvTourButton)
         
-        switch tour_Package_Selected {
+        switch tourPackage {
             
         case single_Tour:
             drivingExperienceButton.isSelected = false
@@ -174,7 +177,7 @@ class ToursSelectionVC: UIViewController {
           
           updateSelectionFont(button: drivingExperienceButton)
           
-          switch tour_Package_Selected {
+          switch tourPackage {
               
           case single_Tour:
               atvTourButton.isSelected = false
@@ -209,7 +212,7 @@ class ToursSelectionVC: UIViewController {
         
         updateSelectionFont(button: horseBackRidingTourButton)
     
-        switch tour_Package_Selected {
+        switch tourPackage {
             
         case single_Tour:
             atvTourButton.isSelected = false
@@ -246,7 +249,7 @@ class ToursSelectionVC: UIViewController {
     
         updateSelectionFont(button: pushKartTourButton)
         
-        switch tour_Package_Selected {
+        switch tourPackage {
             
         case single_Tour:
             atvTourButton.isSelected = false
@@ -283,7 +286,7 @@ class ToursSelectionVC: UIViewController {
     
         updateSelectionFont(button: safariTourButton)
         
-        switch tour_Package_Selected {
+        switch tourPackage {
             
         case single_Tour:
             atvTourButton.isSelected = false
@@ -320,7 +323,7 @@ class ToursSelectionVC: UIViewController {
     
         updateSelectionFont(button: zipLineTourButton)
         
-        switch tour_Package_Selected {
+        switch tourPackage {
             
         case single_Tour:
             atvTourButton.isSelected = false
@@ -361,14 +364,24 @@ class ToursSelectionVC: UIViewController {
     
 //    MARK: - Helper Functions
     
+    // checking array for selected buttons
+    func checkSelectedTours(forArray array:Array<UIButton>) {
+        
+        for tours in array {
+        reservationTours.append(tours.currentTitle!)
+       }
+    }
+    
     func selectedTours() {
    
-       switch tour_Package_Selected {
+       switch tourPackage {
            
        case single_Tour:
-//           print(singleTourPackageSelection)
         // catching the selected tour
            reservationTours = [singleTourPackageSelection]
+           
+           //append tour to dictionary
+           reservedToursDictionary[reservationTours[0]] = 1
            
            //method for pushing selected tours to database
            submitSelectedTours()
@@ -381,16 +394,17 @@ class ToursSelectionVC: UIViewController {
            if comboDealToursArray.count > 2 {
                Alert.showOverLimitComboDealTourSelections(on: self)
            } else {
-            
             checkSelectedTours(forArray: comboDealToursArray)
- 
+            
+            //append tour to dictionary
+            reservedToursDictionary.updateValue(1, forKey: reservationTours[0])
+            reservedToursDictionary.updateValue(1, forKey: reservationTours[1])
+            
             //method for pushing selected tours to database
             submitSelectedTours()
             
                Alert.showSuccessfullyCreatedReservation(on: self)
            }
-           
-         
            
        case super_Deal:
            
@@ -398,8 +412,12 @@ class ToursSelectionVC: UIViewController {
            if superDealPackageArray.count > 3 {
                Alert.showOverLimitSuperDealTourSelections(on: self)
            } else {
-            
             checkSelectedTours(forArray: superDealPackageArray)
+            
+            //append tour to dictionary
+            reservedToursDictionary.updateValue(1, forKey: reservationTours[0])
+            reservedToursDictionary.updateValue(1, forKey: reservationTours[1])
+            reservedToursDictionary.updateValue(1, forKey: reservationTours[2])
             
             //method for pushing selected tours to database
             submitSelectedTours()
@@ -407,15 +425,19 @@ class ToursSelectionVC: UIViewController {
                Alert.showSuccessfullyCreatedReservation(on: self)
            }
            
-           
        case deluxe_Package:
            
            // check if package selections is greater than package limit
            if deluxePackageArray.count > 4 {
                Alert.showOverLimitDeluxePackageTourSelections(on: self)
            } else {
-            
             checkSelectedTours(forArray: deluxePackageArray)
+            
+            //append tour to dictionary
+            reservedToursDictionary.updateValue(1, forKey: reservationTours[0])
+            reservedToursDictionary.updateValue(1, forKey: reservationTours[1])
+            reservedToursDictionary.updateValue(1, forKey: reservationTours[2])
+            reservedToursDictionary.updateValue(1, forKey: reservationTours[3])
 
             //method for pushing selected tours to database
             submitSelectedTours()
@@ -430,22 +452,14 @@ class ToursSelectionVC: UIViewController {
     
     func submitSelectedTours() {
         
-        
-        // reservationTours is currently showing empty
-//        print("reservartion tours are \(reservationTours.description)", "reservationId is \(reservationId)", "selected package is \(tour_Package_Selected)")
-        
-    }
-    
-    // checking array for selected buttons
-    func checkSelectedTours(forArray array:Array<UIButton>) {
-        
-        for tours in array {
-        reservationTours.append(tours.currentTitle!)
-       }
+        let tours = RESERVATION_TOURS_REF.child(reservationId).child(tourPackage)
+        tours.updateChildValues(reservedToursDictionary) { (err, ref) in
+           
+        }
     }
     
     func updateTourLabel() {
-        if tour_Package_Selected == single_Tour {
+        if tourPackage == single_Tour {
             tourLabel.text = "Please select reserved tour"
         }
     }
