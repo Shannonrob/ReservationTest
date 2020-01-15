@@ -39,4 +39,10 @@ struct Alert {
          showBasicAlert(on: vc, with: "Success", message: "Your reservation was created.")
     }
     
+    static func beforeSubmittingReservation(on vc: UIViewController) {
+         showBasicAlert(on: vc, with: "Before submission", message: "Please check to verify reservation information is accurate.")
+    }
 }
+
+
+

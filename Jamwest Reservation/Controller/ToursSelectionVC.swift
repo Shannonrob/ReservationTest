@@ -11,7 +11,6 @@ import Firebase
 
 class ToursSelectionVC: UIViewController {
     
-
 //    MARK: - Properties
     
     var singleTourPackageSelection = String()
@@ -21,13 +20,11 @@ class ToursSelectionVC: UIViewController {
     var reservationTours = [String]()
     var reservationId = ""
     var tourPackage = String()
-    
     var reservedToursDictionary = [:] as [String: Any]
     
 //    MARK: - Labels
     
     let tourLabel: UILabel = {
-
         let label = UILabel()
         label.text = "Please select reserved tours"
         label.textColor = .darkText
@@ -35,11 +32,9 @@ class ToursSelectionVC: UIViewController {
         return label
     }()
     
-    
 //    MARK: - Buttons
     
    let atvTourButton: UIButton = {
-
        let button = UIButton(type: .system)
        button.configureButtonWithIcon("orangeATV", title: "ATV Tour", titleColor: .gray, buttonColor: .white, cornerRadius: 6)
        button.titleLabel?.font = .systemFont(ofSize: 24)
@@ -47,11 +42,9 @@ class ToursSelectionVC: UIViewController {
        button.layer.borderColor = UIColor.lightGray.cgColor
        button.addTarget(self, action: #selector(handleATVTour), for: .touchUpInside)
        return button
-    
    }()
    
    let horseBackRidingTourButton: UIButton = {
-    
        let button = UIButton(type: .system)
        button.configureButtonWithIcon("orangeHorseRiding", title: "Horseback", titleColor: .gray, buttonColor: .white, cornerRadius: 6)
        button.titleLabel?.font = .systemFont(ofSize: 24)
@@ -62,7 +55,6 @@ class ToursSelectionVC: UIViewController {
    }()
    
    let safariTourButton: UIButton = {
-    
        let button = UIButton(type: .system)
        button.configureButtonWithIcon("orangeCrocodile", title: "Safari Tour", titleColor: .gray, buttonColor: .white, cornerRadius: 6)
        button.titleLabel?.font = .systemFont(ofSize: 24)
@@ -73,7 +65,6 @@ class ToursSelectionVC: UIViewController {
    }()
    
    let zipLineTourButton: UIButton = {
-    
        let button = UIButton(type: .system)
        button.configureButtonWithIcon("orangeZipline", title: "Zip Line", titleColor: .gray, buttonColor: .white, cornerRadius: 6)
        button.titleLabel?.font = .systemFont(ofSize: 24)
@@ -84,7 +75,6 @@ class ToursSelectionVC: UIViewController {
    }()
    
    let pushKartTourButton: UIButton = {
-    
        let button = UIButton(type: .system)
        button.configureButtonWithIcon("orangeKart", title: "Push Kart", titleColor: .gray, buttonColor: .white, cornerRadius: 6)
        button.titleLabel?.font = .systemFont(ofSize: 24)
@@ -95,7 +85,6 @@ class ToursSelectionVC: UIViewController {
    }()
     
     let drivingExperienceButton: UIButton = {
-     
         let button = UIButton(type: .system)
         button.configureButtonWithIcon(orange_Race_Flag_Icon, title: "Driving Experience", titleColor: .gray, buttonColor: .white, cornerRadius: 6)
         button.titleLabel?.font = .systemFont(ofSize: 24)
@@ -106,7 +95,6 @@ class ToursSelectionVC: UIViewController {
     }()
     
     let submitButton: UIButton = {
-        
         let button = UIButton(type: .system)
         button.setTitle("Submit", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -117,9 +105,8 @@ class ToursSelectionVC: UIViewController {
         button.isEnabled = false
         button.addTarget(self, action: #selector(handleSubmitButton), for: .touchUpInside)
         return button
-       }()
+   }()
    
-    
     
 //    MARK: - Init
     override func viewDidLoad() {
@@ -385,9 +372,7 @@ class ToursSelectionVC: UIViewController {
            
            //method for pushing selected tours to database
            submitSelectedTours()
-           
-           Alert.showSuccessfullyCreatedReservation(on: self)
-           
+        
        case combo_Deal:
            
            // check if package selections is greater than package limit
@@ -396,14 +381,12 @@ class ToursSelectionVC: UIViewController {
            } else {
             checkSelectedTours(forArray: comboDealToursArray)
             
-            //append tour to dictionary
+            //append tours to dictionary
             reservedToursDictionary.updateValue(1, forKey: reservationTours[0])
             reservedToursDictionary.updateValue(1, forKey: reservationTours[1])
             
             //method for pushing selected tours to database
             submitSelectedTours()
-            
-               Alert.showSuccessfullyCreatedReservation(on: self)
            }
            
        case super_Deal:
@@ -414,15 +397,13 @@ class ToursSelectionVC: UIViewController {
            } else {
             checkSelectedTours(forArray: superDealPackageArray)
             
-            //append tour to dictionary
+            //append tours to dictionary
             reservedToursDictionary.updateValue(1, forKey: reservationTours[0])
             reservedToursDictionary.updateValue(1, forKey: reservationTours[1])
             reservedToursDictionary.updateValue(1, forKey: reservationTours[2])
             
             //method for pushing selected tours to database
             submitSelectedTours()
-            
-               Alert.showSuccessfullyCreatedReservation(on: self)
            }
            
        case deluxe_Package:
@@ -433,7 +414,7 @@ class ToursSelectionVC: UIViewController {
            } else {
             checkSelectedTours(forArray: deluxePackageArray)
             
-            //append tour to dictionary
+            //append tours to dictionary
             reservedToursDictionary.updateValue(1, forKey: reservationTours[0])
             reservedToursDictionary.updateValue(1, forKey: reservationTours[1])
             reservedToursDictionary.updateValue(1, forKey: reservationTours[2])
@@ -441,20 +422,19 @@ class ToursSelectionVC: UIViewController {
 
             //method for pushing selected tours to database
             submitSelectedTours()
-            
-               Alert.showSuccessfullyCreatedReservation(on: self)
            }
-           
        default:
            return
        }
     }
     
+    // submit tours to firebase
     func submitSelectedTours() {
         
         let tours = RESERVATION_TOURS_REF.child(reservationId).child(tourPackage)
         tours.updateChildValues(reservedToursDictionary) { (err, ref) in
-           
+            
+            self.showAlertSheet(self.submitButton)
         }
     }
     
@@ -592,6 +572,42 @@ class ToursSelectionVC: UIViewController {
         submitButton.isEnabled = false
         return
         }
+    }
+    
+    func showAddReservationVC() {
+        //
+        let addReservationVC = AddReservationVC()
+        
+        var vcArray = self.navigationController?.viewControllers
+        vcArray!.removeLast()
+        vcArray!.append(addReservationVC)
+        self.navigationController?.setViewControllers(vcArray!, animated: true)
+    }
+    
+    // Action sheet
+    func showAlertSheet(_ sender: UIButton) {
+        
+        let alertController = UIAlertController(title: nil, message: "Do you wish to submit another reservation?", preferredStyle: .alert)
+        let defaultAction = UIAlertAction(title: "Yes", style: .default, handler: { (alert: UIAlertAction!) -> Void in
+            // present AddReservationVC
+            self.showAddReservationVC()
+        })
+
+        let deleteAction = UIAlertAction(title: "No", style: .destructive, handler: { (alert: UIAlertAction!) -> Void in
+    
+            //dismiss all viewControllers back to rootVC
+            self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+        })
+
+        alertController.addAction(defaultAction)
+        alertController.addAction(deleteAction)
+        
+        if let popoverController = alertController.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 

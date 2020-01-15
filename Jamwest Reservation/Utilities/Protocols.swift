@@ -11,8 +11,3 @@ protocol HomeVcDelegate {
     func handleMenuToggle(forMenuOption menuOption: MenuOption?)
 }
 
-protocol LoginVCDelegate {
-    
-    func handleDidSignIn() 
-}
-

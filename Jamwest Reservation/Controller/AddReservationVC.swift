@@ -12,18 +12,11 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
 
 //    MARK: - Properties
     
+    let toursSelectionVC = ToursSelectionVC()
+    
     var reservationTime = String()
     var reservationDate = String()
     var tourPackageSelected = String()
-    
-//    need to identify where are these properties used else delete
-    
-//    var atvSelected = false
-//    var horseBackSelected = false
-//    var safariSelected = false
-//    var zipLineSelected = false
-//    var pushKartSelected = false
-//
     
 //    MARK: - Labels
      let hotelNameLabel: UILabel = {
@@ -276,10 +269,8 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
        view.addGestureRecognizer(tap)
         
         stepperValueLabel.text = "\((Int(paxStepper.value )))"
-        textFieldDelegateStatus()
-
+        textFieldDelegates()
     }
-    
     
 //    MARK: - Selectors
     
@@ -288,11 +279,10 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     }
     
     @objc func handleNextButton() {
-        
+
         formatReservationTime()
         formatReservationDate()
-
-        submitReservation()
+        showActionSheet(navigationItem.rightBarButtonItem!)
     }
     
     @objc func configureDatePicker() {
@@ -414,15 +404,44 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
             
             RESERVATION_TOURS_REF.updateChildValues([reservationId: tourPackage])
             
-            
-           let toursSelectionVC = ToursSelectionVC()
-            toursSelectionVC.reservationId = reservationId
-            toursSelectionVC.tourPackage = self.tourPackageSelected
-            self.present(UINavigationController(rootViewController: toursSelectionVC), animated: true, completion: nil)
+            //present toursSelectionVC
+            var vcArray = self.navigationController?.viewControllers
+            vcArray!.removeLast()
+            vcArray!.append(self.toursSelectionVC)
+            self.toursSelectionVC.reservationId = reservationId
+            self.toursSelectionVC.tourPackage = self.tourPackageSelected
+            self.navigationController?.setViewControllers(vcArray!, animated: true)
         }
     }
     
-    func textFieldDelegateStatus() {
+    // Action sheet
+    func showActionSheet(_ sender: UIBarButtonItem) {
+        
+        let alertController = UIAlertController(title: nil, message: "Would you like to verify that all information is correct before creating this reservation?", preferredStyle: .actionSheet)
+        
+        let defaultAction = UIAlertAction(title: "Reserve", style: .default, handler: { (alert: UIAlertAction!) -> Void in
+            // Submit current reservation to database
+            self.submitReservation()
+        })
+
+        let deleteAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (alert: UIAlertAction!) -> Void in
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (alert: UIAlertAction!) -> Void in
+        })
+
+        alertController.addAction(defaultAction)
+        alertController.addAction(deleteAction)
+        alertController.addAction(cancelAction)
+        
+        if let popoverController = alertController.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func textFieldDelegates() {
         
         hotelNameTextField.delegate = self
         reservationDateTextfield.delegate = self
@@ -440,7 +459,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
            tourRepTextfield.isEditing ||
            tourCompanyTextfield.isEditing {
                
-               reservationDateTextfield.isEnabled = false
+           reservationDateTextfield.isEnabled = false
            }
        }
        
@@ -535,8 +554,6 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
        navigationItem.rightBarButtonItem?.isEnabled = true
     }
 }
-
-
 
 extension AddReservationVC {
     
