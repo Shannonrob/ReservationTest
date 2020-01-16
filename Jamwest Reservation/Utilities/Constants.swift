@@ -22,7 +22,7 @@ let group_Name = "group-Name"
 let voucher_Number = "voucher-Num"
 let tour_Rep = "tour-Rep"
 let tour_Company = "tour-Comp"
-let pax = "pax"
+let pax_Count = "pax"
 let tour_Package = "tour-Package"
 
 // Fonts
@@ -58,10 +58,11 @@ struct Constants {
             struct Primary {
                 static let Orange = UIColor(red: 242/255, green: 125/255, blue: 15/255, alpha: 1)
                 static let Purple = UIColor(displayP3Red: 17/255, green: 16/255, blue: 38/255, alpha: 95)
-//                static let HeavyGreen = UIColor(displayP3Red: 0/255, green: 162/255, blue: 138/255, alpha: 1)
+                static let Green = UIColor(displayP3Red: 0/255, green: 162/255, blue: 138/255, alpha: 1)
                 static let HeavyGreen = UIColor(displayP3Red: 0/255, green: 81/255, blue: 82/255, alpha: 1)
                 static let LightPurple = UIColor(displayP3Red: 17/255, green: 16/255, blue: 95/255, alpha: 100)
                 static let MenuBlue = UIColor(displayP3Red: 17/255, green: 16/255, blue: 160/255, alpha: 100)
+                static let MarkerColor = UIColor(red: 0/255, green: 133/255, blue: 81/255, alpha: 1)
                 
             }
             

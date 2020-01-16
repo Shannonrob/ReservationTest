@@ -37,6 +37,7 @@ class LoginVC: UIViewController {
 //    MARK: - Buttons
     
     let loginButton: UIButton = {
+        
         let button = UIButton(type: .system)
         button.setTitle("Login", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 24)
@@ -59,8 +60,8 @@ class LoginVC: UIViewController {
     }()
     
     let dontHaveAccountButton: UIButton = {
+      
         let button = UIButton(type: .system)
-        
         let attributedTitle = NSMutableAttributedString(string: "Dont have an account?  ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18), NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         attributedTitle.append(NSAttributedString(string: "Sign Up", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18), NSAttributedString.Key.foregroundColor: UIColor(red: 242/255, green: 125/255, blue: 15/255, alpha: 1)]))
         button.addTarget(self, action: #selector(handleShowSignUp), for: .touchUpInside)
@@ -138,7 +139,6 @@ class LoginVC: UIViewController {
         incorrectPasswordLabel.anchor(top: stackView.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 15, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         incorrectPasswordLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
-    
 
     func presenContainerVC() {
         
@@ -149,6 +149,4 @@ class LoginVC: UIViewController {
         navigationController.didMove(toParent: self)
         navigationController.setNavigationBarHidden(true, animated: false)
     }
-    
-    
 }

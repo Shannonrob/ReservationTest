@@ -393,7 +393,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
                          voucher_Number: voucherNumber,
                          tour_Rep: tourRep,
                          tour_Company: tourCompany,
-                         pax: paxQuantity] as [String: Any]
+                         pax_Count: paxQuantity] as [String: Any]
           // post id
         let reservation = RESERVATION_REF.child(reservationDate).child(reservationTime).childByAutoId()
 

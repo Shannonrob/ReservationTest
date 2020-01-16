@@ -14,9 +14,9 @@ class SignUpVC: UIViewController {
     let emailTextField: UITextField = {
          
           let textfield = UITextField()
-        textfield.design(placeHolder: "Email", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 0, height: 0)
+          textfield.design(placeHolder: "Email", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 0, height: 0)
           textfield.addTarget(self, action: #selector(formValidation), for: .editingChanged)
-        textfield.keyboardType = .emailAddress
+          textfield.keyboardType = .emailAddress
           return textfield
       }()
     
@@ -47,6 +47,7 @@ class SignUpVC: UIViewController {
     }()
     
     let signUpButton: UIButton = {
+       
         let button = UIButton(type: .system)
         button.setTitle("Sign Up", for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 24)
@@ -69,8 +70,8 @@ class SignUpVC: UIViewController {
     }()
     
     let alreadyHaveAccount: UIButton = {
+    
         let button = UIButton(type: .system)
-        
         let attributedTitle = NSMutableAttributedString(string: "Already have an account?  ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18), NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         attributedTitle.append(NSAttributedString(string: "Log In", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18), NSAttributedString.Key.foregroundColor: UIColor(red: 242/255, green: 125/255, blue: 15/255, alpha: 1)]))
         button.addTarget(self, action: #selector(handleShowLogIn), for: .touchUpInside)
