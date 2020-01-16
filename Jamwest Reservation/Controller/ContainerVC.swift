@@ -44,7 +44,7 @@ class ContainerVC: UIViewController {
 //    MARK: - Handlers
     
     func presentHomeVC() {
-        let homeVC = HomeVC()
+        let homeVC = HomeVC(collectionViewLayout: UICollectionViewFlowLayout())
         homeVC.delegate = self
         centerController = UINavigationController(rootViewController: homeVC)
 

@@ -8,54 +8,22 @@
 
  import UIKit
 
- class HomeVC: UIViewController {
+private let reuseIdentifier = "Cell"
+
+class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
   
  //    MARK: - Properties
-    
     var delegate: HomeVcDelegate?
-    
-//    MARK: - Labels
-    
-    let greetingLabel: UILabel = {
-        
-        let label = UILabel()
-        label.textColor = .white
-        label.lineBreakMode = NSLineBreakMode.byWordWrapping
-        label.numberOfLines = 2
-        label.text = """
-        Welcome to Jamwest
-             Adventure Park
-        """
-        label.font = UIFont(name: avenirNext_Demibold, size: 30)
-        return label
-    }()
-     
-    let selectGroupLabel: UILabel = {
-
-        let label = UILabel()
-        label.textColor = .white
-        label.lineBreakMode = NSLineBreakMode.byWordWrapping
-        label.numberOfLines = 2
-        label.text = """
-        Select group to
-        sign your waiver.
-        """
-        label.font = UIFont(name: avenirNext_Demibold, size: 40)
-        return label
-    
-    }()
-
     
  //    MARK: - Init
      
      override func viewDidLoad() {
          super.viewDidLoad()
         
-        configureViewConstraints()
-        view.backgroundColor = Constants.Design.Color.Background.FadeGray
+        // register cell classes
+        self.collectionView!.register(ReservationCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
-        configureNavigationBar()
-        
+        configureUI()
      }
      
  //    MARK: - Handlers
@@ -64,11 +32,46 @@
         delegate?.handleMenuToggle(forMenuOption: nil)
     }
     
-    func configureNavigationBar() {
-//        NavigationBar title size
+//    MARK: - UICollectionViewFlowLayout
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        // cell sizes
+        let width = (view.frame.width - 5) / 2
+        return CGSize(width: width, height: 200)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 5
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 5
+    }
+    
+    
+//    MARK: - UICollectionViewDataSource
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ReservationCell
+        cell.backgroundColor = .white
+        cell.layer.cornerRadius = 8
+        return cell
+    }
+    
+    func configureUI() {
+        
+        view.backgroundColor = Constants.Design.Color.Background.FadeGray
+        collectionView.backgroundColor = Constants.Design.Color.Hue.Green
         
         let reservation = UIFont.boldSystemFont(ofSize: 25)
-//        let reservation = UIFont.init(name:"Helvetica neue", size: 25)!
         navigationController?.navigationBar.barTintColor = Constants.Design.Color.Primary.HeavyGreen
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.barStyle = .black
@@ -77,27 +80,4 @@
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: reservation]
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "menuButton").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleMenuToggle))
     }
-    
-//    MARK: - Contraints
-    func configureViewConstraints() {
-       
-//      UIViews
-        
-//        view.addSubview(rightView)
-//        rightView.anchor(top: view.topAnchor, left: nil, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: view.frame.width / 2, height: 0)
-    
-    
-//    UILabels
-        
-//        let greetingLabelsStackView = UIStackView(arrangedSubviews: [greetingLabel, selectGroupLabel])
-//        greetingLabelsStackView.axis = .vertical
-//        greetingLabelsStackView.configureStackView(alignment: .center, distribution: .equalSpacing, spacing: 60)
-//
-//        rightView.addSubview(greetingLabelsStackView)
-//        greetingLabelsStackView.anchor(top: rightView.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 120, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-//        greetingLabelsStackView.centerXAnchor.constraint(equalTo: rightView.centerXAnchor).isActive = true
-    
-    }
-    
- 
  }
