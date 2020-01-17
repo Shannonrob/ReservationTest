@@ -15,6 +15,10 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
   
  //    MARK: - Properties
     var delegate: HomeVcDelegate?
+    var currentDate = String()
+    var reservations = [Reservation]()
+    
+    
     
  //    MARK: - Init
      
@@ -83,6 +87,8 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         return cell
     }
     
+//    MARK: - Helper functions
+    
     func configureUI() {
         
         view.backgroundColor = Constants.Design.Color.Background.FadeGray
@@ -98,13 +104,33 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "menuButton").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleMenuToggle))
     }
     
+    func formatReservationDate() {
+       
+       // gets the current date
+       let date: Date = Date()
+       let reservationDateFormatter = DateFormatter()
+       reservationDateFormatter.dateStyle = .medium
+
+       currentDate = reservationDateFormatter.string(from: date)
+   }
+
 //    MARK: - API
     
     func fetchPosts() {
+    
+        formatReservationDate()
         
-        RESERVATION_REF.observe(.childAdded) { (snapshot) in
+        RESERVATION_DATE_REF.child(currentDate).observe(.childAdded) { (snapshot) in
             
-            print(snapshot)
+            let reservationIds = snapshot.key
+            
+            RESERVATION_REF.child(reservationIds).observe(.childAdded) { (reservationSnapshot) in
+                print("Here are the reservations \(reservationSnapshot)")
+            }
+            
+            //uses the current date to get the reservationIds for said date
+//            print("These are the reservation ids \(snapshot.key)")
+            
         }
     }
  }

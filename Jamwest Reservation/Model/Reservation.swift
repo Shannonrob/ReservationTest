@@ -24,12 +24,13 @@ class Reservation {
         
         self.postId = postId
         
-//        if let date = dictionary[] as? String {
-//            self.date = date
+        if let date = dictionary[reservation_Date] as? String {
+            self.date = date
+        }
         
-//        if let time = dictionary[] as? String {
-//            self.time = time
-//        }
+        if let time = dictionary[reservation_Time] as? String {
+            self.time = time
+        }
         
         if let group = dictionary[group_Name] as? String {
             self.group = group

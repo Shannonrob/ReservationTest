@@ -385,7 +385,9 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
            let tourRep = tourRepTextfield.text,
            let tourCompany = tourCompanyTextfield.text else { return }
            let paxQuantity = paxStepper.value
-        let tourPackage = tourPackageSelected
+           let time = reservationTime
+           let date = reservationDate
+           
            
         // reservation info
           let values = [ hotel_Name: hotel,
@@ -393,16 +395,22 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
                          voucher_Number: voucherNumber,
                          tour_Rep: tourRep,
                          tour_Company: tourCompany,
+                         reservation_Time: time,
                          pax_Count: paxQuantity] as [String: Any]
+        
+
           // post id
-        let reservation = RESERVATION_REF.child(reservationDate).child(reservationTime).childByAutoId()
+        let reservation = RESERVATION_REF.childByAutoId()
 
           // upload information to dataBase
         reservation.updateChildValues(values) { (err, ref) in
             
             guard let reservationId = reservation.key else { return }
             
-            RESERVATION_TOURS_REF.updateChildValues([reservationId: tourPackage])
+            let dateValue = [reservationId: 1] as [String: Any]
+            
+            let dates = RESERVATION_DATE_REF.child(date)
+            dates.updateChildValues(dateValue)
             
             //present toursSelectionVC
             var vcArray = self.navigationController?.viewControllers

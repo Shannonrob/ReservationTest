@@ -14,6 +14,7 @@ let DB_REF = Database.database().reference()
 let USER_REF = DB_REF.child("users")
 let RESERVATION_REF = DB_REF.child("reservations")
 let RESERVATION_TOURS_REF = DB_REF.child("reservation-Tours")
+let RESERVATION_DATE_REF = DB_REF.child("reservation-Date")
 
 
 // Database parameters
@@ -24,6 +25,10 @@ let tour_Rep = "tour-Rep"
 let tour_Company = "tour-Comp"
 let pax_Count = "pax"
 let tour_Package = "tour-Package"
+let reservation_Time = "time"
+let reservation_Date = "date"
+let reservation_Id = "reservation-Id"
+
 
 // Fonts
 let avenirNext_Demibold = "AvenirNext-DemiBold"
