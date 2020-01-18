@@ -45,7 +45,7 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         
         // cell sizes
         let width = (view.frame.width - 26) / 2
-        return CGSize(width: width, height: 200)
+        return CGSize(width: width, height: 160)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -134,6 +134,10 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
                 let reservation = Reservation(reservationId: reservationIds, dictionary: dictionary)
                 
                 self.reservations.append(reservation)
+                
+//                self.reservations.sort { (resertvation1, reservation2) -> Bool in
+//                    return resertvation1.group > reservation2.group
+//                }
                 
                 self.collectionView.reloadData()
             }

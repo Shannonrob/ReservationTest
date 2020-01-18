@@ -69,7 +69,7 @@ class ReservationCell: UICollectionViewCell {
     let pendingWaiversLabel: UILabel = {
         
         let label = UILabel()
-        label.text = "Pending waivers :"
+        label.text = "Waivers :"
         label.textColor = .darkText
         label.font = UIFont(name: avenirNext_Medium, size: 16)
         return label
@@ -120,52 +120,6 @@ class ReservationCell: UICollectionViewCell {
            return label
        }()
     
-//    let firstTourLabel: UILabel = {
-//
-//        let label = UILabel()
-//        label.lineBreakMode = NSLineBreakMode.byWordWrapping
-//        label.numberOfLines = 4
-//        label.text = "tour 1"
-//        label.textColor = Constants.Design.Color.Primary.MarkerColor
-//        label.font = UIFont(name: avenirNext_Demibold, size: 18)
-//        return label
-//    }()
-//
-//    let secondTourLabel: UILabel = {
-//
-//        let label = UILabel()
-//        label.lineBreakMode = NSLineBreakMode.byWordWrapping
-//        label.numberOfLines = 4
-//        label.text = "tour 2"
-//        label.textColor = Constants.Design.Color.Primary.MarkerColor
-//        label.font = UIFont(name: avenirNext_Demibold, size: 18)
-//        return label
-//    }()
-//
-//    let thirdTourLabel: UILabel = {
-//
-//        let label = UILabel()
-//        label.lineBreakMode = NSLineBreakMode.byWordWrapping
-//        label.numberOfLines = 4
-//        label.text = "tour 3"
-//        label.textColor = Constants.Design.Color.Primary.MarkerColor
-//        label.font = UIFont(name: avenirNext_Demibold, size: 18)
-//        return label
-//    }()
-//
-//    let forthTourLabel: UILabel = {
-//
-//        let label = UILabel()
-//        label.lineBreakMode = NSLineBreakMode.byWordWrapping
-//        label.numberOfLines = 4
-//        label.text = "tour 4"
-//        label.textColor = Constants.Design.Color.Primary.MarkerColor
-//        label.font = UIFont(name: avenirNext_Demibold, size: 18)
-//        return label
-//    }()
-//
-
-    
 //    MARK: - Init
     
     override init(frame: CGRect) {
@@ -183,81 +137,47 @@ class ReservationCell: UICollectionViewCell {
     
     func configureCell() {
         
-        // top stackViews
-        
+        // left stackViews
         let groupStackView = UIStackView(arrangedSubviews: [groupLabel, groupNameLabel])
-        groupStackView.configureStackView(alignment: .center, distribution: .fillProportionally, spacing: nil)
+        groupStackView.configureStackView(alignment: .center, distribution: .fillEqually, spacing: nil)
         groupStackView.axis = .vertical
-        
+
+        let timeStackView = UIStackView(arrangedSubviews: [timeLabel, reservationTimeLabel])
+        timeStackView.configureStackView(alignment: .center, distribution: .fillEqually, spacing: nil)
+        timeStackView.axis = .vertical
+
+
+        let leftStackView = UIStackView(arrangedSubviews: [groupStackView, timeStackView])
+        leftStackView.configureStackView(alignment: .center, distribution: .fillEqually, spacing: 18)
+        leftStackView.axis = .vertical
+
+        // right stackView
         let hotelStackView = UIStackView(arrangedSubviews: [hotelLabel, hotelNameLabel])
-        hotelStackView.configureStackView(alignment: .center, distribution: .fillProportionally, spacing: nil)
+        hotelStackView.configureStackView(alignment: .center, distribution: .fillEqually, spacing: nil)
         hotelStackView.axis = .vertical
         
-        let topStackView = UIStackView(arrangedSubviews: [groupStackView, hotelStackView])
-        topStackView.configureStackView(alignment: .center, distribution: .equalSpacing, spacing: nil)
-        topStackView.axis = .horizontal
-        
-        // bottom stackViews
-        
-        let timeStackView = UIStackView(arrangedSubviews: [timeLabel, reservationTimeLabel])
-        timeStackView.configureStackView(alignment: .center, distribution: .fillProportionally, spacing: nil)
-        timeStackView.axis = .vertical
-        
         let packageStackView = UIStackView(arrangedSubviews: [packageLabel, packageNameLabel])
-        packageStackView.configureStackView(alignment: .center, distribution: .fillProportionally, spacing: nil)
+        packageStackView.configureStackView(alignment: .center, distribution: .fillEqually, spacing: nil)
         packageStackView.axis = .vertical
-        
+                
+        let rightStackView = UIStackView(arrangedSubviews: [hotelStackView, packageStackView])
+        rightStackView.configureStackView(alignment: .center, distribution: .fillEqually, spacing: 18)
+        rightStackView.axis = .vertical
+
+        // center stackView
         let waiverStackView = UIStackView(arrangedSubviews: [pendingWaiversLabel, pendingWaiversCountLabel])
-        waiverStackView.configureStackView(alignment: .center, distribution: .fillProportionally, spacing: nil)
+        waiverStackView.configureStackView(alignment: .center, distribution: .fillEqually, spacing: nil)
         waiverStackView.axis = .vertical
-        
-        let bottomStackView = UIStackView(arrangedSubviews: [timeStackView, waiverStackView, packageStackView])
-        bottomStackView.configureStackView(alignment: .center, distribution: .equalCentering, spacing: nil)
-        bottomStackView.axis = .horizontal
-        
+
         //stackView anchors
+        addSubview(leftStackView)
+        leftStackView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 15, paddingLeft: 10, paddingBottom: 15, paddingRight: 0, width: (frame.width / 2) - 30, height: 0)
+
+        addSubview(waiverStackView)
+        waiverStackView.anchor(top: nil, left: nil, bottom: bottomAnchor, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 15, paddingRight: 0, width: 0, height: 50)
+        waiverStackView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         
-        addSubview(topStackView)
-        topStackView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 20, paddingLeft: 25, paddingBottom: 0, paddingRight: 35, width: 0, height: 0)
-        
-        addSubview(bottomStackView)
-        bottomStackView.anchor(top: nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 35, paddingBottom: 30, paddingRight: 35, width: 0, height: 0)
-        
-//        // stackViews on the left
-//        let groupInfoStackView = UIStackView(arrangedSubviews: [groupLabel, groupNameLabel])
-//        groupInfoStackView.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
-//        groupInfoStackView.axis = .vertical
-//
-//        let hotelInfoStackView = UIStackView(arrangedSubviews: [hotelLabel, hotelNameLabel])
-//        hotelInfoStackView.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
-//        hotelInfoStackView.axis = .vertical
-//
-//        let reservationTimeStackView = UIStackView(arrangedSubviews: [timeLabel, reservationTimeLabel])
-//        reservationTimeStackView.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
-//        reservationTimeStackView.axis = .vertical
-//
-//        let leftStackView = UIStackView(arrangedSubviews: [groupInfoStackView, hotelInfoStackView, reservationTimeStackView])
-//        leftStackView.configureStackView(alignment: .leading, distribution: .fillEqually, spacing: 5)
-//        leftStackView.axis = .vertical
-//
-//        // stackViews on the right
-//        let toursInfoStackView = UIStackView(arrangedSubviews: [packageLabel, firstTourLabel,secondTourLabel,thirdTourLabel,forthTourLabel])
-//        toursInfoStackView.configureStackView(alignment: .center, distribution: .equalCentering, spacing: nil)
-//        toursInfoStackView.axis = .vertical
-//
-//        let pendingWaiverStackView = UIStackView(arrangedSubviews: [pendingWaiversLabel, pendingWaiversCountLabel])
-//        pendingWaiverStackView.configureStackView(alignment: .center, distribution: .fillEqually, spacing: nil)
-//        pendingWaiverStackView.axis = .vertical
-//
-//        let rightStackView = UIStackView(arrangedSubviews: [toursInfoStackView, pendingWaiverStackView])
-//        rightStackView.configureStackView(alignment: .center, distribution: .fillProportionally, spacing: 5)
-//        rightStackView.axis = .vertical
-//
-//        // set stackViews constraints
-//        addSubview(leftStackView)
-//        leftStackView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 25, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-//
-//        addSubview(rightStackView)
-//        rightStackView.anchor(top: topAnchor, left: nil, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 30, width: 0, height: 0)
+        addSubview(rightStackView)
+        rightStackView.anchor(top: topAnchor, left: nil, bottom: bottomAnchor, right: rightAnchor, paddingTop: 15, paddingLeft: 0, paddingBottom: 15, paddingRight: 10, width: (frame.width / 2) - 30, height: 0)
     }
 }
