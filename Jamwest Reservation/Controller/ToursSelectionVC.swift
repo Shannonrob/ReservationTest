@@ -368,7 +368,7 @@ class ToursSelectionVC: UIViewController {
            reservationTours = [singleTourPackageSelection]
            
            //append tour to dictionary
-           reservedToursDictionary[reservationTours[0]] = 1
+           reservedToursDictionary.updateValue(reservationTours[0], forKey: first_Tour)
            
            //method for pushing selected tours to database
            submitSelectedTours()
@@ -382,8 +382,8 @@ class ToursSelectionVC: UIViewController {
             checkSelectedTours(forArray: comboDealToursArray)
             
             //append tours to dictionary
-            reservedToursDictionary.updateValue(1, forKey: reservationTours[0])
-            reservedToursDictionary.updateValue(1, forKey: reservationTours[1])
+            reservedToursDictionary.updateValue(reservationTours[0], forKey: first_Tour)
+            reservedToursDictionary.updateValue(reservationTours[1], forKey: second_Tour)
             
             //method for pushing selected tours to database
             submitSelectedTours()
@@ -398,9 +398,9 @@ class ToursSelectionVC: UIViewController {
             checkSelectedTours(forArray: superDealPackageArray)
             
             //append tours to dictionary
-            reservedToursDictionary.updateValue(1, forKey: reservationTours[0])
-            reservedToursDictionary.updateValue(1, forKey: reservationTours[1])
-            reservedToursDictionary.updateValue(1, forKey: reservationTours[2])
+            reservedToursDictionary.updateValue(reservationTours[0], forKey: first_Tour)
+            reservedToursDictionary.updateValue(reservationTours[1], forKey: second_Tour)
+            reservedToursDictionary.updateValue(reservationTours[2], forKey: third_Tour)
             
             //method for pushing selected tours to database
             submitSelectedTours()
@@ -415,10 +415,10 @@ class ToursSelectionVC: UIViewController {
             checkSelectedTours(forArray: deluxePackageArray)
             
             //append tours to dictionary
-            reservedToursDictionary.updateValue(1, forKey: reservationTours[0])
-            reservedToursDictionary.updateValue(1, forKey: reservationTours[1])
-            reservedToursDictionary.updateValue(1, forKey: reservationTours[2])
-            reservedToursDictionary.updateValue(1, forKey: reservationTours[3])
+            reservedToursDictionary.updateValue(reservationTours[0], forKey: first_Tour)
+            reservedToursDictionary.updateValue(reservationTours[1], forKey: second_Tour)
+            reservedToursDictionary.updateValue(reservationTours[2], forKey: third_Tour)
+            reservedToursDictionary.updateValue(reservationTours[3], forKey: forth_Tour)
 
             //method for pushing selected tours to database
             submitSelectedTours()
@@ -426,16 +426,6 @@ class ToursSelectionVC: UIViewController {
        default:
            return
        }
-    }
-    
-    // submit tours to firebase
-    func submitSelectedTours() {
-        
-        let tours = RESERVATION_TOURS_REF.child(reservationId).child(tourPackage)
-        tours.updateChildValues(reservedToursDictionary) { (err, ref) in
-            
-            self.showAlertSheet(self.submitButton)
-        }
     }
     
     func updateTourLabel() {
@@ -608,6 +598,19 @@ class ToursSelectionVC: UIViewController {
             popoverController.permittedArrowDirections = []
         }
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    
+//    MARK: - API
+    
+    // submit tours to firebase
+    func submitSelectedTours() {
+        
+        let tours = RESERVATION_TOURS_REF.child(reservationId)
+        tours.updateChildValues(reservedToursDictionary) { (err, ref) in
+            
+            self.showAlertSheet(self.submitButton)
+        }
     }
 }
 

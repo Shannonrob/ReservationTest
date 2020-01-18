@@ -19,15 +19,19 @@ let RESERVATION_DATE_REF = DB_REF.child("reservation-Date")
 
 // Database parameters
 let hotel_Name = "hotel"
-let group_Name = "group-Name"
-let voucher_Number = "voucher-Num"
-let tour_Rep = "tour-Rep"
-let tour_Company = "tour-Comp"
+let group_Name = "groupName"
+let voucher_Number = "voucherNum"
+let tour_Rep = "tourRep"
+let tour_Company = "tourComp"
 let pax_Count = "pax"
-let tour_Package = "tour-Package"
+let tour_Package = "tourPackage"
 let reservation_Time = "time"
 let reservation_Date = "date"
-let reservation_Id = "reservation-Id"
+let reservation_Id = "reservationId"
+let first_Tour = "firstTour"
+let second_Tour = "secondTour"
+let third_Tour = "thirdTour"
+let forth_Tour = "forthTour"
 
 
 // Fonts

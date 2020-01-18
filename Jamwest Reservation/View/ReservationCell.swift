@@ -10,6 +10,24 @@ import UIKit
 
 class ReservationCell: UICollectionViewCell {
     
+    var reservation: Reservation? {
+        
+        didSet {
+            
+            guard let name = reservation?.group else { return }
+            guard let hotel = reservation?.hotel else { return }
+            guard let time = reservation?.time else { return }
+            guard let package = reservation?.package else { return }
+            guard let pendingWaivers = reservation?.pax else { return }
+            
+            groupNameLabel.text = name
+            hotelNameLabel.text = hotel
+            reservationTimeLabel.text = time
+            packageNameLabel.text = package
+            pendingWaiversCountLabel.text = "\(pendingWaivers)"
+        }
+    }
+    
 //    MARK: - Labels
     
     let groupLabel: UILabel = {
@@ -39,10 +57,10 @@ class ReservationCell: UICollectionViewCell {
         return label
     }()
     
-    let toursLabel: UILabel = {
+    let packageLabel: UILabel = {
         
         let label = UILabel()
-        label.text = "Tours :"
+        label.text = "Package :"
         label.textColor = .darkText
         label.font = UIFont(name: avenirNext_Medium, size: 16)
         return label
@@ -78,25 +96,9 @@ class ReservationCell: UICollectionViewCell {
     let reservationTimeLabel: UILabel = {
         
         let label = UILabel()
-        label.text = "Time of reservation"
+        label.text = "Time"
         label.textColor = Constants.Design.Color.Primary.MarkerColor
         label.font = UIFont(name: avenirNext_Demibold, size: 24)
-        return label
-    }()
-    
-    let reservationToursLabel: UILabel = {
-        
-        let label = UILabel()
-        label.lineBreakMode = NSLineBreakMode.byWordWrapping
-        label.numberOfLines = 4
-        label.text = """
-                    ATV Tour
-                    Driving Experience
-                    HorseBack Riding
-                    Safari Tour
-                    """
-        label.textColor = Constants.Design.Color.Primary.MarkerColor
-        label.font = UIFont(name: avenirNext_Demibold, size: 18)
         return label
     }()
     
@@ -108,6 +110,61 @@ class ReservationCell: UICollectionViewCell {
         label.font = UIFont(name: avenirNext_Demibold, size: 26)
         return label
     }()
+    
+    let packageNameLabel: UILabel = {
+           
+           let label = UILabel()
+           label.text = "Package Name"
+           label.textColor = Constants.Design.Color.Primary.MarkerColor
+           label.font = UIFont(name: avenirNext_Demibold, size: 26)
+           return label
+       }()
+    
+//    let firstTourLabel: UILabel = {
+//
+//        let label = UILabel()
+//        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+//        label.numberOfLines = 4
+//        label.text = "tour 1"
+//        label.textColor = Constants.Design.Color.Primary.MarkerColor
+//        label.font = UIFont(name: avenirNext_Demibold, size: 18)
+//        return label
+//    }()
+//
+//    let secondTourLabel: UILabel = {
+//
+//        let label = UILabel()
+//        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+//        label.numberOfLines = 4
+//        label.text = "tour 2"
+//        label.textColor = Constants.Design.Color.Primary.MarkerColor
+//        label.font = UIFont(name: avenirNext_Demibold, size: 18)
+//        return label
+//    }()
+//
+//    let thirdTourLabel: UILabel = {
+//
+//        let label = UILabel()
+//        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+//        label.numberOfLines = 4
+//        label.text = "tour 3"
+//        label.textColor = Constants.Design.Color.Primary.MarkerColor
+//        label.font = UIFont(name: avenirNext_Demibold, size: 18)
+//        return label
+//    }()
+//
+//    let forthTourLabel: UILabel = {
+//
+//        let label = UILabel()
+//        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+//        label.numberOfLines = 4
+//        label.text = "tour 4"
+//        label.textColor = Constants.Design.Color.Primary.MarkerColor
+//        label.font = UIFont(name: avenirNext_Demibold, size: 18)
+//        return label
+//    }()
+//
+
     
 //    MARK: - Init
     
@@ -126,41 +183,81 @@ class ReservationCell: UICollectionViewCell {
     
     func configureCell() {
         
-        // stackViews on the left
-        let groupInfoStackView = UIStackView(arrangedSubviews: [groupLabel, groupNameLabel])
-        groupInfoStackView.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
-        groupInfoStackView.axis = .vertical
+        // top stackViews
         
-        let hotelInfoStackView = UIStackView(arrangedSubviews: [hotelLabel, hotelNameLabel])
-        hotelInfoStackView.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
-        hotelInfoStackView.axis = .vertical
+        let groupStackView = UIStackView(arrangedSubviews: [groupLabel, groupNameLabel])
+        groupStackView.configureStackView(alignment: .center, distribution: .fillProportionally, spacing: nil)
+        groupStackView.axis = .vertical
         
-        let reservationTimeStackView = UIStackView(arrangedSubviews: [timeLabel, reservationTimeLabel])
-        reservationTimeStackView.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
-        reservationTimeStackView.axis = .vertical
+        let hotelStackView = UIStackView(arrangedSubviews: [hotelLabel, hotelNameLabel])
+        hotelStackView.configureStackView(alignment: .center, distribution: .fillProportionally, spacing: nil)
+        hotelStackView.axis = .vertical
         
-        let leftStackView = UIStackView(arrangedSubviews: [groupInfoStackView, hotelInfoStackView, reservationTimeStackView])
-        leftStackView.configureStackView(alignment: .leading, distribution: .fillEqually, spacing: 5)
-        leftStackView.axis = .vertical
+        let topStackView = UIStackView(arrangedSubviews: [groupStackView, hotelStackView])
+        topStackView.configureStackView(alignment: .center, distribution: .equalSpacing, spacing: nil)
+        topStackView.axis = .horizontal
         
-        // stackViews on the right
-        let toursInfoStackView = UIStackView(arrangedSubviews: [toursLabel, reservationToursLabel])
-        toursInfoStackView.configureStackView(alignment: .center, distribution: .equalCentering, spacing: nil)
-        toursInfoStackView.axis = .vertical
+        // bottom stackViews
         
-        let pendingWaiverStackView = UIStackView(arrangedSubviews: [pendingWaiversLabel, pendingWaiversCountLabel])
-        pendingWaiverStackView.configureStackView(alignment: .center, distribution: .fillEqually, spacing: nil)
-        pendingWaiverStackView.axis = .vertical
+        let timeStackView = UIStackView(arrangedSubviews: [timeLabel, reservationTimeLabel])
+        timeStackView.configureStackView(alignment: .center, distribution: .fillProportionally, spacing: nil)
+        timeStackView.axis = .vertical
         
-        let rightStackView = UIStackView(arrangedSubviews: [toursInfoStackView, pendingWaiverStackView])
-        rightStackView.configureStackView(alignment: .center, distribution: .fillProportionally, spacing: 5)
-        rightStackView.axis = .vertical
+        let packageStackView = UIStackView(arrangedSubviews: [packageLabel, packageNameLabel])
+        packageStackView.configureStackView(alignment: .center, distribution: .fillProportionally, spacing: nil)
+        packageStackView.axis = .vertical
         
-        // set stackViews constraints
-        addSubview(leftStackView)
-        leftStackView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 25, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        let waiverStackView = UIStackView(arrangedSubviews: [pendingWaiversLabel, pendingWaiversCountLabel])
+        waiverStackView.configureStackView(alignment: .center, distribution: .fillProportionally, spacing: nil)
+        waiverStackView.axis = .vertical
         
-        addSubview(rightStackView)
-        rightStackView.anchor(top: topAnchor, left: nil, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 0, height: 0)
+        let bottomStackView = UIStackView(arrangedSubviews: [timeStackView, waiverStackView, packageStackView])
+        bottomStackView.configureStackView(alignment: .center, distribution: .equalCentering, spacing: nil)
+        bottomStackView.axis = .horizontal
+        
+        //stackView anchors
+        
+        addSubview(topStackView)
+        topStackView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 20, paddingLeft: 25, paddingBottom: 0, paddingRight: 35, width: 0, height: 0)
+        
+        addSubview(bottomStackView)
+        bottomStackView.anchor(top: nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 35, paddingBottom: 30, paddingRight: 35, width: 0, height: 0)
+        
+//        // stackViews on the left
+//        let groupInfoStackView = UIStackView(arrangedSubviews: [groupLabel, groupNameLabel])
+//        groupInfoStackView.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
+//        groupInfoStackView.axis = .vertical
+//
+//        let hotelInfoStackView = UIStackView(arrangedSubviews: [hotelLabel, hotelNameLabel])
+//        hotelInfoStackView.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
+//        hotelInfoStackView.axis = .vertical
+//
+//        let reservationTimeStackView = UIStackView(arrangedSubviews: [timeLabel, reservationTimeLabel])
+//        reservationTimeStackView.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
+//        reservationTimeStackView.axis = .vertical
+//
+//        let leftStackView = UIStackView(arrangedSubviews: [groupInfoStackView, hotelInfoStackView, reservationTimeStackView])
+//        leftStackView.configureStackView(alignment: .leading, distribution: .fillEqually, spacing: 5)
+//        leftStackView.axis = .vertical
+//
+//        // stackViews on the right
+//        let toursInfoStackView = UIStackView(arrangedSubviews: [packageLabel, firstTourLabel,secondTourLabel,thirdTourLabel,forthTourLabel])
+//        toursInfoStackView.configureStackView(alignment: .center, distribution: .equalCentering, spacing: nil)
+//        toursInfoStackView.axis = .vertical
+//
+//        let pendingWaiverStackView = UIStackView(arrangedSubviews: [pendingWaiversLabel, pendingWaiversCountLabel])
+//        pendingWaiverStackView.configureStackView(alignment: .center, distribution: .fillEqually, spacing: nil)
+//        pendingWaiverStackView.axis = .vertical
+//
+//        let rightStackView = UIStackView(arrangedSubviews: [toursInfoStackView, pendingWaiverStackView])
+//        rightStackView.configureStackView(alignment: .center, distribution: .fillProportionally, spacing: 5)
+//        rightStackView.axis = .vertical
+//
+//        // set stackViews constraints
+//        addSubview(leftStackView)
+//        leftStackView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 25, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+//
+//        addSubview(rightStackView)
+//        rightStackView.anchor(top: topAnchor, left: nil, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 30, width: 0, height: 0)
     }
 }

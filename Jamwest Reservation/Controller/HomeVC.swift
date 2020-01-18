@@ -16,6 +16,7 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
  //    MARK: - Properties
     var delegate: HomeVcDelegate?
     var currentDate = String()
+//    var toursDictionary = [:] as [String: Any] delete if not used
     var reservations = [Reservation]()
     
     
@@ -66,11 +67,13 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return reservations.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ReservationCell
+        
+        cell.reservation = reservations[indexPath.item]
         
         cell.backgroundColor = .white
         cell.layer.cornerRadius = 8
@@ -124,13 +127,16 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
             
             let reservationIds = snapshot.key
             
-            RESERVATION_REF.child(reservationIds).observe(.childAdded) { (reservationSnapshot) in
-                print("Here are the reservations \(reservationSnapshot)")
+            RESERVATION_REF.child(reservationIds).observeSingleEvent(of: .value) { (reservationSnapshot) in
+    
+                guard let dictionary = reservationSnapshot.value as? Dictionary<String, AnyObject> else { return }
+                
+                let reservation = Reservation(reservationId: reservationIds, dictionary: dictionary)
+                
+                self.reservations.append(reservation)
+                
+                self.collectionView.reloadData()
             }
-            
-            //uses the current date to get the reservationIds for said date
-//            print("These are the reservation ids \(snapshot.key)")
-            
         }
     }
  }

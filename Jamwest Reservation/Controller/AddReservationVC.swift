@@ -396,6 +396,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
                          tour_Rep: tourRep,
                          tour_Company: tourCompany,
                          reservation_Time: time,
+                         tour_Package: tourPackageSelected,
                          pax_Count: paxQuantity] as [String: Any]
         
 
