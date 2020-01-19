@@ -44,12 +44,12 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         // cell sizes
-        let width = (view.frame.width - 26) / 2
+        let width = (view.frame.width - 60) / 2
         return CGSize(width: width, height: 160)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
+        return 14
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -57,7 +57,7 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10, left: 8, bottom: 5, right: 8)
+        return UIEdgeInsets(top: 10, left: 23, bottom: 5, right: 23)
     }
     
     
@@ -77,8 +77,8 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         
         cell.backgroundColor = .white
         cell.layer.cornerRadius = 8
-        cell.layer.borderWidth = 1.0
-        cell.layer.borderColor = UIColor.clear.cgColor
+        cell.layer.borderWidth = 0.75
+        cell.layer.borderColor = Constants.Design.Color.Primary.MarkerColor.cgColor
         
         // cell shadow
         cell.layer.shadowColor = UIColor.gray.cgColor
@@ -96,6 +96,7 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         
         view.backgroundColor = Constants.Design.Color.Background.FadeGray
         collectionView.backgroundColor = Constants.Design.Color.Background.FadeGray
+        collectionView.showsVerticalScrollIndicator = false
        
         let reservation = UIFont.boldSystemFont(ofSize: 25)
         navigationController?.navigationBar.barTintColor = Constants.Design.Color.Primary.HeavyGreen
@@ -135,10 +136,10 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
                 
                 self.reservations.append(reservation)
                 
-//                self.reservations.sort { (resertvation1, reservation2) -> Bool in
-//                    return resertvation1.group > reservation2.group
-//                }
-                
+                // sort results in alphabetical order
+                self.reservations.sort { (reservation1, reservation2) -> Bool in
+                    return reservation1.group < reservation2.group
+                }
                 self.collectionView.reloadData()
             }
         }
