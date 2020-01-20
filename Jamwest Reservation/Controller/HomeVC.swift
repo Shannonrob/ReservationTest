@@ -31,13 +31,9 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         
         configureUI()
         fetchPosts()
+        refreshData()
      }
      
- //    MARK: - Handlers
-    
-    @objc func handleMenuToggle() {
-        delegate?.handleMenuToggle(forMenuOption: nil)
-    }
     
 //    MARK: - UICollectionViewFlowLayout
     
@@ -45,7 +41,7 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         
         // cell sizes
         let width = (view.frame.width - 60) / 2
-        return CGSize(width: width, height: 160)
+        return CGSize(width: width, height: 170)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -90,8 +86,43 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         return cell
     }
     
+    //    MARK: - Handlers
+    
+    @objc func handleMenuToggle() {
+        delegate?.handleMenuToggle(forMenuOption: nil)
+    }
+    
+     @objc func handleReloadData() {
+            collectionView.reloadData()
+        }
+    
+    @objc func handleEditReservation() {
+        
+    }
+    
 //    MARK: - Helper functions
     
+    func refreshData() {
+        
+        // set timer
+        let calendar = Calendar.current
+        let today = Date()
+        let date = calendar.date( bySettingHour: 00, minute: 1, second: 0, of: today)!
+        let timer = Timer(fireAt: date, interval: 0, target: self, selector: #selector(handleReloadData), userInfo: nil, repeats: false)
+        
+        RunLoop.main.add(timer, forMode: RunLoop.Mode.common)
+    }
+    
+    func formatReservationDate() {
+        
+        // gets the current date
+        let date: Date = Date()
+        let reservationDateFormatter = DateFormatter()
+        reservationDateFormatter.dateStyle = .medium
+
+        currentDate = reservationDateFormatter.string(from: date)
+    }
+
     func configureUI() {
         
         view.backgroundColor = Constants.Design.Color.Background.FadeGray
@@ -102,22 +133,14 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         navigationController?.navigationBar.barTintColor = Constants.Design.Color.Primary.HeavyGreen
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.barStyle = .black
+        navigationController?.navigationBar.tintColor = .white
         
         navigationItem.title = "Reservation"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: reservation]
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "menuButton").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleMenuToggle))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(handleEditReservation))
     }
     
-    func formatReservationDate() {
-       
-       // gets the current date
-       let date: Date = Date()
-       let reservationDateFormatter = DateFormatter()
-       reservationDateFormatter.dateStyle = .medium
-
-       currentDate = reservationDateFormatter.string(from: date)
-   }
-
 //    MARK: - API
     
     func fetchPosts() {
