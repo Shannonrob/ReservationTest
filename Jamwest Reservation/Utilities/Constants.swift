@@ -52,6 +52,9 @@ let white_CheckMark = "whiteCheckMark"
 let clear_CheckMark = "hiddenCheckMark"
 let orange_Race_Flag_Icon = "orangeRaceFlagIcon"
 
+// Notification Keys
+let date_Changed = "Wurllink.dateChanged"
+
 // Notifying ToursSelectionVC which package was selected in AddReservationVC
 //var tour_Package_Selected = String()
 

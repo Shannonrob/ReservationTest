@@ -34,9 +34,8 @@ class ReservationCell: UICollectionViewCell {
         
         let label = UILabel()
         label.text = "Group :"
-//        label.textColor = Constants.Design.Color.Primary.MarkerColor
         label.textColor = .darkGray
-        label.font = UIFont(name: avenirNext_Medium, size: 16)
+        label.font = UIFont(name: avenirNext_Medium, size: 20)
         return label
     }()
     
@@ -45,7 +44,7 @@ class ReservationCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "Hotel :"
         label.textColor = .darkGray
-        label.font = UIFont(name: avenirNext_Medium, size: 16)
+        label.font = UIFont(name: avenirNext_Medium, size: 20)
         return label
     }()
     
@@ -54,7 +53,7 @@ class ReservationCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "Time :"
         label.textColor = .darkGray
-        label.font = UIFont(name: avenirNext_Medium, size: 16)
+        label.font = UIFont(name: avenirNext_Medium, size: 20)
         return label
     }()
     
@@ -63,7 +62,7 @@ class ReservationCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "Package :"
         label.textColor = .darkGray
-        label.font = UIFont(name: avenirNext_Medium, size: 16)
+        label.font = UIFont(name: avenirNext_Medium, size: 20)
         return label
     }()
     
@@ -72,7 +71,7 @@ class ReservationCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "Waivers :"
         label.textColor = .darkGray
-        label.font = UIFont(name: avenirNext_Medium, size: 16)
+        label.font = UIFont(name: avenirNext_Medium, size: 20)
         return label
     }()
     
@@ -80,7 +79,7 @@ class ReservationCell: UICollectionViewCell {
         
         let label = UILabel()
         label.text = "Name of group"
-        label.textColor = .darkText
+        label.textColor = .black
         label.font = UIFont(name: avenirNext_Demibold, size: 24)
         return label
     }()
@@ -89,7 +88,7 @@ class ReservationCell: UICollectionViewCell {
         
         let label = UILabel()
         label.text = "Name of hotel"
-        label.textColor = .darkText
+        label.textColor = .black
         label.font = UIFont(name: avenirNext_Demibold, size: 24)
         return label
     }()
@@ -98,7 +97,7 @@ class ReservationCell: UICollectionViewCell {
         
         let label = UILabel()
         label.text = "Time"
-        label.textColor = .darkText
+        label.textColor = .black
         label.font = UIFont(name: avenirNext_Demibold, size: 24)
         return label
     }()
@@ -108,7 +107,7 @@ class ReservationCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "6"
         label.textColor = Constants.Design.Color.Primary.Orange
-        label.font = UIFont(name: avenirNext_Demibold, size: 26)
+        label.font = UIFont(name: avenirNext_Demibold, size: 24)
         return label
     }()
     
@@ -116,8 +115,8 @@ class ReservationCell: UICollectionViewCell {
            
            let label = UILabel()
            label.text = "Package Name"
-           label.textColor = .darkText
-           label.font = UIFont(name: avenirNext_Demibold, size: 26)
+           label.textColor = .black
+           label.font = UIFont(name: avenirNext_Demibold, size: 24)
            return label
        }()
     

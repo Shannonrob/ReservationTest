@@ -265,6 +265,8 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         configureStackViewComponents()
         configurePaxStepper()
         
+        hotelNameTextField.becomeFirstResponder()
+        
        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
        view.addGestureRecognizer(tap)
         

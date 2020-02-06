@@ -120,7 +120,8 @@ class ToursSelectionVC: UIViewController {
 //    MARK: - Selectors
     
     @objc func handleDismiss() {
-        dismiss(animated: true, completion: nil)
+//        dismiss(animated: true, completion: nil)
+        dismissTourSelectionVC(navigationItem.leftBarButtonItem!)
     }
     
     @objc func handleATVTour() {
@@ -437,12 +438,12 @@ class ToursSelectionVC: UIViewController {
     func configureUI() {
         
         view.backgroundColor = Constants.Design.Color.Background.FadeGray
-        navigationController?.navigationBar.barTintColor = Constants.Design.Color.Primary.HeavyGreen
         
+        navigationController?.navigationBar.barTintColor = Constants.Design.Color.Primary.HeavyGreen
         navigationController?.navigationBar.isHidden = false
-        navigationItem.title = "Tour selection"
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barStyle = .black
+        navigationItem.title = "Tour selection"
         
         let reservation = UIFont.boldSystemFont(ofSize: 25)
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: reservation]
@@ -576,7 +577,7 @@ class ToursSelectionVC: UIViewController {
     
     // Action sheet
     func showAlertSheet(_ sender: UIButton) {
-        
+
         let alertController = UIAlertController(title: nil, message: "Do you wish to submit another reservation?", preferredStyle: .alert)
         let defaultAction = UIAlertAction(title: "Yes", style: .default, handler: { (alert: UIAlertAction!) -> Void in
             // present AddReservationVC
@@ -584,9 +585,32 @@ class ToursSelectionVC: UIViewController {
         })
 
         let deleteAction = UIAlertAction(title: "No", style: .destructive, handler: { (alert: UIAlertAction!) -> Void in
-    
+
             //dismiss all viewControllers back to rootVC
             self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+        })
+
+        alertController.addAction(defaultAction)
+        alertController.addAction(deleteAction)
+
+        if let popoverController = alertController.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    
+    func dismissTourSelectionVC(_ sender: UIBarButtonItem) {
+        
+        let alertController = UIAlertController(title: "Warning", message: "This reservation will be incomplete!", preferredStyle: .alert)
+        let defaultAction = UIAlertAction(title: "Proceed", style: .default, handler: { (alert: UIAlertAction!) -> Void in
+            // dismiss tourSelectionVC
+            self.dismiss(animated: true, completion: nil)
+        })
+
+        let deleteAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (alert: UIAlertAction!) -> Void in
         })
 
         alertController.addAction(defaultAction)
@@ -599,7 +623,6 @@ class ToursSelectionVC: UIViewController {
         }
         self.present(alertController, animated: true, completion: nil)
     }
-    
     
 //    MARK: - API
     

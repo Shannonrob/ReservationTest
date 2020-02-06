@@ -40,8 +40,13 @@ struct Alert {
     }
     
     static func beforeSubmittingReservation(on vc: UIViewController) {
-         showBasicAlert(on: vc, with: "Before submission", message: "Please check to verify reservation information is accurate.")
+         showBasicAlert(on: vc, with: "Before submission", message: "Please verify reservation information is accurate.")
     }
+    
+    static func dayChangedDetected(on vc: UIViewController) {
+         showBasicAlert(on: vc, with: "Day Changed", message: "Detected new date.")
+    }
+
 }
 
 

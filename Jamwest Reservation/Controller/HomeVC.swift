@@ -16,10 +16,17 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
  //    MARK: - Properties
     var delegate: HomeVcDelegate?
     var currentDate = String()
-//    var toursDictionary = [:] as [String: Any] delete if not used
     var reservations = [Reservation]()
+ 
+    //    var toursDictionary = [:] as [String: Any] delete if not used
     
+    //notification key whatever
+    let dateChanged = Notification.Name(rawValue: date_Changed)
     
+    // remove observers
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     
  //    MARK: - Init
      
@@ -28,10 +35,11 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         
         // register cell classes
         self.collectionView!.register(ReservationCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        
+            
         configureUI()
         fetchPosts()
-        refreshData()
+        
+        observeDateChanged()
      }
      
     
@@ -89,30 +97,29 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     //    MARK: - Handlers
     
     @objc func handleMenuToggle() {
+        
         delegate?.handleMenuToggle(forMenuOption: nil)
     }
     
-     @objc func handleReloadData() {
-            collectionView.reloadData()
-        }
-    
-    @objc func handleEditReservation() {
+    @objc func handleReloadData() {
         
+        self.collectionView.reloadData()
     }
     
 //    MARK: - Helper functions
     
-    func refreshData() {
+    // Date did change notification
+    func observeDateChanged() {
         
-        // set timer
-        let calendar = Calendar.current
-        let today = Date()
-        let date = calendar.date( bySettingHour: 00, minute: 1, second: 0, of: today)!
-        let timer = Timer(fireAt: date, interval: 0, target: self, selector: #selector(handleReloadData), userInfo: nil, repeats: false)
-        
-        RunLoop.main.add(timer, forMode: RunLoop.Mode.common)
+        NotificationCenter.default.addObserver(self, selector: #selector(HomeVC.updateDateChanged(notification:)), name: dateChanged, object: nil)
     }
     
+    @objc func updateDateChanged(notification: NSNotification) {
+        
+        Alert.dayChangedDetected(on: self)
+    }
+    
+    // format reservation date
     func formatReservationDate() {
         
         // gets the current date
@@ -138,7 +145,6 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         navigationItem.title = "Reservation"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: reservation]
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "menuButton").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleMenuToggle))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(handleEditReservation))
     }
     
 //    MARK: - API
@@ -168,3 +174,6 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         }
     }
  }
+
+
+
