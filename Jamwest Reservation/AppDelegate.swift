@@ -16,8 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        NotificationCenter.default.addObserver(self, selector: #selector(calendarDayDidChange(_:)), name: NSNotification.Name.NSCalendarDayChanged, object: nil)
-        
         FirebaseApp.configure()
         return true
     }
@@ -36,12 +34,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 
-
-    @objc private func calendarDayDidChange(_ notification : NSNotification) {
-      
-        let name = Notification.Name(rawValue: date_Changed)
-        NotificationCenter.default.post(name: name, object: nil)
-        
-      }
 }
 

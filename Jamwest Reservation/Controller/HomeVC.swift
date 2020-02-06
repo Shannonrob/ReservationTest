@@ -21,7 +21,7 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     //    var toursDictionary = [:] as [String: Any] delete if not used
     
     //notification key whatever
-    let dateChanged = Notification.Name(rawValue: date_Changed)
+    let dateChanged = Notification.Name(rawValue: date_Changed_key)
     
     // remove observers
     deinit {
@@ -108,15 +108,14 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
 //    MARK: - Helper functions
     
-    // Date did change notification
+    // listens for dateDidChange notification
     func observeDateChanged() {
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeVC.updateDateChanged(notification:)), name: dateChanged, object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(HomeVC.handleDateDidChange(notification:)), name: dateChanged, object: nil)
     }
     
-    @objc func updateDateChanged(notification: NSNotification) {
-        
-        Alert.dayChangedDetected(on: self)
+    @objc func handleDateDidChange(notification: NSNotification) {
+        print("handle date changed here")
     }
     
     // format reservation date
