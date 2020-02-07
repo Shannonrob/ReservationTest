@@ -41,7 +41,7 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         
         observeDateChanged()
      }
-     
+    
     
 //    MARK: - UICollectionViewFlowLayout
     
@@ -101,22 +101,20 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         delegate?.handleMenuToggle(forMenuOption: nil)
     }
     
-    @objc func handleReloadData() {
-        
-        self.collectionView.reloadData()
-    }
     
 //    MARK: - Helper functions
     
-    // listens for dateDidChange notification
+    // listener for dateDidChange notification
     func observeDateChanged() {
-
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeVC.handleDateDidChange(notification:)), name: dateChanged, object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(HomeVC.fetchPosts),
+                                               name: dateChanged, object: nil)
     }
     
-    @objc func handleDateDidChange(notification: NSNotification) {
-        print("handle date changed here")
-    }
+//    @objc func handleDateDidChange(notification: NSNotification) {
+//
+//    }
     
     // format reservation date
     func formatReservationDate() {
@@ -148,8 +146,10 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
 //    MARK: - API
     
-    func fetchPosts() {
-    
+    @objc func fetchPosts() {
+        
+        reservations = []
+        
         formatReservationDate()
         
         RESERVATION_DATE_REF.child(currentDate).observe(.childAdded) { (snapshot) in
@@ -157,7 +157,7 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
             let reservationIds = snapshot.key
             
             RESERVATION_REF.child(reservationIds).observeSingleEvent(of: .value) { (reservationSnapshot) in
-    
+                
                 guard let dictionary = reservationSnapshot.value as? Dictionary<String, AnyObject> else { return }
                 
                 let reservation = Reservation(reservationId: reservationIds, dictionary: dictionary)
