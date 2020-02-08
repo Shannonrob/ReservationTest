@@ -18,8 +18,6 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     var currentDate = String()
     var reservations = [Reservation]()
  
-    //    var toursDictionary = [:] as [String: Any] delete if not used
-    
     //notification key whatever
     let dateChanged = Notification.Name(rawValue: date_Changed_key)
     
@@ -27,6 +25,9 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
+    
+    //    var toursDictionary = [:] as [String: Any] delete if not used
+       
     
  //    MARK: - Init
      
@@ -37,9 +38,8 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         self.collectionView!.register(ReservationCell.self, forCellWithReuseIdentifier: reuseIdentifier)
             
         configureUI()
-        fetchPosts()
-        
         observeDateChanged()
+        fetchPosts()
      }
     
     
@@ -108,13 +108,9 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     func observeDateChanged() {
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(HomeVC.fetchPosts),
-                                               name: dateChanged, object: nil)
+        selector: #selector(HomeVC.fetchPosts),
+        name: dateChanged, object: nil)
     }
-    
-//    @objc func handleDateDidChange(notification: NSNotification) {
-//
-//    }
     
     // format reservation date
     func formatReservationDate() {
@@ -123,7 +119,6 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         let date: Date = Date()
         let reservationDateFormatter = DateFormatter()
         reservationDateFormatter.dateStyle = .medium
-
         currentDate = reservationDateFormatter.string(from: date)
     }
 
@@ -147,9 +142,8 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 //    MARK: - API
     
     @objc func fetchPosts() {
-        
+
         reservations = []
-        
         formatReservationDate()
         
         RESERVATION_DATE_REF.child(currentDate).observe(.childAdded) { (snapshot) in
@@ -172,7 +166,8 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
             }
         }
     }
- }
+}
+
 
 
 
