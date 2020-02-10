@@ -39,7 +39,8 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
             
         configureUI()
         observeDateChanged()
-        fetchPosts()
+        fetchCurrentReservations()
+    
      }
     
     
@@ -94,6 +95,11 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        print(reservations[indexPath.row].reservationId!)
+    }
+    
     //    MARK: - Handlers
     
     @objc func handleMenuToggle() {
@@ -108,7 +114,7 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     func observeDateChanged() {
         
         NotificationCenter.default.addObserver(self,
-        selector: #selector(HomeVC.fetchPosts),
+        selector: #selector(HomeVC.fetchCurrentReservations),
         name: dateChanged, object: nil)
     }
     
@@ -141,14 +147,14 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
 //    MARK: - API
     
-    @objc func fetchPosts() {
+    @objc func fetchCurrentReservations() {
 
         reservations = []
         formatReservationDate()
         
         RESERVATION_DATE_REF.child(currentDate).observe(.childAdded) { (snapshot) in
-            
-            let reservationIds = snapshot.key
+    
+             let reservationIds = snapshot.key
             
             RESERVATION_REF.child(reservationIds).observeSingleEvent(of: .value) { (reservationSnapshot) in
                 
@@ -166,6 +172,13 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
             }
         }
     }
+    
+    
+//    if snapshot.hasChild(self.currentDate) {
+//                   print("true")
+//               } else {
+//                   print("blank")
+//               }
 }
 
 
