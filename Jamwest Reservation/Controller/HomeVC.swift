@@ -97,7 +97,9 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        print(reservations[indexPath.row].reservationId!)
+        let participantInfoVC = ParticipantInfoVC()
+        participantInfoVC.reservation = reservations[indexPath.row]
+        navigationController?.pushViewController(participantInfoVC, animated: true)
     }
     
     //    MARK: - Handlers
@@ -140,7 +142,7 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         navigationController?.navigationBar.barStyle = .black
         navigationController?.navigationBar.tintColor = .white
         
-        navigationItem.title = "Reservation"
+        navigationItem.title = "Reservations"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: reservation]
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "menuButton").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleMenuToggle))
     }
@@ -172,13 +174,6 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
             }
         }
     }
-    
-    
-//    if snapshot.hasChild(self.currentDate) {
-//                   print("true")
-//               } else {
-//                   print("blank")
-//               }
 }
 
 

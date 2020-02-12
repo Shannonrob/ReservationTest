@@ -131,6 +131,8 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         textfield.design(placeHolder: "Hotel", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
         textfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeHotel"))
         textfield.layer.borderWidth = 0.85
+        textfield.layer.cornerRadius = 4
+        textfield.layer.masksToBounds = true
         textfield.layer.borderColor = Constants.Design.Color.Border.Blue
         textfield.addTarget(self, action: #selector(handleFormValidation), for: .allTouchEvents)
         return textfield
@@ -141,6 +143,8 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         textfield.design(placeHolder: "Representative", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
         textfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeConcierge"))
         textfield.layer.borderWidth = 0.85
+        textfield.layer.cornerRadius = 4
+        textfield.layer.masksToBounds = true
         textfield.layer.borderColor = Constants.Design.Color.Border.Blue
         textfield.addTarget(self, action: #selector(handleFormValidation), for: .editingChanged)
         return textfield
@@ -151,6 +155,8 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         textfield.design(placeHolder: "Name", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
         textfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeName"))
         textfield.layer.borderWidth = 0.85
+        textfield.layer.cornerRadius = 4
+        textfield.layer.masksToBounds = true
         textfield.layer.borderColor = Constants.Design.Color.Border.Blue
         textfield.addTarget(self, action: #selector(handleFormValidation), for: .editingChanged)
         return textfield
@@ -161,6 +167,8 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         textfield.design(placeHolder: "Tour Company", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
         textfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeBus"))
         textfield.layer.borderWidth = 0.85
+        textfield.layer.cornerRadius = 4
+        textfield.layer.masksToBounds = true
         textfield.layer.borderColor = Constants.Design.Color.Border.Blue
         textfield.addTarget(self, action: #selector(handleFormValidation), for: .editingChanged)
         return textfield
@@ -171,6 +179,8 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         textfield.design(placeHolder: "Voucher", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
         textfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeNumber"))
         textfield.layer.borderWidth = 0.85
+        textfield.layer.cornerRadius = 4
+        textfield.layer.masksToBounds = true
         textfield.layer.borderColor = Constants.Design.Color.Border.Blue
         textfield.addTarget(self, action: #selector(handleFormValidation), for: .editingChanged)
         textfield.keyboardType = .numberPad
@@ -183,6 +193,8 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         textfield.design(placeHolder: "mm/dd/yyyy", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
         textfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeDate"))
         textfield.layer.borderWidth = 1
+        textfield.layer.cornerRadius = 4
+        textfield.layer.masksToBounds = true
         textfield.layer.borderColor = Constants.Design.Color.Border.Blue
         textfield.addTarget(self, action: #selector(configureDatePicker), for: .editingDidBegin)
         return textfield
