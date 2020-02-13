@@ -10,6 +10,7 @@
 		850380792381A37F00E14BB3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850380782381A37F00E14BB3 /* Constants.swift */; };
 		8541AFF723CFDBFE00276BF0 /* ReservationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8541AFF623CFDBFE00276BF0 /* ReservationCell.swift */; };
 		8554D8A123F46D5D0050A499 /* ParticipantInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8554D8A023F46D5D0050A499 /* ParticipantInfoVC.swift */; };
+		8554D8A323F49A0D0050A499 /* UILabelExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8554D8A223F49A0D0050A499 /* UILabelExt.swift */; };
 		8569B9E02391AAD2004707A2 /* ToursSelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8569B9DF2391AAD2004707A2 /* ToursSelectionVC.swift */; };
 		858A5624237B1E3500624FB8 /* AddReservationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858A5623237B1E3500624FB8 /* AddReservationVC.swift */; };
 		85D18A1F236F040C00F06441 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D18A1E236F040C00F06441 /* AppDelegate.swift */; };
@@ -42,6 +43,7 @@
 		850380782381A37F00E14BB3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8541AFF623CFDBFE00276BF0 /* ReservationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationCell.swift; sourceTree = "<group>"; };
 		8554D8A023F46D5D0050A499 /* ParticipantInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantInfoVC.swift; sourceTree = "<group>"; };
+		8554D8A223F49A0D0050A499 /* UILabelExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelExt.swift; sourceTree = "<group>"; };
 		8569B9DF2391AAD2004707A2 /* ToursSelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToursSelectionVC.swift; sourceTree = "<group>"; };
 		858A5623237B1E3500624FB8 /* AddReservationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReservationVC.swift; sourceTree = "<group>"; };
 		85D18A1B236F040C00F06441 /* Jamwest Reservation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Jamwest Reservation.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -178,6 +180,7 @@
 				85F932E5239BF4A600549000 /* ArrayExt.swift */,
 				85F932DB239BF3BB00549000 /* UIbuttonExt.swift */,
 				85F932E3239BF47100549000 /* UIColorExt.swift */,
+				8554D8A223F49A0D0050A499 /* UILabelExt.swift */,
 				85F932E1239BF45100549000 /* UIStackviewExt.swift */,
 				85F932DF239BF3DF00549000 /* UITextfieldExt.swift */,
 				85F932DD239BF3CA00549000 /* UIViewExt.swift */,
@@ -338,6 +341,7 @@
 				8569B9E02391AAD2004707A2 /* ToursSelectionVC.swift in Sources */,
 				85D18A4C2377049A00F06441 /* SignUpVC.swift in Sources */,
 				850380792381A37F00E14BB3 /* Constants.swift in Sources */,
+				8554D8A323F49A0D0050A499 /* UILabelExt.swift in Sources */,
 				85D18A482375B05700F06441 /* LoginVC.swift in Sources */,
 				85D18A1F236F040C00F06441 /* AppDelegate.swift in Sources */,
 				85F932DE239BF3CA00549000 /* UIViewExt.swift in Sources */,

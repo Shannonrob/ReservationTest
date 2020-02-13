@@ -10,7 +10,7 @@ import Foundation
 
 class Reservation {
     
-    var date: String!
+//    var date: String!
     var time: String!
     var group: String!
     var hotel: String!
@@ -29,9 +29,9 @@ class Reservation {
         
         self.reservationId = reservationId
         
-        if let date = dictionary[reservation_Date] as? String {
-            self.date = date
-        }
+//        if let date = dictionary[reservation_Date] as? String {
+//            self.date = date
+//        }
         
         if let time = dictionary[reservation_Time] as? String {
             self.time = time

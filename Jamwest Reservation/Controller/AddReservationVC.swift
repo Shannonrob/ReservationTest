@@ -555,7 +555,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     }
     
     func formatReservationDate() {
-        // formatter for reservation time selected
+        // formatter for reservation date selected
         let reservationDateFormatter = DateFormatter()
         reservationDateFormatter.dateStyle = .medium
 
