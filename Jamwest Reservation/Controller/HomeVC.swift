@@ -143,6 +143,7 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         navigationController?.navigationBar.tintColor = .white
         
         navigationItem.title = "Reservations"
+        
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: reservation]
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "menuButton").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleMenuToggle))
     }

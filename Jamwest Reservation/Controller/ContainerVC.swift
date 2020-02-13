@@ -27,6 +27,8 @@ class ContainerVC: UIViewController {
             presentLoginVC()
         } else {
             presentHomeVC()
+            // adds shadow to HomeVC
+            addShadow()
         }
     }
     
@@ -145,6 +147,18 @@ class ContainerVC: UIViewController {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
             self.setNeedsStatusBarAppearanceUpdate()
       }, completion: nil)
+    }
+    
+    func addShadow() {
+        
+        let viewLayer = centerController.view.layer
+        
+        viewLayer.shadowPath = UIBezierPath(roundedRect: centerController.view.bounds, cornerRadius: viewLayer.cornerRadius).cgPath
+        viewLayer.shadowColor = UIColor.black.cgColor
+        viewLayer.shadowOpacity = 0.4
+        viewLayer.shadowOffset = CGSize(width: -10, height: -10)
+        viewLayer.shadowRadius = 5
+        viewLayer.masksToBounds = false
     }
 }
 
