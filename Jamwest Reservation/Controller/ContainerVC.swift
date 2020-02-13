@@ -14,6 +14,7 @@ class ContainerVC: UIViewController {
 //    MARK: - Properties
 
     var menuVC: MenuVC!
+    var menuOption: MenuOption!
     var centerController: UIViewController!
     var isExpanded = false
 
@@ -101,9 +102,16 @@ class ContainerVC: UIViewController {
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
                 self.centerController.view.frame.origin.x = self.centerController.view.frame.width - 780
             }, completion: nil)
+            
+            //disable HomeVC() and close menu with tap gesture
+            let tap = UITapGestureRecognizer(target: self, action: #selector(handleCenterControllerVCTapped(_:)))
+           centerController.view.addGestureRecognizer(tap)
+            
         } else {
+
+            centerController.view.gestureRecognizers?.removeAll()
+            
 //            hide menu
-                      
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
                 self.centerController.view.frame.origin.x = 0
             }) { (_) in
@@ -114,6 +122,10 @@ class ContainerVC: UIViewController {
         animateStatusBar()
     }
     
+    @objc func handleCenterControllerVCTapped(_ sender: UITapGestureRecognizer? = nil) {
+        
+        handleMenuToggle(forMenuOption: menuOption)
+    }
     
     func didSelectMenuOption(menuOption: MenuOption){
         switch menuOption{
@@ -129,14 +141,11 @@ class ContainerVC: UIViewController {
         }
     }
     
-    
-    
     func animateStatusBar() {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
             self.setNeedsStatusBarAppearanceUpdate()
       }, completion: nil)
     }
-    
 }
 
 extension ContainerVC: HomeVcDelegate {
@@ -147,6 +156,8 @@ extension ContainerVC: HomeVcDelegate {
     }
         isExpanded = !isExpanded
         animatePanel(shouldExpand: isExpanded, menuOption: menuOption)
+        
+    
     }
 }
 
