@@ -96,7 +96,7 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
     
     let groupCountTextfield: UITextField = {
         let textfield = UITextField()
-        textfield.design(placeHolder: "1", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 200, height: 51)
+        textfield.design(placeHolder: "1", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 140, height: 51)
         textfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeGroup"))
         textfield.allowsEditingTextAttributes = false
         textfield.textAlignment = .center
@@ -180,9 +180,7 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
     
     let groupCountPicker: UIPickerView = {
        
-        let countin = [1,2,3]
         let picker = UIPickerView()
-
         picker.backgroundColor = .white
         picker.setValue(UIColor.black, forKey: "textColor")
         return picker
@@ -245,12 +243,12 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
         let space = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
         let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(handleSelectedGroupCount))
         toolBar.barTintColor = .lightGray
-        toolBar.tintColor = Constants.Design.Color.Primary.Purple
+        toolBar.tintColor = Constants.Design.Color.Primary.HeavyGreen
         toolBar.setItems([space, doneButton], animated: false)
         toolBar.isUserInteractionEnabled = true
         toolBar.sizeToFit()
         
-        let groupCountPickerSize = CGSize(width: (groupCountTextfield.frame.width) - 50, height: 200)
+        let groupCountPickerSize = CGSize(width: (groupCountTextfield.frame.width) - 20, height: 200)
 
         popoverView.addSubview(toolBar)
         popoverView.addSubview(groupCountPicker)
@@ -402,8 +400,8 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
         rightStackView.axis = .vertical
         
         let groupCountStackView = UIStackView(arrangedSubviews: [groupCountLabel, groupCountTextfield])
-        groupCountStackView.configureStackView(alignment: .center, distribution: .fillEqually, spacing: 5)
-        groupCountStackView.axis = .horizontal
+        groupCountStackView.configureStackView(alignment: .center, distribution: .fillProportionally, spacing: nil)
+        groupCountStackView.axis = .vertical
         
         view.addSubview(leftStackView)
         leftStackView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 30, paddingLeft: 80, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
@@ -412,7 +410,7 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
         rightStackView.anchor(top: view.topAnchor, left: leftStackView.rightAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 30, paddingLeft: 0, paddingBottom: 0, paddingRight: 80, width: 0, height: 0)
         
         view.addSubview(groupCountStackView)
-        groupCountStackView.anchor(top: rightStackView.bottomAnchor, left: nil, bottom: nil, right: view.rightAnchor, paddingTop: 25, paddingLeft: 0, paddingBottom: 0, paddingRight: 80, width: 260, height: 0)
+        groupCountStackView.anchor(top: rightStackView.bottomAnchor, left: nil, bottom: nil, right: view.rightAnchor, paddingTop: 25, paddingLeft: 0, paddingBottom: 0, paddingRight: 80, width: 0, height: 0)
         
         
     }
@@ -438,6 +436,5 @@ extension ParticipantInfoVC: UIPickerViewDelegate, UIPickerViewDataSource {
         
         selectedGroupCount = String(groupCounter[row])
     }
-
-
+    
 }
