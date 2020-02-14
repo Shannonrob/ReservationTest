@@ -13,6 +13,9 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
 //    MARK: - Properties
     
     var reservation: Reservation?
+    var groupCounter = [Int]()
+    var selectedGroupCount: String?
+    
     
 //    MARK: - TextFields
     
@@ -56,7 +59,7 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
     let countryTextfield: UITextField = {
         let textfield = UITextField()
         textfield.design(placeHolder: "Country", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 400, height: 51)
-        textfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeMap "))
+        textfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeCountry "))
         textfield.layer.borderWidth = 0.85
         textfield.layer.cornerRadius = 4
         textfield.layer.masksToBounds = true
@@ -66,7 +69,6 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
     }()
     
     let phoneNumberTextfield: UITextField = {
-       
         let textfield = UITextField()
         textfield.design(placeHolder: "Phone number", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 400, height: 51)
         textfield.keyboardType = .phonePad
@@ -89,6 +91,20 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
         textfield.layer.masksToBounds = true
         textfield.layer.borderColor = Constants.Design.Color.Border.Blue
         textfield.addTarget(self, action: #selector(handleFormValidation), for: .editingChanged)
+        return textfield
+    }()
+    
+    let groupCountTextfield: UITextField = {
+        let textfield = UITextField()
+        textfield.design(placeHolder: "1", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 200, height: 51)
+        textfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeGroup"))
+        textfield.allowsEditingTextAttributes = false
+        textfield.textAlignment = .center
+        textfield.layer.borderWidth = 0.85
+        textfield.layer.cornerRadius = 4
+        textfield.layer.masksToBounds = true
+        textfield.layer.borderColor = Constants.Design.Color.Border.Blue
+        textfield.addTarget(self, action: #selector(handleGroupCountPicker), for: .editingDidBegin)
         return textfield
     }()
     
@@ -149,7 +165,46 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
      label.font = UIFont(name: avenirNext_Demibold, size: 16)
      return label
     }()
+    
+    let groupCountLabel: UILabel = {
+        
+     let label = UILabel()
+     label.text = " Group Count"
+     label.textColor = .darkGray
+     label.font = UIFont(name: avenirNext_Demibold, size: 16)
+     return label
+    }()
+    
+    
+//    MARK: - Picker
+    
+    let groupCountPicker: UIPickerView = {
+       
+        let countin = [1,2,3]
+        let picker = UIPickerView()
 
+        picker.backgroundColor = .white
+        picker.setValue(UIColor.black, forKey: "textColor")
+        return picker
+    }()
+    
+    
+//    MARK: - UIView
+    
+    let popoverView: UIView = {
+        
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    let popoverViewController: UIViewController = {
+       
+        let view = UIViewController()
+        return view
+    }()
+
+    
     
 //    MARK: - Init
     
@@ -164,6 +219,11 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
         textFieldDelegates()
         getCurrentDate(textField: dateTextfield)
         
+        groupCountPicker.delegate = self
+        groupCountPicker.dataSource = self
+        
+        groupCounterLoop()
+        
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
         view.addGestureRecognizer(tap)
        
@@ -175,9 +235,60 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
     @objc func handleFormValidation() {
         
     }
+    
+    @objc func handleGroupCountPicker() {
+        
+        groupCountTextfield.resignFirstResponder()
+        
+        let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        toolBar.barStyle = UIBarStyle.default
+        let space = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(handleSelectedGroupCount))
+        toolBar.barTintColor = .lightGray
+        toolBar.tintColor = Constants.Design.Color.Primary.Purple
+        toolBar.setItems([space, doneButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+        toolBar.sizeToFit()
+        
+        let groupCountPickerSize = CGSize(width: (groupCountTextfield.frame.width) - 50, height: 200)
+
+        popoverView.addSubview(toolBar)
+        popoverView.addSubview(groupCountPicker)
+
+        popoverViewController.view = popoverView
+        popoverViewController.modalPresentationStyle = .popover
+        popoverViewController.view.frame = CGRect(x: 0, y: 0, width: groupCountPickerSize.width, height: groupCountPickerSize.height)
+        popoverViewController.preferredContentSize = groupCountPickerSize
+        popoverViewController.popoverPresentationController?.sourceView = groupCountTextfield
+        popoverViewController.popoverPresentationController?.sourceRect = CGRect(x: 0, y: 51, width: groupCountTextfield.bounds.width, height: 0)
+        popoverViewController.popoverPresentationController?.delegate = self as? UIPopoverPresentationControllerDelegate
+
+        toolBar.anchor(top: popoverView.topAnchor, left: popoverView.leftAnchor, bottom: nil, right: popoverView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: groupCountPicker.frame.width, height: 60)
+        groupCountPicker.anchor(top: toolBar.bottomAnchor, left: popoverView.leftAnchor, bottom: popoverView.bottomAnchor, right: popoverView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+
+
+        self.present(popoverViewController, animated: true, completion: nil)
+    }
+    
+    @objc func handleSelectedGroupCount() {
+        
+        groupCountTextfield.text = selectedGroupCount
+    // add form validation here for checking if group count textfield has text
+        
+        dismiss(animated: true, completion: nil)
+    }
 
     
 //    MARK: - Helpers Functions
+    
+    func groupCounterLoop() {
+        
+        for numbers in 1...99 {
+            
+            self.groupCounter.append(numbers)
+        }
+        
+    }
     
     func textFieldDelegates() {
         
@@ -201,11 +312,28 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
             emailTextfield.becomeFirstResponder()
         case emailTextfield:
             countryTextfield.becomeFirstResponder()
-            
         default:
             textField.resignFirstResponder()
         }
         return false
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+           
+        if firstNameTextfield.isEditing ||
+           lastNameTextfield.isEditing ||
+           phoneNumberTextfield.isEditing ||
+           emailTextfield.isEditing ||
+           countryTextfield.isEditing {
+               
+           groupCountTextfield.isEnabled = false
+           }
+       }
+       
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+    
+        groupCountTextfield.isEnabled = true
+        return true
     }
     
     func getCurrentDate(textField: UITextField) {
@@ -229,7 +357,7 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
         view.backgroundColor = Constants.Design.Color.Background.FadeGray
         
         navigationController?.navigationBar.isHidden = false
-        navigationItem.title = "Participant waiver"
+        navigationItem.title = "Participant information"
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barStyle = .black
         navigationController?.navigationBar.barTintColor = Constants.Design.Color.Primary.HeavyGreen
@@ -241,44 +369,75 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
     
     func configureConstraints() {
         
-        let firstNameStackVIew = UIStackView(arrangedSubviews: [firstNameLabel, firstNameTextfield])
-        firstNameStackVIew.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
-        firstNameStackVIew.axis = .vertical
+        let firstNameStackView = UIStackView(arrangedSubviews: [firstNameLabel, firstNameTextfield])
+        firstNameStackView.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
+        firstNameStackView.axis = .vertical
         
-        let lastNameStackVIew = UIStackView(arrangedSubviews: [lastNameLabel, lastNameTextfield])
-        lastNameStackVIew.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
-        lastNameStackVIew.axis = .vertical
+        let lastNameStackView = UIStackView(arrangedSubviews: [lastNameLabel, lastNameTextfield])
+        lastNameStackView.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
+        lastNameStackView.axis = .vertical
         
-        let emailStackVIew = UIStackView(arrangedSubviews: [emailLabel, emailTextfield])
-        emailStackVIew.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
-        emailStackVIew.axis = .vertical
+        let emailStackView = UIStackView(arrangedSubviews: [emailLabel, emailTextfield])
+        emailStackView.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
+        emailStackView.axis = .vertical
         
-        let phoneNumberStackVIew = UIStackView(arrangedSubviews: [phoneNumberLabel, phoneNumberTextfield])
-        phoneNumberStackVIew.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
-        phoneNumberStackVIew.axis = .vertical
+        let phoneNumberStackView = UIStackView(arrangedSubviews: [phoneNumberLabel, phoneNumberTextfield])
+        phoneNumberStackView.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
+        phoneNumberStackView.axis = .vertical
         
-        let countryStackVIew = UIStackView(arrangedSubviews: [countryLabel, countryTextfield])
-        countryStackVIew.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
-        countryStackVIew.axis = .vertical
+        let countryStackView = UIStackView(arrangedSubviews: [countryLabel, countryTextfield])
+        countryStackView.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
+        countryStackView.axis = .vertical
         
-        let dateStackVIew = UIStackView(arrangedSubviews: [dateLabel, dateTextfield])
-        dateStackVIew.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
-        dateStackVIew.axis = .vertical
+        let dateStackView = UIStackView(arrangedSubviews: [dateLabel, dateTextfield])
+        dateStackView.configureStackView(alignment: .leading, distribution: .fillProportionally, spacing: nil)
+        dateStackView.axis = .vertical
         
-        let leftStackView = UIStackView(arrangedSubviews: [firstNameStackVIew, phoneNumberStackVIew, countryStackVIew])
+        let leftStackView = UIStackView(arrangedSubviews: [firstNameStackView, phoneNumberStackView, countryStackView, dateStackView])
         leftStackView.configureStackView(alignment: .leading, distribution: .fillEqually, spacing: 25)
         leftStackView.axis = .vertical
         
-        let rightStackView = UIStackView(arrangedSubviews: [lastNameStackVIew, emailStackVIew, dateStackVIew])
+        let rightStackView = UIStackView(arrangedSubviews: [lastNameStackView, emailStackView])
         rightStackView.configureStackView(alignment: .leading, distribution: .fillEqually, spacing: 25)
         rightStackView.axis = .vertical
         
+        let groupCountStackView = UIStackView(arrangedSubviews: [groupCountLabel, groupCountTextfield])
+        groupCountStackView.configureStackView(alignment: .center, distribution: .fillEqually, spacing: 5)
+        groupCountStackView.axis = .horizontal
         
         view.addSubview(leftStackView)
         leftStackView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 30, paddingLeft: 80, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
         view.addSubview(rightStackView)
         rightStackView.anchor(top: view.topAnchor, left: leftStackView.rightAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 30, paddingLeft: 0, paddingBottom: 0, paddingRight: 80, width: 0, height: 0)
+        
+        view.addSubview(groupCountStackView)
+        groupCountStackView.anchor(top: rightStackView.bottomAnchor, left: nil, bottom: nil, right: view.rightAnchor, paddingTop: 25, paddingLeft: 0, paddingBottom: 0, paddingRight: 80, width: 260, height: 0)
+        
+        
     }
     
+}
+
+extension ParticipantInfoVC: UIPickerViewDelegate, UIPickerViewDataSource {
+
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        
+        return String(groupCounter[row])
+    }
+
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return groupCounter.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        selectedGroupCount = String(groupCounter[row])
+    }
+
+
 }

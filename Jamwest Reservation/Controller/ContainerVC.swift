@@ -156,7 +156,7 @@ class ContainerVC: UIViewController {
         viewLayer.shadowPath = UIBezierPath(roundedRect: centerController.view.bounds, cornerRadius: viewLayer.cornerRadius).cgPath
         viewLayer.shadowColor = UIColor.black.cgColor
         viewLayer.shadowOpacity = 0.4
-        viewLayer.shadowOffset = CGSize(width: -10, height: -10)
+        viewLayer.shadowOffset = CGSize(width: -10, height: 0)
         viewLayer.shadowRadius = 5
         viewLayer.masksToBounds = false
     }
