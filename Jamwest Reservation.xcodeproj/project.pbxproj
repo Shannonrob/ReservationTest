@@ -13,6 +13,7 @@
 		8554D8A323F49A0D0050A499 /* UILabelExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8554D8A223F49A0D0050A499 /* UILabelExt.swift */; };
 		8569B9E02391AAD2004707A2 /* ToursSelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8569B9DF2391AAD2004707A2 /* ToursSelectionVC.swift */; };
 		858A5624237B1E3500624FB8 /* AddReservationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858A5623237B1E3500624FB8 /* AddReservationVC.swift */; };
+		859C092723F861B3000EFF35 /* PickerViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C092623F861B3000EFF35 /* PickerViewData.swift */; };
 		85D18A1F236F040C00F06441 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D18A1E236F040C00F06441 /* AppDelegate.swift */; };
 		85D18A21236F040C00F06441 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D18A20236F040C00F06441 /* SceneDelegate.swift */; };
 		85D18A28236F040D00F06441 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85D18A27236F040D00F06441 /* Assets.xcassets */; };
@@ -46,6 +47,7 @@
 		8554D8A223F49A0D0050A499 /* UILabelExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelExt.swift; sourceTree = "<group>"; };
 		8569B9DF2391AAD2004707A2 /* ToursSelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToursSelectionVC.swift; sourceTree = "<group>"; };
 		858A5623237B1E3500624FB8 /* AddReservationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReservationVC.swift; sourceTree = "<group>"; };
+		859C092623F861B3000EFF35 /* PickerViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewData.swift; sourceTree = "<group>"; };
 		85D18A1B236F040C00F06441 /* Jamwest Reservation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Jamwest Reservation.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		85D18A1E236F040C00F06441 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		85D18A20236F040C00F06441 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 			children = (
 				85F5C76323958F3600BDBA25 /* Alert.swift */,
 				85D18A4123707ADD00F06441 /* MenuOption.swift */,
+				859C092623F861B3000EFF35 /* PickerViewData.swift */,
 				85E786EE23D0D35F008F017A /* Reservation.swift */,
 			);
 			path = Model;
@@ -349,6 +352,7 @@
 				85E786EF23D0D35F008F017A /* Reservation.swift in Sources */,
 				85F932E6239BF4A600549000 /* ArrayExt.swift in Sources */,
 				8541AFF723CFDBFE00276BF0 /* ReservationCell.swift in Sources */,
+				859C092723F861B3000EFF35 /* PickerViewData.swift in Sources */,
 				85D18A21236F040C00F06441 /* SceneDelegate.swift in Sources */,
 				85D18A3C236F05CF00F06441 /* MenuVC.swift in Sources */,
 				858A5624237B1E3500624FB8 /* AddReservationVC.swift in Sources */,

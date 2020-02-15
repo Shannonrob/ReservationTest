@@ -12,6 +12,8 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
     
 //    MARK: - Properties
     
+    var pickerViewData = [PickerViewData]()
+    
     var reservation: Reservation?
     var groupCounter = [Int]()
     var selectedGroupCount: String?
@@ -58,18 +60,6 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
         return textfield
     }()
     
-    let countryTextfield: UITextField = {
-        let textfield = UITextField()
-        textfield.design(placeHolder: "Country", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 235, height: 51)
-        textfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeCountry "))
-        textfield.layer.borderWidth = 0.85
-        textfield.layer.cornerRadius = 4
-        textfield.layer.masksToBounds = true
-        textfield.layer.borderColor = Constants.Design.Color.Border.Blue
-        textfield.addTarget(self, action: #selector(handlePickerView), for: .editingChanged)
-        return textfield
-    }()
-    
     let phoneNumberTextfield: UITextField = {
         let textfield = UITextField()
         textfield.design(placeHolder: "Phone number", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 400, height: 51)
@@ -93,6 +83,19 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
         textfield.layer.masksToBounds = true
         textfield.layer.borderColor = Constants.Design.Color.Border.Blue
         textfield.addTarget(self, action: #selector(handleFormValidation), for: .editingChanged)
+        return textfield
+    }()
+    
+    let countryTextfield: UITextField = {
+        let textfield = UITextField()
+        textfield.design(placeHolder: "Country", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 235, height: 51)
+        textfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeCountry "))
+        textfield.allowsEditingTextAttributes = false
+        textfield.layer.borderWidth = 0.85
+        textfield.layer.cornerRadius = 4
+        textfield.layer.masksToBounds = true
+        textfield.layer.borderColor = Constants.Design.Color.Border.Blue
+        textfield.addTarget(self, action: #selector(handlePickerView), for: .editingDidBegin)
         return textfield
     }()
     
@@ -180,7 +183,7 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
     
 //    MARK: - Picker
     
-    let groupCountPicker: UIPickerView = {
+    let pickerView: UIPickerView = {
        
         let picker = UIPickerView()
         picker.backgroundColor = .white
@@ -202,8 +205,8 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
         textFieldDelegates()
         getCurrentDate(textField: dateTextfield)
         
-        groupCountPicker.delegate = self
-        groupCountPicker.dataSource = self
+        pickerView.delegate = self
+        pickerView.dataSource = self
         
         groupCounterLoop()
         
@@ -217,26 +220,31 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
         
     }
     
+    // present pickerview
     @objc func handlePickerView(textfield: UITextField) {
         
-//        let selectedTextfield = UITextField()
-//        
-//        switch textfield {
-//        case countryTextfield:
-//            print("country textfield tapped")
-//        case groupCountTextfield:
-//            
-//            groupCountTextfield.resignFirstResponder()
-//            selectedTextfield = groupCountTextfield
-//            print("group count textfield tapped")
-//        default:
-//            break
-//        }
+        var selectedTextfield: UITextField?
+
+        switch textfield {
+            
+        case countryTextfield:
+            countryTextfield.resignFirstResponder()
+            selectedTextfield = countryTextfield
+            print("country textfield tapped")
+            
+        case groupCountTextfield:
+            groupCountTextfield.resignFirstResponder()
+            selectedTextfield = groupCountTextfield
+            print("group count textfield tapped")
+            
+        default:
+            break
+        }
         
         let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         toolBar.barStyle = UIBarStyle.default
         let space = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(handleSelectedGroupCount))
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(handlePickerViewSelection))
         toolBar.barTintColor = .lightGray
         toolBar.tintColor = Constants.Design.Color.Primary.HeavyGreen
         toolBar.setItems([space, doneButton], animated: false)
@@ -244,30 +252,30 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
         toolBar.sizeToFit()
         
         // the dimensions of the pickerview size
-        let groupCountPickerSize = CGSize(width: (groupCountTextfield.frame.width) - 20, height: 200)
+        let groupCountPickerSize = CGSize(width: (selectedTextfield!.frame.width) - 20, height: 200)
         let popoverView = UIView()
         popoverView.backgroundColor = .white
         let popoverViewController = UIViewController()
     
         popoverView.addSubview(toolBar)
-        popoverView.addSubview(groupCountPicker)
+        popoverView.addSubview(pickerView)
 
         popoverViewController.view = popoverView
         popoverViewController.modalPresentationStyle = .popover
         popoverViewController.view.frame = CGRect(x: 0, y: 0, width: groupCountPickerSize.width, height: groupCountPickerSize.height)
         popoverViewController.preferredContentSize = groupCountPickerSize
-        popoverViewController.popoverPresentationController?.sourceView = groupCountTextfield
+        popoverViewController.popoverPresentationController?.sourceView = selectedTextfield
         popoverViewController.popoverPresentationController?.permittedArrowDirections = .up
-        popoverViewController.popoverPresentationController?.sourceRect = CGRect(x: (groupCountTextfield.bounds.width) / 2, y: groupCountTextfield.bounds.height + 1, width: 0, height: 0)
+        popoverViewController.popoverPresentationController?.sourceRect = CGRect(x: (selectedTextfield!.bounds.width) / 2, y: selectedTextfield!.bounds.height + 1, width: 0, height: 0)
         popoverViewController.popoverPresentationController?.delegate = self as? UIPopoverPresentationControllerDelegate
 
-        toolBar.anchor(top: popoverView.topAnchor, left: popoverView.leftAnchor, bottom: nil, right: popoverView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: groupCountPicker.frame.width, height: 60)
-        groupCountPicker.anchor(top: toolBar.bottomAnchor, left: popoverView.leftAnchor, bottom: popoverView.bottomAnchor, right: popoverView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        toolBar.anchor(top: popoverView.topAnchor, left: popoverView.leftAnchor, bottom: nil, right: popoverView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: pickerView.frame.width, height: 60)
+        pickerView.anchor(top: toolBar.bottomAnchor, left: popoverView.leftAnchor, bottom: popoverView.bottomAnchor, right: popoverView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
 
         self.present(popoverViewController, animated: true, completion: nil)
     }
     
-    @objc func handleSelectedGroupCount() {
+    @objc func handlePickerViewSelection() {
         
         groupCountTextfield.text = selectedGroupCount
     // add form validation here for checking if group count textfield has text
@@ -282,9 +290,10 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
         
         for numbers in 1...99 {
             
-            self.groupCounter.append(numbers)
+            let numbersResult = PickerViewData(title: String(numbers))
+            pickerViewData.append(numbersResult)
+//            self.groupCounter.append(numbers)
         }
-        
     }
     
     func textFieldDelegates() {
@@ -322,19 +331,14 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
            phoneNumberTextfield.isEditing ||
            emailTextfield.isEditing ||
            countryTextfield.isEditing {
+            countryTextfield.isEnabled = false
            groupCountTextfield.isEnabled = false
            }
        }
-    
-//    //checking if countries of group count textfield was tapped
-//    func textfieldGestureCheck(_ textField: UITextField) {
-//
-//        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
-//        view.addGestureRecognizer(tap)
-//    }
        
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
     
+        countryTextfield.isEnabled = true
         groupCountTextfield.isEnabled = true
         return true
     }
@@ -433,17 +437,20 @@ extension ParticipantInfoVC: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
-        return String(groupCounter[row])
+//        return String(groupCounter[row])
+        return pickerViewData[row].title
     }
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         
-        return groupCounter.count
+        return pickerViewData.count
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
-        selectedGroupCount = String(groupCounter[row])
+//        selectedGroupCount = String(groupCounter[row])
+        
+        print("item selected")
     }
     
 }
