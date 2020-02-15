@@ -207,9 +207,7 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
         
         pickerView.delegate = self
         pickerView.dataSource = self
-        
-        groupCounterLoop()
-        
+     
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
         view.addGestureRecognizer(tap)
     }
@@ -223,6 +221,8 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
     // present pickerview
     @objc func handlePickerView(textfield: UITextField) {
         
+        pickerViewData = []
+        
         var selectedTextfield: UITextField?
 
         switch textfield {
@@ -230,12 +230,12 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
         case countryTextfield:
             countryTextfield.resignFirstResponder()
             selectedTextfield = countryTextfield
-            print("country textfield tapped")
+            groupCounterLoop(textfield)
             
         case groupCountTextfield:
             groupCountTextfield.resignFirstResponder()
             selectedTextfield = groupCountTextfield
-            print("group count textfield tapped")
+            groupCounterLoop(textfield)
             
         default:
             break
@@ -286,13 +286,25 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
     
 //    MARK: - Helpers Functions
     
-    func groupCounterLoop() {
+    // loop and appends array to pickerview data model
+    func groupCounterLoop(_ textfield: UITextField) {
         
-        for numbers in 1...99 {
+        switch textfield {
+        case countryTextfield:
+            for countries in countries {
+                
+                let countriesResult = PickerViewData(title: String(countries))
+                pickerViewData.append(countriesResult)
+            }
             
-            let numbersResult = PickerViewData(title: String(numbers))
-            pickerViewData.append(numbersResult)
-//            self.groupCounter.append(numbers)
+        case groupCountTextfield:
+            for numbers in 1...99 {
+                
+                let numbersResult = PickerViewData(title: String(numbers))
+                pickerViewData.append(numbersResult)
+            }
+        default:
+            break
         }
     }
     
