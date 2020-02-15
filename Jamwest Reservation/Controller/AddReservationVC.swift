@@ -251,22 +251,6 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         stepper.addTarget(self, action: #selector(handleStepper), for: UIControl.Event.valueChanged)
         return stepper
     }()
-    
-//    Mark: - UIView
-    
-    let popoverView: UIView = {
-        
-        let view = UIView()
-        view.backgroundColor = .white
-        return view
-    }()
-    
-    let popoverViewController: UIViewController = {
-       
-        let view = UIViewController()
-        return view
-    }()
- 
 
 //    MARK: - Init
     override func viewDidLoad() {
@@ -315,6 +299,10 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         toolBar.sizeToFit()
 
         let datePickerSize = CGSize(width: datePicker.frame.width, height: 300)
+        
+        let popoverView = UIView()
+        popoverView.backgroundColor = .white
+        let popoverViewController = UIViewController()
 
         popoverView.addSubview(toolBar)
         popoverView.addSubview(datePicker)
