@@ -96,7 +96,7 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+                
         let participantInfoVC = ParticipantInfoVC()
         participantInfoVC.reservation = reservations[indexPath.row]
         navigationController?.pushViewController(participantInfoVC, animated: true)
@@ -119,7 +119,7 @@ class HomeVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         selector: #selector(HomeVC.fetchCurrentReservations),
         name: dateChanged, object: nil)
     }
-    
+
     // format reservation date
     func formatReservationDate() {
         

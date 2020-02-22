@@ -12,11 +12,12 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
     
 //    MARK: - Properties
     
+    var countryTextfieldBool = Bool()
     var pickerViewData = [PickerViewData]()
     
     var reservation: Reservation?
     var groupCounter = [Int]()
-    var selectedGroupCount: String?
+    var pickerViewSelection: String?
     
 //    let countries =  ["India", "China", "United States"].sorted()
     
@@ -91,6 +92,7 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
         textfield.design(placeHolder: "Country", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 235, height: 51)
         textfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeCountry "))
         textfield.allowsEditingTextAttributes = false
+        textfield.textAlignment = .center
         textfield.layer.borderWidth = 0.85
         textfield.layer.cornerRadius = 4
         textfield.layer.masksToBounds = true
@@ -101,7 +103,8 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
     
     let groupCountTextfield: UITextField = {
         let textfield = UITextField()
-        textfield.design(placeHolder: "1", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 140, height: 51)
+        textfield.design(placeHolder: nil, backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 140, height: 51)
+        textfield.text = "1"
         textfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeGroup"))
         textfield.allowsEditingTextAttributes = false
         textfield.textAlignment = .center
@@ -147,7 +150,7 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
     let countryLabel: UILabel = {
 
      let label = UILabel()
-     label.text = " Country"
+     label.text = " Country of residence"
      label.textColor = .darkGray
      label.font = UIFont(name: avenirNext_Demibold, size: 16)
      return label
@@ -222,20 +225,22 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
     @objc func handlePickerView(textfield: UITextField) {
         
         pickerViewData = []
-        
         var selectedTextfield: UITextField?
-
+        
         switch textfield {
             
         case countryTextfield:
             countryTextfield.resignFirstResponder()
+//            pickerViewSelection?.append(countryTextfield.text!)
             selectedTextfield = countryTextfield
-            groupCounterLoop(textfield)
+            pickerViewDataLoop(textfield)
+            countryTextfieldBool = true
             
         case groupCountTextfield:
             groupCountTextfield.resignFirstResponder()
             selectedTextfield = groupCountTextfield
-            groupCounterLoop(textfield)
+            pickerViewDataLoop(textfield)
+            countryTextfieldBool = false
             
         default:
             break
@@ -272,14 +277,35 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
         toolBar.anchor(top: popoverView.topAnchor, left: popoverView.leftAnchor, bottom: nil, right: popoverView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: pickerView.frame.width, height: 60)
         pickerView.anchor(top: toolBar.bottomAnchor, left: popoverView.leftAnchor, bottom: popoverView.bottomAnchor, right: popoverView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
 
+//        pickerView.anchor(top: popoverView.topAnchor, left: popoverView.leftAnchor, bottom: popoverView.bottomAnchor, right: popoverView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        
         self.present(popoverViewController, animated: true, completion: nil)
     }
     
     @objc func handlePickerViewSelection() {
         
-        groupCountTextfield.text = selectedGroupCount
+//        textField.text = pickerViewSelection
     // add form validation here for checking if group count textfield has text
         
+        switch countryTextfieldBool {
+            
+        case true:
+            
+            if pickerViewSelection == nil && !countryTextfield.text!.isEmpty {
+                pickerViewSelection = countryTextfield.text
+            }
+            countryTextfield.text = pickerViewSelection
+             pickerViewSelection = nil
+            
+        case false:
+            
+            if pickerViewSelection == nil && !groupCountTextfield.text!.isEmpty {
+                pickerViewSelection = groupCountTextfield.text
+            }
+            groupCountTextfield.text = pickerViewSelection
+            pickerViewSelection = nil
+        }
+        pickerView.selectRow(0, inComponent: 0, animated: true)
         dismiss(animated: true, completion: nil)
     }
 
@@ -287,9 +313,10 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
 //    MARK: - Helpers Functions
     
     // loop and appends array to pickerview data model
-    func groupCounterLoop(_ textfield: UITextField) {
+    func pickerViewDataLoop(_ textfield: UITextField) {
         
         switch textfield {
+            
         case countryTextfield:
             for countries in countries {
                 
@@ -449,7 +476,6 @@ extension ParticipantInfoVC: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
-//        return String(groupCounter[row])
         return pickerViewData[row].title
     }
 
@@ -460,9 +486,6 @@ extension ParticipantInfoVC: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
-//        selectedGroupCount = String(groupCounter[row])
-        
-        print("item selected")
+        pickerViewSelection = String(pickerViewData[row].title)
     }
-    
 }
