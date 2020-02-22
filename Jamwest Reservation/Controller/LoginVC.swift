@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class LoginVC: UIViewController {
+class LoginVC: UIViewController, UITextFieldDelegate {
     
     var window: UIWindow?
     var centerController: UIViewController!
@@ -22,16 +22,18 @@ class LoginVC: UIViewController {
     textfield.design(placeHolder: "Email", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 0, height: 0)
     textfield.addTarget(self, action: #selector(formValidation), for: .editingChanged)
     textfield.keyboardType = .emailAddress
+    textfield.clearTextfieldIcon(#imageLiteral(resourceName: "grayClearButtonExpanded "))
     return textfield
    }()
     
    let passwordTextField: UITextField = {
        
-     let textfield = UITextField()
-     textfield.design(placeHolder: "Password", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 0, height: 0)
-     textfield.isSecureTextEntry = true
-     textfield.addTarget(self, action: #selector(formValidation), for: .editingChanged)
-     return textfield
+    let textfield = UITextField()
+    textfield.design(placeHolder: "Password", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 0, height: 0)
+    textfield.isSecureTextEntry = true
+    textfield.clearTextfieldIcon(#imageLiteral(resourceName: "grayClearButtonExpanded "))
+    textfield.addTarget(self, action: #selector(formValidation), for: .editingChanged)
+    return textfield
     }()
     
 //    MARK: - Buttons
@@ -77,6 +79,11 @@ class LoginVC: UIViewController {
         navigationController?.navigationBar.isHidden = true
         configureViewComponents()
         
+        textFieldDelegates()
+        
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
+        view.addGestureRecognizer(tap)
+      
         view.addSubview(dontHaveAccountButton)
         dontHaveAccountButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 30, paddingRight: 0, width: 0, height: 50)
     }
@@ -122,7 +129,42 @@ class LoginVC: UIViewController {
            loginButton.backgroundColor = UIColor(red: 242/255, green: 125/255, blue: 15/255, alpha: 1)
        }
     
+    // delete contents of textfield
+    @objc func handleClearTextField(textfield: Bool) {
+       
+        if emailTextField.isFirstResponder {
+            emailTextField.text?.removeAll()
+        } else {
+            passwordTextField.text?.removeAll()
+        }
+   }
+    
 //    MARK: - Helper Functions
+    
+    func textFieldDelegates() {
+        
+        emailTextField.delegate = self 
+        passwordTextField.delegate = self
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+
+       switch textField {
+           
+       case emailTextField:
+       passwordTextField.becomeFirstResponder()
+       default:
+       textField.resignFirstResponder()
+       }
+       return false
+   }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        // add gesture to clear button icon
+        let clearTextfieldGesture = UITapGestureRecognizer(target: self, action: #selector(handleClearTextField))
+        clearTextfieldGesture.numberOfTapsRequired = 1
+        textField.rightView?.addGestureRecognizer(clearTextfieldGesture)
+    }
     
     func configureViewComponents() {
         let stackView = UIStackView(arrangedSubviews: [emailTextField,passwordTextField,loginButton])

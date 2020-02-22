@@ -19,9 +19,6 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
     var groupCounter = [Int]()
     var pickerViewSelection: String?
     
-//    let countries =  ["India", "China", "United States"].sorted()
-    
-    
 //    MARK: - TextFields
     
     let firstNameTextfield: UITextField = {
@@ -231,7 +228,6 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
             
         case countryTextfield:
             countryTextfield.resignFirstResponder()
-//            pickerViewSelection?.append(countryTextfield.text!)
             selectedTextfield = countryTextfield
             pickerViewDataLoop(textfield)
             countryTextfieldBool = true
@@ -276,15 +272,12 @@ class ParticipantInfoVC: UIViewController, UITextFieldDelegate {
 
         toolBar.anchor(top: popoverView.topAnchor, left: popoverView.leftAnchor, bottom: nil, right: popoverView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: pickerView.frame.width, height: 60)
         pickerView.anchor(top: toolBar.bottomAnchor, left: popoverView.leftAnchor, bottom: popoverView.bottomAnchor, right: popoverView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-
-//        pickerView.anchor(top: popoverView.topAnchor, left: popoverView.leftAnchor, bottom: popoverView.bottomAnchor, right: popoverView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
         self.present(popoverViewController, animated: true, completion: nil)
     }
     
     @objc func handlePickerViewSelection() {
-        
-//        textField.text = pickerViewSelection
+
     // add form validation here for checking if group count textfield has text
         
         switch countryTextfieldBool {

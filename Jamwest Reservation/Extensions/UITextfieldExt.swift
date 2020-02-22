@@ -13,7 +13,6 @@ extension UITextField {
     func design(placeHolder: String?, backgroundColor: UIColor?, fontSize: CGFloat?, textColor: UIColor?, borderStyle: BorderStyle?, width: CGFloat, height: CGFloat) {
         
         
-        
         if let backgroundColor = backgroundColor {
             self.backgroundColor = backgroundColor
         }
@@ -41,9 +40,9 @@ extension UITextField {
            if height != 0 {
                heightAnchor.constraint(equalToConstant: height).isActive = true
            }
-        
     }
     
+    // textfield icon
     func setTextfieldIcon(_ image: UIImage) {
         
         let iconView = UIImageView(frame: CGRect(x: -10, y: 0, width: 50, height: 50))
@@ -55,5 +54,19 @@ extension UITextField {
         rightView = iconContainerView
         rightViewMode = .unlessEditing
         
+    }
+    
+    // clearButton
+    func clearTextfieldIcon(_ image: UIImage) {
+        
+        let iconView = UIImageView(frame: CGRect(x: -10, y: 0, width: 50, height: 50))
+        iconView.image = image
+    
+        let iconContainerView: UIView = UIView(frame: CGRect(x: 30, y: 0, width: 50, height: 50))
+        iconContainerView.addSubview(iconView)
+        iconContainerView.isUserInteractionEnabled = true
+    
+        rightView = iconContainerView
+        rightViewMode = .whileEditing
     }
 }
