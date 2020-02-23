@@ -141,7 +141,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     let tourRepTextfield: UITextField = {
         let textfield = UITextField()
         textfield.design(placeHolder: "Representative", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 300, height: 51)
-        textfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeConcierge"))
+        textfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeRepresentative"))
         textfield.layer.borderWidth = 0.85
         textfield.layer.cornerRadius = 4
         textfield.layer.masksToBounds = true
@@ -326,6 +326,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
     
         formatDate()
         formValidation()
+        reservationDateTextfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeDate"))
     }
     
     @objc func handleStepper() {
@@ -375,55 +376,24 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
             return
         }
     }
+    
+    // delete contents of textfield
+     @objc func handleClearTextField(textfield: Bool) {
+
+      if hotelNameTextField.isFirstResponder {
+             hotelNameTextField.text?.removeAll()
+      } else if groupNameTextfield.isFirstResponder {
+             groupNameTextfield.text?.removeAll()
+      } else if vourcherTextfield.isFirstResponder {
+          vourcherTextfield.text?.removeAll()
+      } else if tourRepTextfield.isFirstResponder {
+             tourRepTextfield.text?.removeAll()
+      } else {
+          tourCompanyTextfield.text?.removeAll()
+      }
+    }
 
 //    MARK: - Helper Functions
-    // creating reservation
-    func submitReservation() {
-        
-        guard
-           let hotel = hotelNameTextField.text,
-           let group = groupNameTextfield.text,
-           let voucherNumber = vourcherTextfield.text,
-           let tourRep = tourRepTextfield.text,
-           let tourCompany = tourCompanyTextfield.text else { return }
-           let paxQuantity = paxStepper.value
-           let time = reservationTime
-           let date = reservationDate
-           
-           
-        // reservation info
-          let values = [ hotel_Name: hotel,
-                         group_Name: group,
-                         voucher_Number: voucherNumber,
-                         tour_Rep: tourRep,
-                         tour_Company: tourCompany,
-                         reservation_Time: time,
-                         tour_Package: tourPackageSelected,
-                         pax_Count: paxQuantity] as [String: Any]
-        
-
-          // post id
-        let reservation = RESERVATION_REF.childByAutoId()
-
-          // upload information to dataBase
-        reservation.updateChildValues(values) { (err, ref) in
-            
-            guard let reservationId = reservation.key else { return }
-            
-            let dateValue = [reservationId: 1] as [String: Any]
-            
-            let dates = RESERVATION_DATE_REF.child(date)
-            dates.updateChildValues(dateValue)
-            
-            //present toursSelectionVC
-            var vcArray = self.navigationController?.viewControllers
-            vcArray!.removeLast()
-            vcArray!.append(self.toursSelectionVC)
-            self.toursSelectionVC.reservationId = reservationId
-            self.toursSelectionVC.tourPackage = self.tourPackageSelected
-            self.navigationController?.setViewControllers(vcArray!, animated: true)
-        }
-    }
     
     // Action sheet
     func showActionSheet(_ sender: UIBarButtonItem) {
@@ -472,12 +442,37 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
                
            reservationDateTextfield.isEnabled = false
            }
-       }
+        //adds clear button icon to textfield
+        textField.textfieldClearButtonIcon(#imageLiteral(resourceName: "clearButtonSmall "))
+        
+        // add gesture to clear button icon
+        let clearTextfieldGesture = UITapGestureRecognizer(target: self, action: #selector(handleClearTextField))
+        clearTextfieldGesture.numberOfTapsRequired = 1
+        textField.rightView?.addGestureRecognizer(clearTextfieldGesture)
+   }
        
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
     
         reservationDateTextfield.isEnabled = true
         return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+    // reinstantiate each icon after editing
+        switch textField {
+        case hotelNameTextField:
+             hotelNameTextField.setTextfieldIcon(#imageLiteral(resourceName: "orangeHotel"))
+        case groupNameTextfield:
+             groupNameTextfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeName"))
+        case vourcherTextfield:
+             vourcherTextfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeNumber"))
+        case tourRepTextfield:
+             tourRepTextfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeRepresentative"))
+        case tourCompanyTextfield:
+             tourCompanyTextfield.setTextfieldIcon(#imageLiteral(resourceName: "orangeBus"))
+        default:
+            break
+        }
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -502,6 +497,7 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
         return false
     }
     
+//    MARK: - Configuration
    
     func configureUI() {
         
@@ -564,6 +560,57 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
        }
        navigationItem.rightBarButtonItem?.isEnabled = true
     }
+    
+//    MARK: - API
+
+// creating reservation
+   func submitReservation() {
+       
+       guard
+          let hotel = hotelNameTextField.text,
+          let group = groupNameTextfield.text,
+          let voucherNumber = vourcherTextfield.text,
+          let tourRep = tourRepTextfield.text,
+          let tourCompany = tourCompanyTextfield.text else { return }
+          let paxQuantity = paxStepper.value
+          let time = reservationTime
+          let date = reservationDate
+          
+          
+       // reservation info
+         let values = [ hotel_Name: hotel,
+                        group_Name: group,
+                        voucher_Number: voucherNumber,
+                        tour_Rep: tourRep,
+                        tour_Company: tourCompany,
+                        reservation_Time: time,
+                        tour_Package: tourPackageSelected,
+                        pax_Count: paxQuantity] as [String: Any]
+       
+
+         // post id
+       let reservation = RESERVATION_REF.childByAutoId()
+
+         // upload information to dataBase
+       reservation.updateChildValues(values) { (err, ref) in
+           
+           guard let reservationId = reservation.key else { return }
+           
+           let dateValue = [reservationId: 1] as [String: Any]
+           
+           let dates = RESERVATION_DATE_REF.child(date)
+           dates.updateChildValues(dateValue)
+           
+           //present toursSelectionVC
+           var vcArray = self.navigationController?.viewControllers
+           vcArray!.removeLast()
+           vcArray!.append(self.toursSelectionVC)
+           self.toursSelectionVC.reservationId = reservationId
+           self.toursSelectionVC.tourPackage = self.tourPackageSelected
+           self.navigationController?.setViewControllers(vcArray!, animated: true)
+       }
+   }
+    
 }
 
 extension AddReservationVC {

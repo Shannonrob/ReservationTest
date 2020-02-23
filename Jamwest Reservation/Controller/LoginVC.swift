@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FirebaseAuth
 
 class LoginVC: UIViewController, UITextFieldDelegate {
     
@@ -22,7 +23,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     textfield.design(placeHolder: "Email", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 0, height: 0)
     textfield.addTarget(self, action: #selector(formValidation), for: .editingChanged)
     textfield.keyboardType = .emailAddress
-    textfield.clearTextfieldIcon(#imageLiteral(resourceName: "grayClearButtonExpanded "))
+    textfield.textfieldClearButtonIcon(#imageLiteral(resourceName: "grayClearButtonExpanded "))
     return textfield
    }()
     
@@ -31,7 +32,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     let textfield = UITextField()
     textfield.design(placeHolder: "Password", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 0, height: 0)
     textfield.isSecureTextEntry = true
-    textfield.clearTextfieldIcon(#imageLiteral(resourceName: "grayClearButtonExpanded "))
+    textfield.textfieldClearButtonIcon(#imageLiteral(resourceName: "grayClearButtonExpanded "))
     textfield.addTarget(self, action: #selector(formValidation), for: .editingChanged)
     return textfield
     }()

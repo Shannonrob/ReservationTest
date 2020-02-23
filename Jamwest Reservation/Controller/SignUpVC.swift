@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FirebaseAuth
 
 class SignUpVC: UIViewController, UITextFieldDelegate {
     
@@ -17,7 +18,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         textfield.design(placeHolder: "Email", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 0, height: 0)
         textfield.addTarget(self, action: #selector(formValidation), for: .editingChanged)
         textfield.keyboardType = .emailAddress
-        textfield.clearTextfieldIcon(#imageLiteral(resourceName: "grayClearButtonExpanded "))
+        textfield.textfieldClearButtonIcon(#imageLiteral(resourceName: "grayClearButtonExpanded "))
         return textfield
     }()
     
@@ -26,7 +27,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         let textfield = UITextField()
         textfield.design(placeHolder: "Username", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 0, height: 0)
         textfield.addTarget(self, action: #selector(formValidation), for: .editingChanged)
-        textfield.clearTextfieldIcon(#imageLiteral(resourceName: "grayClearButtonExpanded "))
+        textfield.textfieldClearButtonIcon(#imageLiteral(resourceName: "grayClearButtonExpanded "))
         return textfield
     }()
     
@@ -35,7 +36,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         let textfield = UITextField()
         textfield.design(placeHolder: "Password", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 0, height: 0)
         textfield.isSecureTextEntry = true
-        textfield.clearTextfieldIcon(#imageLiteral(resourceName: "grayClearButtonExpanded "))
+        textfield.textfieldClearButtonIcon(#imageLiteral(resourceName: "grayClearButtonExpanded "))
         textfield.addTarget(self, action: #selector(formValidation), for: .editingChanged)
         return textfield
     }()
@@ -45,7 +46,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         let textfield = UITextField()
         textfield.design(placeHolder: "Confirm Password", backgroundColor: .white, fontSize: 18, textColor: .black, borderStyle: .roundedRect, width: 0, height: 0)
         textfield.isSecureTextEntry = true
-        textfield.clearTextfieldIcon(#imageLiteral(resourceName: "grayClearButtonExpanded "))
+        textfield.textfieldClearButtonIcon(#imageLiteral(resourceName: "grayClearButtonExpanded "))
         textfield.addTarget(self, action: #selector(formValidation), for: .editingChanged)
         return textfield
     }()
@@ -151,7 +152,6 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
     
     // delete contents of textfield
        @objc func handleClearTextField(textfield: Bool) {
-
 
         if emailTextField.isFirstResponder {
                emailTextField.text?.removeAll()

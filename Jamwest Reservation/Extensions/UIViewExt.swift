@@ -39,8 +39,6 @@ extension UIView {
         }
     }
     
-    
-    
 //    func bindToKeyboard() {
 //        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
 //    }

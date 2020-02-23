@@ -57,7 +57,7 @@ extension UITextField {
     }
     
     // clearButton
-    func clearTextfieldIcon(_ image: UIImage) {
+    func textfieldClearButtonIcon(_ image: UIImage) {
         
         let iconView = UIImageView(frame: CGRect(x: -10, y: 0, width: 50, height: 50))
         iconView.image = image
