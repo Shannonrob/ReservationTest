@@ -90,6 +90,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
          view.backgroundColor = Constants.Design.Color.Primary.HeavyGreen
         
         configureViewComponents()
+        textFieldDelegates()
         
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
         view.addGestureRecognizer(tap)
@@ -150,18 +151,16 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
     
     // delete contents of textfield
        @objc func handleClearTextField(textfield: Bool) {
-          
-//           if emailTextField.isFirstResponder {
-//               emailTextField.text?.removeAll()
-//           } else {
-//               passwordTextField.text?.removeAll()
-//           }
-        
-        switch textfield {
-        case emailTextField.isFirstResponder:
-            print("email")
-        default:
-            break
+
+
+        if emailTextField.isFirstResponder {
+               emailTextField.text?.removeAll()
+        } else if userNameTextfield.isFirstResponder {
+               userNameTextfield.text?.removeAll()
+        } else if passwordTextfield.isFirstResponder {
+            passwordTextfield.text?.removeAll()
+        } else {
+            confirmPasswordTextfield.text?.removeAll()
         }
       }
     
@@ -175,21 +174,21 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         confirmPasswordTextfield.delegate = self
       }
       
-      func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
         switch textField {
-             
+            
         case emailTextField:
-        userNameTextfield.becomeFirstResponder()
+            userNameTextfield.becomeFirstResponder()
         case userNameTextfield:
-        passwordTextfield.becomeFirstResponder()
+            passwordTextfield.becomeFirstResponder()
         case passwordTextfield:
-        confirmPasswordTextfield.becomeFirstResponder()
+            confirmPasswordTextfield.becomeFirstResponder()
         default:
-        textField.resignFirstResponder()
-    }
+            textField.resignFirstResponder()
+        }
         return false
-}
+    }
       
       func textFieldDidBeginEditing(_ textField: UITextField) {
           // add gesture to clear button icon
