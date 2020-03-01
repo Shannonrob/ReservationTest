@@ -610,7 +610,6 @@ class AddReservationVC: UIViewController, UITextFieldDelegate {
            self.navigationController?.setViewControllers(vcArray!, animated: true)
        }
    }
-    
 }
 
 extension AddReservationVC {
